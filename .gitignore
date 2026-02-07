@@ -1,0 +1,45 @@
+build.log
+build_check.log
+build_check_final.log
+build_check_final_v2.log
+build_error.log
+
+backend/node_modules
+
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle/
+build/
+*/build/
+
+# Local configuration file (contains SDK path/personal settings)
+local.properties
+
+# IDE specific files (IntelliJ / Android Studio)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code (if you use it)
+.vscode/
+
+# OS specific system files
+.DS_Store
+Thumbs.db
