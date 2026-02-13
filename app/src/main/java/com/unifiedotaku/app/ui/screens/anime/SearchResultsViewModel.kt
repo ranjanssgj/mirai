@@ -41,7 +41,7 @@ class SearchResultsViewModel @Inject constructor(
     private fun load() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
-            animeRepository.searchAnime(query, 1, 50)
+            animeRepository.searchAnime(query, 1, 25)
                 .onSuccess { dtos ->
                     _uiState.update {
                         it.copy(

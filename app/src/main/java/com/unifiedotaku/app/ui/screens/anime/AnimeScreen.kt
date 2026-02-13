@@ -35,7 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.unifiedotaku.app.domain.model.Series
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.clayShadow
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +71,7 @@ fun AnimeScreen(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                            Color.White.copy(alpha = 0.05f),
                             Color.Transparent
                         )
                     )
@@ -110,7 +114,7 @@ fun AnimeScreen(
                         Text(
                             text = "${uiState.searchResults.size} results",
                             style = AppTypography.HeadlineSmall,
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = Color.White
                         )
                         TextButton(onClick = viewModel::clearSearch) {
                             Text(
@@ -188,8 +192,8 @@ private fun StitchHeader() {
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surface)
-                    .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), CircleShape),
+                    .background(AppColors.ClayCard)
+                    .border(1.dp, Color.White.copy(alpha = 0.1f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -206,12 +210,12 @@ private fun StitchHeader() {
                 Text(
                     text = "WELCOME BACK",
                     style = AppTypography.WelcomeLabel,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = AppColors.TextSecondary
                 )
                 Text(
                     text = "OtakuMaster",
                     style = AppTypography.Username,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = Color.White
                 )
             }
         }
@@ -221,13 +225,13 @@ private fun StitchHeader() {
             modifier = Modifier
                 .size(44.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surface)
+                .background(AppColors.ClayCard)
         ) {
             BadgedBox(
                 badge = {
                     Badge(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
+                        containerColor = AppColors.Primary,
+                        contentColor = Color.White
                     ) {
                         Text("3")
                     }
@@ -236,7 +240,7 @@ private fun StitchHeader() {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
                     contentDescription = "Notifications",
-                    tint = MaterialTheme.colorScheme.onBackground
+                    tint = Color.White
                 )
             }
         }
@@ -265,21 +269,18 @@ private fun StitchSearchModule(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        Box(
+        ClayContainer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
-                .clip(RoundedCornerShape(28.dp))
-                .background(MaterialTheme.colorScheme.surface)
-                .border(
-                    width = 1.dp,
-                    color = if (query.isNotEmpty()) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) 
-                           else MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(28.dp)
-                )
-                .padding(horizontal = 20.dp),
-            contentAlignment = Alignment.CenterStart
+                .height(56.dp),
+            borderRadius = 28.dp
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -287,7 +288,7 @@ private fun StitchSearchModule(
                 Icon(
                     imageVector = Icons.Outlined.Search,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                    tint = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.size(22.dp)
                 )
                 
@@ -297,7 +298,7 @@ private fun StitchSearchModule(
                     value = query,
                     onValueChange = onQueryChange,
                     modifier = Modifier.weight(1f),
-                    textStyle = AppTypography.BodyLarge.copy(color = MaterialTheme.colorScheme.onBackground),
+                    textStyle = AppTypography.BodyLarge.copy(color = Color.White),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     keyboardActions = KeyboardActions(onSearch = { if (query.length >= 3) onSearch() }),
@@ -307,7 +308,7 @@ private fun StitchSearchModule(
                                 Text(
                                     text = "Search Anime, Manga...",
                                     style = AppTypography.BodyLarge,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.5f)
+                                    color = AppColors.TextSecondary.copy(alpha=0.5f)
                                 )
                             }
                             innerTextField()
@@ -327,15 +328,15 @@ private fun StitchSearchModule(
                             IconButton(
                                 onClick = { if (query.length >= 3) onSearch() },
                                 modifier = Modifier
-                                    .size(36.dp)
+                                    .size(32.dp)
                                     .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.primary)
+                                    .background(Color.White)
                             ) {
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                     contentDescription = "Search",
-                                    tint = MaterialTheme.colorScheme.onPrimary,
-                                    modifier = Modifier.size(18.dp)
+                                    tint = Color.Black,
+                                    modifier = Modifier.size(14.dp)
                                 )
                             }
                         }
@@ -349,7 +350,7 @@ private fun StitchSearchModule(
                             Icon(
                                 imageVector = Icons.Filled.Clear,
                                 contentDescription = "Clear",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = AppColors.TextSecondary,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -362,15 +363,16 @@ private fun StitchSearchModule(
                         Icon(
                             imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.Tune,
                             contentDescription = if (isExpanded) "Collapse" else "Filters",
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = Color.White,
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
             }
         }
+        }
 
-        AnimatedVisibility(
+        androidx.compose.animation.AnimatedVisibility(
             visible = isExpanded,
             enter = expandVertically() + fadeIn(),
             exit = shrinkVertically() + fadeOut()
@@ -381,7 +383,7 @@ private fun StitchSearchModule(
                     .padding(top = 2.dp),
                 color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(16.dp),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                border = BorderStroke(1.dp, Color.White.copy(alpha=0.1f))
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
@@ -401,16 +403,16 @@ private fun StitchSearchModule(
                                 onClick = { onGenreToggle(genre) },
                                 label = { Text(genre, style = AppTypography.LabelMedium) },
                                 colors = FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedLabelColor = MaterialTheme.colorScheme.primary,
-                                    containerColor = MaterialTheme.colorScheme.background,
-                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                    selectedContainerColor = Color.White,
+                                    selectedLabelColor = Color.Black,
+                                    containerColor = AppColors.ClayCard,
+                                    labelColor = Color.White
                                 ),
                                 border = FilterChipDefaults.filterChipBorder(
                                     enabled = true,
                                     selected = isSelected,
-                                    borderColor = MaterialTheme.colorScheme.outline,
-                                    selectedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                                    borderColor = Color.White.copy(alpha=0.1f),
+                                    selectedBorderColor = Color.White
                                 )
                             )
                         }
@@ -514,13 +516,13 @@ private fun StitchSearchModule(
                                 imageVector = Icons.Outlined.FilterAltOff,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp),
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = Color.White
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 "Clear Filters",
                                 style = AppTypography.LabelMedium,
-                                color = MaterialTheme.colorScheme.primary
+                                color = Color.White
                             )
                         }
                     }
@@ -531,7 +533,7 @@ private fun StitchSearchModule(
 }
 
 @Composable
-private fun TrendingHeroSection(
+fun TrendingHeroSection(
     trending: List<Series>,
     currentIndex: Int,
     onPrevious: () -> Unit,
@@ -551,21 +553,21 @@ private fun TrendingHeroSection(
                 Icon(
                     imageVector = Icons.Filled.LocalFireDepartment,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary,
+                    tint = Color.White,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Trending Now",
                     style = AppTypography.HeadlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = Color.White
                 )
             }
 
             Text(
                 text = "View All",
                 style = AppTypography.LabelMedium.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.primary,
+                color = Color.White,
                 modifier = Modifier.clickable(onClick = onViewAll)
             )
             
@@ -576,8 +578,8 @@ private fun TrendingHeroSection(
                             .size(if (index == currentIndex) 8.dp else 6.dp)
                             .clip(CircleShape)
                             .background(
-                                if (index == currentIndex) MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                                if (index == currentIndex) Color.White
+                                else Color.White.copy(alpha = 0.2f)
                             )
                     )
                 }
@@ -586,12 +588,13 @@ private fun TrendingHeroSection(
 
         if (trending.isNotEmpty() && currentIndex < trending.size) {
             val currentAnime = trending[currentIndex]
-            Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-                Card(
-                    modifier = Modifier.fillMaxWidth().aspectRatio(3f / 4f).clickable { onSeriesClick(currentAnime.id) },
-                    shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-                ) {
+            ClayCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(3f / 4f)
+                    .clickable { onSeriesClick(currentAnime.id) },
+                borderRadius = 24.dp
+            ) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -603,15 +606,15 @@ private fun TrendingHeroSection(
                             modifier = Modifier.fillMaxSize()
                         )
                         Box(modifier = Modifier.fillMaxSize().background(
-                            Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.7f), MaterialTheme.colorScheme.background.copy(alpha = 0.95f)))
+                            Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Transparent, AppColors.DarkBackground.copy(alpha = 0.7f), AppColors.DarkBackground.copy(alpha = 0.95f)))
                         ))
-                        Surface(modifier = Modifier.align(Alignment.TopStart).padding(16.dp), color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp), shadowElevation = 4.dp) {
-                            Text(text = "#${currentIndex + 1}", style = AppTypography.TitleSmall, color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp))
+                        Surface(modifier = Modifier.align(Alignment.TopStart).padding(16.dp), color = Color.White, shape = RoundedCornerShape(8.dp), shadowElevation = 4.dp) {
+                            Text(text = "#${currentIndex + 1}", style = AppTypography.TitleSmall, color = Color.Black, modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp))
                         }
                         Column(modifier = Modifier.fillMaxWidth().align(Alignment.BottomStart).padding(20.dp)) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(bottom = 12.dp)) {
                                 items(currentAnime.genres.take(3)) { genre ->
-                                    Surface(color = Color.White.copy(alpha=0.1f), shape = RoundedCornerShape(8.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                                    Surface(color = Color.White.copy(alpha=0.1f), shape = RoundedCornerShape(8.dp), border = BorderStroke(1.dp, Color.White.copy(alpha=0.1f))) {
                                         Text(text = genre.uppercase(), style = AppTypography.Badge, color = Color.White, modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp))
                                     }
                                 }
@@ -636,12 +639,12 @@ private fun TrendingHeroSection(
                             }
                             Spacer(modifier = Modifier.height(16.dp))
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                Button(onClick = { onSeriesClick(currentAnime.id) }, modifier = Modifier.weight(1f).height(48.dp), shape = RoundedCornerShape(12.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)) {
-                                    Icon(Icons.Filled.PlayArrow, null, modifier = Modifier.size(20.dp))
+                                Button(onClick = { onSeriesClick(currentAnime.id) }, modifier = Modifier.weight(1f).height(48.dp), shape = RoundedCornerShape(12.dp), colors = ButtonDefaults.buttonColors(containerColor = Color.White)) {
+                                    Icon(Icons.Filled.PlayArrow, null, tint = Color.Black, modifier = Modifier.size(20.dp))
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Watch Now", style = AppTypography.Button)
+                                    Text("Watch Now", style = AppTypography.Button, color = Color.Black)
                                 }
-                                Surface(modifier = Modifier.size(48.dp), color = Color.White.copy(alpha=0.1f), shape = RoundedCornerShape(12.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                                Surface(modifier = Modifier.size(48.dp), color = Color.White.copy(alpha=0.1f), shape = RoundedCornerShape(12.dp), border = BorderStroke(1.dp, Color.White.copy(alpha=0.1f))) {
                                     IconButton(onClick = { /* TODO */ }) { Icon(Icons.Outlined.Add, null, tint = Color.White) }
                                 }
                             }
@@ -659,7 +662,6 @@ private fun TrendingHeroSection(
             }
         }
     }
-}
 
 @Composable
 private fun LatestUpdatesGrid(
@@ -674,11 +676,11 @@ private fun LatestUpdatesGrid(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.NewReleases, null, tint = Color(0xFF64B5F6), modifier = Modifier.size(24.dp))
+                Icon(Icons.Filled.NewReleases, null, tint = Color.White, modifier = Modifier.size(24.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Latest Updates", style = AppTypography.HeadlineMedium, color = MaterialTheme.colorScheme.onBackground)
+                Text(text = "Latest Updates", style = AppTypography.HeadlineMedium, color = Color.White)
             }
-            Text(text = "View All", style = AppTypography.LabelMedium.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.primary, modifier = Modifier.clickable(onClick = onViewAll))
+            Text(text = "View All", style = AppTypography.LabelMedium.copy(fontWeight = FontWeight.Bold), color = Color.White, modifier = Modifier.clickable(onClick = onViewAll))
         }
 
         if (updates.isNotEmpty()) {
@@ -699,15 +701,33 @@ private fun LatestUpdatesGrid(
 @Composable
 private fun StitchAnimeCard(series: Series, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier.clickable(onClick = onClick)) {
-        Box(modifier = Modifier.fillMaxWidth().aspectRatio(3f / 4f).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surface)) {
-            AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(series.coverUrl).crossfade(true).build(), contentDescription = series.title, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+        ClayCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(3f / 4f),
+            borderRadius = 12.dp
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(series.coverUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = series.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
             series.nextAiringEpisode?.let { ep ->
-                Surface(modifier = Modifier.align(Alignment.TopEnd).padding(6.dp), color = Color.Black.copy(alpha=0.6f), shape = RoundedCornerShape(6.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                Surface(
+                    modifier = Modifier.align(Alignment.TopEnd).padding(6.dp), 
+                    color = Color.Black.copy(alpha=0.6f), 
+                    shape = RoundedCornerShape(6.dp), 
+                    border = BorderStroke(1.dp, Color.White.copy(alpha=0.1f))
+                ) {
                     Text(text = "EP $ep", style = AppTypography.Badge, color = Color.White, modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp))
                 }
             }
         }
-        Text(text = series.title, style = AppTypography.TitleSmall, color = MaterialTheme.colorScheme.onBackground, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
+        Text(text = series.title, style = AppTypography.TitleSmall, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 2.dp)) {
             series.score?.let { score ->
                 Icon(Icons.Filled.Star, null, tint = Color(0xFFFFD700), modifier = Modifier.size(12.dp))
@@ -724,12 +744,12 @@ private fun StitchAnimeCard(series: Series, onClick: () -> Unit, modifier: Modif
 private fun ScheduleCard(schedule: Map<String, List<Series>>, selectedDay: String, onDaySelect: (String) -> Unit, onSeriesClick: (String) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.Schedule, null, tint = Color(0xFFFFB74D), modifier = Modifier.size(24.dp))
+            Icon(Icons.Filled.Schedule, null, tint = Color.White, modifier = Modifier.size(24.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Schedule", style = AppTypography.HeadlineMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(text = "Schedule", style = AppTypography.HeadlineMedium, color = Color.White)
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Surface(modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(20.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+        Surface(modifier = Modifier.fillMaxWidth(), color = AppColors.DarkSurface, shape = RoundedCornerShape(20.dp), border = BorderStroke(1.dp, Color.White.copy(alpha=0.1f))) {
             Column(modifier = Modifier.padding(16.dp)) {
                  DayPicker(selectedDay, onDaySelect)
                  Spacer(modifier = Modifier.height(16.dp))
@@ -750,21 +770,21 @@ private fun ScheduleCard(schedule: Map<String, List<Series>>, selectedDay: Strin
             val isSelected = day == selectedDay
             Surface(
                 onClick = { onDaySelect(day) },
-                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background,
+                color = if (isSelected) Color.White else AppColors.DarkBackground,
                 shape = RoundedCornerShape(12.dp),
-                border = BorderStroke(1.dp, if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline)
+                border = BorderStroke(1.dp, if (isSelected) Color.White else Color.White.copy(alpha=0.1f))
             ) {
-                Text(day.take(3), style = AppTypography.LabelMedium, color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+                Text(day.take(3), style = AppTypography.LabelMedium, color = if (isSelected) Color.Black else AppColors.TextSecondary, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
             }
         }
     }
 }
 @Composable fun ScheduleAnimeItem(series: Series, onClick: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-        Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(4.dp)).background(MaterialTheme.colorScheme.surfaceVariant)) {
+        Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(4.dp)).background(AppColors.ClayCard)) {
             AsyncImage(model = series.coverUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
         Spacer(modifier = Modifier.width(12.dp))
-        Text(series.title, style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onBackground, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(series.title, style = AppTypography.BodyMedium, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }

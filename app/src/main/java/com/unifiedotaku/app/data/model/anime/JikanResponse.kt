@@ -11,6 +11,10 @@ data class JikanSingleResponse(
     @SerializedName("data") val data: AnimeDto
 )
 
+data class JikanMangaSingleResponse(
+    @SerializedName("data") val data: MangaDto
+)
+
 data class JikanEpisodesResponse(
     @SerializedName("data") val data: List<JikanEpisodeDto>,
     @SerializedName("pagination") val pagination: PaginationDto
@@ -116,4 +120,29 @@ data class ItemsDto(
     @SerializedName("count") val count: Int,
     @SerializedName("total") val total: Int,
     @SerializedName("per_page") val perPage: Int
+)
+
+data class MangaDto(
+    @SerializedName("mal_id") val malId: Int,
+    @SerializedName("url") val url: String,
+    @SerializedName("images") val images: AnimeImagesDto, // Reuse same image structure
+    @SerializedName("title") val title: String,
+    @SerializedName("title_english") val titleEnglish: String?,
+    @SerializedName("title_japanese") val titleJapanese: String?,
+    @SerializedName("type") val type: String?,
+    @SerializedName("chapters") val chapters: Int?,
+    @SerializedName("volumes") val volumes: Int?,
+    @SerializedName("status") val status: String?,
+    @SerializedName("publishing") val publishing: Boolean,
+    @SerializedName("score") val score: Double?,
+    @SerializedName("scored_by") val scoredBy: Int?,
+    @SerializedName("rank") val rank: Int?,
+    @SerializedName("popularity") val popularity: Int?,
+    @SerializedName("members") val members: Int?,
+    @SerializedName("favorites") val favorites: Int?,
+    @SerializedName("synopsis") val synopsis: String?,
+    @SerializedName("background") val background: String?,
+    @SerializedName("authors") val authors: List<EntityDto> = emptyList(),
+    @SerializedName("serializations") val serializations: List<EntityDto> = emptyList(),
+    @SerializedName("genres") val genres: List<EntityDto> = emptyList()
 )

@@ -19,7 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.compose.ui.text.font.FontWeight
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,18 +41,16 @@ fun SettingsScaffold(
                 title = { Text(title, style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                ),
-                scrollBehavior = scrollBehavior
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
             )
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -73,13 +75,13 @@ fun SettingsGroup(title: String? = null, content: @Composable ColumnScope.() -> 
             Text(
                 title.uppercase(),
                 style = AppTypography.LabelSmall,
-                color = MaterialTheme.colorScheme.tertiary,
+                color = Color.White.copy(alpha=0.6f),
                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
             )
         }
-        Surface(
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(12.dp)
+        ClayCard(
+            borderRadius = 12.dp,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column {
                 content()
@@ -104,9 +106,9 @@ fun SettingsItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(title, style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(title, style = AppTypography.BodyMedium, color = Color.White)
             if (subtitle != null) {
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
         if (trailing != null) {
@@ -129,7 +131,7 @@ fun SettingsItem(
 // Helper to add Divider between items
 @Composable
 fun SettingsDivider() {
-    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(horizontal = 16.dp))
+    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(horizontal = 16.dp))
 }
 
 
@@ -173,8 +175,10 @@ fun AccountSettingsScreen(
                              onCheckedChange = {},
                              enabled = uiState.malConnected,
                              colors = SwitchDefaults.colors(
-                                 checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                 checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
+                                 checkedThumbColor = Color.White,
+                                 checkedTrackColor = AppColors.TextPrimary,
+                                 uncheckedThumbColor = AppColors.TextSecondary,
+                                 uncheckedTrackColor = Color.Black
                              )
                          ) 
                      })
@@ -208,16 +212,25 @@ fun DataSettingsScreen(
     if (showDownloadPathDialog) {
         AlertDialog(
             onDismissRequest = { showDownloadPathDialog = false },
-            title = { Text("Download location") },
+            containerColor = AppColors.DarkSurface,
+            titleContentColor = Color.White,
+            textContentColor = AppColors.TextSecondary,
+            title = { Text("Download location", style = AppTypography.TitleMedium) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Folder path for downloaded episodes/chapters.", style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Folder path for downloaded episodes/chapters.", style = AppTypography.BodySmall, color = AppColors.TextSecondary)
                     OutlinedTextField(
                         value = downloadPathInput,
                         onValueChange = { downloadPathInput = it },
-                        label = { Text("Path") },
+                        label = { Text("Path", color = Color.White.copy(alpha=0.6f)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.White,
+                            unfocusedBorderColor = Color.White.copy(alpha=0.3f),
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White
+                        )
                     )
                 }
             },
@@ -228,10 +241,10 @@ fun DataSettingsScreen(
                     scope.launch {
                         snackbarHostState.showSnackbar("Download location saved", duration = SnackbarDuration.Short)
                     }
-                }) { Text("Save") }
+                }) { Text("Save", color = Color.White, fontWeight = FontWeight.Bold) }
             },
             dismissButton = {
-                TextButton(onClick = { showDownloadPathDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDownloadPathDialog = false }) { Text("Cancel", color = AppColors.TextSecondary) }
             }
         )
     }
@@ -280,8 +293,10 @@ fun DataSettingsScreen(
                             checked = uiState.downloadOnlyOnWifi,
                             onCheckedChange = { viewModel.toggleDownloadOnlyWifi() },
                             colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
+                                checkedThumbColor = Color.White,
+                                checkedTrackColor = AppColors.TextPrimary,
+                                uncheckedThumbColor = AppColors.TextSecondary,
+                                uncheckedTrackColor = Color.Black
                             )
                         )
                     })

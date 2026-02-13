@@ -31,6 +31,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.unifiedotaku.app.data.local.database.entities.LibraryItem
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.theme.clayShadows
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -49,7 +53,7 @@ fun LibraryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(AppColors.DarkBackground)
     ) {
         Row(
             modifier = Modifier
@@ -61,7 +65,7 @@ fun LibraryScreen(
             Text(
                 text = "Library",
                 style = AppTypography.DisplayMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                color = Color.White
             )
             
             Row {
@@ -70,7 +74,7 @@ fun LibraryScreen(
                         Icon(
                             imageVector = Icons.Outlined.Sort,
                             contentDescription = "Sort",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = AppColors.TextSecondary
                         )
                     }
                     
@@ -84,7 +88,7 @@ fun LibraryScreen(
                                     Text(
                                         order.displayName,
                                         color = if (order == uiState.sortOrder) 
-                                            MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+                                            Color.White else Color.White
                                     )
                                 },
                                 onClick = {
@@ -96,7 +100,7 @@ fun LibraryScreen(
                                         Icon(
                                             Icons.Filled.Check,
                                             null,
-                                            tint = MaterialTheme.colorScheme.primary
+                                            tint = Color.White
                                         ) 
                                     }
                                 } else null
@@ -107,13 +111,11 @@ fun LibraryScreen(
             }
         }
         
-        Surface(
+        ClayContainer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surface,
-            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+            borderRadius = 16.dp
         ) {
             Row(
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
@@ -122,7 +124,7 @@ fun LibraryScreen(
                 Icon(
                     imageVector = Icons.Outlined.Search,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = AppColors.TextSecondary,
                     modifier = Modifier.size(20.dp)
                 )
                 
@@ -130,16 +132,16 @@ fun LibraryScreen(
                     value = uiState.searchQuery,
                     onValueChange = viewModel::updateSearchQuery,
                     modifier = Modifier.weight(1f),
-                    placeholder = { Text("Search library...", style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.5f)) },
+                    placeholder = { Text("Search library...", style = AppTypography.BodyMedium, color = Color.White.copy(alpha=0.3f)) },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = MaterialTheme.colorScheme.primary
+                        cursorColor = Color.White
                     ),
                     singleLine = true,
-                    textStyle = AppTypography.BodyMedium.copy(color = MaterialTheme.colorScheme.onBackground)
+                    textStyle = AppTypography.BodyMedium.copy(color = Color.White)
                 )
                 
                 if (uiState.searchQuery.isNotEmpty()) {
@@ -147,7 +149,7 @@ fun LibraryScreen(
                         Icon(
                             imageVector = Icons.Filled.Clear,
                             contentDescription = "Clear",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = AppColors.TextSecondary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -157,20 +159,22 @@ fun LibraryScreen(
         
         Spacer(modifier = Modifier.height(16.dp))
 
-        Row(
+        ClayContainer(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
-                .padding(4.dp)
+                .padding(horizontal = 16.dp),
+            borderRadius = 12.dp
         ) {
+            Row(
+                modifier = Modifier.padding(4.dp)
+            ) {
             tabs.forEachIndexed { index, title ->
                 val selected = pagerState.currentPage == index
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(if (selected) MaterialTheme.colorScheme.background else Color.Transparent)
+                        .background(if (selected) Color.White.copy(alpha=0.1f) else Color.Transparent)
                         .clickable {
                             scope.launch { 
                                 pagerState.animateScrollToPage(index)
@@ -184,11 +188,12 @@ fun LibraryScreen(
                         text = title,
                         style = AppTypography.BodyMedium,
                         fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-                        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        color = if (selected) Color.White else AppColors.TextSecondary
                     )
                 }
             }
         }
+    }
         
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -260,16 +265,16 @@ private fun FilterPill(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    Surface(
-        onClick = onClick,
-        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(50),
-        border = if (!selected) androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline) else null
+    val backgroundColor = if (selected) Color.White else AppColors.ClayCard
+    ClayCard(
+        modifier = Modifier.clickable(onClick = onClick),
+        borderRadius = 20.dp,
+        color = backgroundColor
     ) {
         Text(
             text = text,
             style = AppTypography.Badge,
-            color = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (selected) Color.Black else AppColors.TextPrimary,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }
@@ -286,7 +291,7 @@ private fun LibraryContent(
 ) {
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+            CircularProgressIndicator(color = Color.White)
         }
         return
     }
@@ -372,19 +377,19 @@ private fun LibrarySection(
             Text(
                 text = title,
                 style = AppTypography.TitleMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                color = Color.White
             )
             
             Spacer(modifier = Modifier.width(8.dp))
             
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(6.dp)
+            Box(
+                modifier = Modifier
+                    .clayShadows(color = AppColors.ClayCard, borderRadius = 6.dp)
             ) {
                 Text(
                     text = "${items.size} Titles",
                     style = AppTypography.LabelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                 )
             }
@@ -411,12 +416,11 @@ private fun LibrarySectionItem(
             .width(110.dp)
             .clickable(onClick = onClick)
     ) {
-        Box(
+        ClayCard(
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(0.7f)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colorScheme.surface)
+                .width(110.dp)
+                .clickable(onClick = onClick),
+            borderRadius = 8.dp
         ) {
             AsyncImage(
                 model = item.coverUrl,
@@ -440,19 +444,20 @@ private fun LibrarySectionItem(
                             .fillMaxWidth()
                             .height(3.dp)
                             .clip(RoundedCornerShape(1.5.dp)),
-                        color = MaterialTheme.colorScheme.primary,
-                        trackColor = Color.White.copy(alpha = 0.3f),
+                        color = Color.White,
+                        trackColor = Color.White.copy(alpha = 0.2f),
                     )
                 }
             }
             
+            
             if (item.progress > 0) {
-                Surface(
+                ClayCard(
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .padding(4.dp),
                     color = Color.Black.copy(alpha = 0.6f),
-                    shape = RoundedCornerShape(4.dp)
+                    borderRadius = 4.dp
                 ) {
                     Text(
                         text = "Ep ${item.progress}",
@@ -469,7 +474,7 @@ private fun LibrarySectionItem(
         Text(
             text = item.title,
             style = AppTypography.BodySmall,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = Color.White,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -477,21 +482,20 @@ private fun LibrarySectionItem(
         Text(
             text = "${item.progress}/${item.totalCount ?: "?"}",
             style = AppTypography.LabelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = AppColors.TextSecondary
         )
     }
 }
 
 @Composable
 fun getStatusColor(status: String): Color {
-    val primary = MaterialTheme.colorScheme.primary
     return when (status) {
-        "Watching", "Reading" -> primary
-        "Completed" -> Color(0xFF81C784)
-        "Plan to Watch", "Plan to Read" -> Color(0xFF3B82F6)
-        "On Hold" -> Color(0xFFEAB308)
-        "Dropped" -> Color(0xFFEF4444)
-        else -> MaterialTheme.colorScheme.onSurfaceVariant
+        "Watching", "Reading" -> Color.White
+        "Completed" -> Color.White
+        "Plan to Watch", "Plan to Read" -> Color.White.copy(alpha=0.6f)
+        "On Hold" -> Color.White.copy(alpha=0.4f)
+        "Dropped" -> Color.White.copy(alpha=0.2f)
+        else -> AppColors.TextSecondary
     }
 }
 
@@ -516,7 +520,7 @@ private fun EmptyLibraryState(isAnime: Boolean) {
                 text = "Your ${if (isAnime) "Anime" else "Manga"} Library is Empty",
                 style = AppTypography.HeadlineSmall,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = Color.White,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
 
@@ -525,7 +529,7 @@ private fun EmptyLibraryState(isAnime: Boolean) {
             Text(
                 text = "Browse ${if (isAnime) "anime" else "manga"} and add them to your library to see them here.",
                 style = AppTypography.BodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = AppColors.TextSecondary,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
         }
@@ -537,64 +541,65 @@ private fun LibraryItemCard(
     item: LibraryItem,
     onClick: () -> Unit
 ) {
-    Column(
+    ClayCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(onClick = onClick),
+        borderRadius = 12.dp
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(0.7f)
-                .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
-            AsyncImage(
-                model = item.coverUrl,
-                contentDescription = item.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-            
-            item.score?.let { score ->
-                if (score > 0) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
-                        shape = RoundedCornerShape(bottomStart = 8.dp),
-                        modifier = Modifier.align(Alignment.TopEnd)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                            verticalAlignment = Alignment.CenterVertically
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(0.7f)
+            ) {
+                AsyncImage(
+                    model = item.coverUrl,
+                    contentDescription = item.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+                    
+                item.score?.let { score ->
+                    if (score > 0) {
+                        ClayCard(
+                            color = Color.Black.copy(alpha = 0.7f),
+                            borderRadius = 0.dp, // Or slight radius, but snippet says bottomStart = 8.dp
+                            modifier = Modifier.align(Alignment.TopEnd)
                         ) {
-                            Icon(
-                                imageVector = Icons.Filled.Star,
-                                contentDescription = null,
-                                tint = Color(0xFFFFD700),
-                                modifier = Modifier.size(10.dp)
-                            )
-                            Spacer(modifier = Modifier.width(2.dp))
-                            Text(
-                                text = String.format("%.1f", score),
-                                style = AppTypography.LabelSmall,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                fontWeight = FontWeight.Bold
-                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Star,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.size(10.dp)
+                                )
+                                Spacer(modifier = Modifier.width(2.dp))
+                                Text(
+                                    text = String.format("%.1f", score),
+                                    style = AppTypography.LabelSmall,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
                 }
             }
+            
+            Column(modifier = Modifier.padding(8.dp)) {
+                Text(
+                    text = item.title,
+                    style = AppTypography.BodySmall,
+                    fontWeight = FontWeight.Medium,
+                    color = AppColors.TextPrimary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
-        
-        Spacer(modifier = Modifier.height(4.dp))
-        
-        Text(
-            text = item.title,
-            style = AppTypography.BodySmall,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onBackground,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
     }
 }

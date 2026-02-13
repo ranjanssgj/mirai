@@ -12,7 +12,6 @@ import com.unifiedotaku.app.data.local.database.dao.DownloadDao
 import com.unifiedotaku.app.data.local.database.entities.DownloadStatus
 import com.unifiedotaku.app.data.local.database.entities.MediaType
 import com.unifiedotaku.app.data.remote.scraper.AnimeScraper
-import com.unifiedotaku.app.data.remote.scraper.MangaScraper
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -169,7 +168,7 @@ class MangaDownloadWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters,
     private val downloadDao: DownloadDao,
-    private val mangaScraper: MangaScraper,
+    private val mangaRepository: com.unifiedotaku.app.data.repository.MangaRepository,
     private val okHttpClient: OkHttpClient
 ) : CoroutineWorker(context, params) {
 
@@ -194,10 +193,20 @@ class MangaDownloadWorker @AssistedInject constructor(
             downloadDao.updateProgress(downloadId, DownloadStatus.DOWNLOADING, 0)
             showNotification("Downloading $seriesTitle Ch $chapterNumber", 0)
 
-            // Get chapter pages
-            val pages = mangaScraper.getChapterPages(chapterId)
+            // Extract extension from seriesId (format: "manga:{extensionId}:{rawId}")
+            val seriesId = inputData.getString(KEY_SERIES_ID) ?: ""
+            val extension = if (seriesId.startsWith("manga:")) {
+                seriesId.split(":", limit = 3).getOrNull(1) ?: "comix.to"
+            } else {
+                "comix.to" // Fallback for old-format IDs
+            }
+
+            // Get chapter pages via Repository (Extension)
+            val pagesResult = mangaRepository.getMangaPages(chapterId, extension)
+            val pages = pagesResult.getOrNull() ?: emptyList()
+
             if (pages.isEmpty()) {
-                downloadDao.markFailed(downloadId, "No pages found")
+                downloadDao.markFailed(downloadId, "No pages found or error: ${pagesResult.exceptionOrNull()?.message}")
                 return@withContext Result.failure()
             }
 
@@ -209,13 +218,12 @@ class MangaDownloadWorker @AssistedInject constructor(
             if (!downloadDir.exists()) downloadDir.mkdirs()
 
             // Download each page
-            pages.forEachIndexed { index, page ->
+            pages.forEachIndexed { index, imageUrl ->
                 val fileName = "page_${String.format("%03d", index + 1)}.jpg"
                 val outputFile = File(downloadDir, fileName)
 
                 val request = Request.Builder()
-                    .url(page.imageUrl)
-                    .apply { page.headers.forEach { (k, v) -> addHeader(k, v) } }
+                    .url(imageUrl)
                     .build()
 
                 try {

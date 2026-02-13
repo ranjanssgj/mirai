@@ -1,46 +1,84 @@
 package com.unifiedotaku.app.data.extensions
 
-import com.unifiedotaku.app.data.remote.api.ChapterDto
-import com.unifiedotaku.app.data.remote.api.MangaDetailsDto
-import com.unifiedotaku.app.data.remote.api.MangaDto
-import com.unifiedotaku.app.data.remote.api.StreamResponse
-import com.unifiedotaku.app.data.model.anime.AnimeDto
+import com.unifiedotaku.app.data.extensions.manga.ComixSource
+import com.unifiedotaku.app.data.remote.api.RepoExtension
+import com.unifiedotaku.app.data.remote.scraper.AniCliSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface AnimeSource {
-    val name: String
-    val baseUrl: String
-    suspend fun searchAnime(query: String): List<AnimeDto>
-    suspend fun getStreamUrl(animeName: String, episodeNumber: Int): StreamResponse?
-}
-
-interface MangaSource {
-    val name: String
-    val baseUrl: String
-    suspend fun searchManga(query: String): List<MangaDto>
-    suspend fun getMangaDetails(id: String): MangaDetailsDto
-    suspend fun getChapters(id: String): List<ChapterDto>
-    suspend fun getPages(chapterId: String): List<String>
-}
-
-class ExtensionManager {
-    private val animeSources = mutableMapOf<String, AnimeSource>()
-    private val mangaSources = mutableMapOf<String, MangaSource>()
-
-    fun registerAnimeSource(source: AnimeSource) {
-        animeSources[source.name] = source
-    }
-
-    fun registerMangaSource(source: MangaSource) {
-        mangaSources[source.name] = source
-    }
-
-    fun getAnimeSource(name: String): AnimeSource? = animeSources[name]
-    fun getMangaSource(name: String): MangaSource? = mangaSources[name]
+@Singleton
+class ExtensionManager @Inject constructor(
+    private val comixSource: ComixSource,
+    private val extensionRepository: ExtensionRepository,
+    private val extensionInstaller: ExtensionInstaller,
+    private val aniCliSource: AniCliSource
+) {
+    // Dynamic source registry: maps extensionId -> MangaSource
+    private val sourceRegistry = mutableMapOf<String, MangaSource>()
     
-    // Default sources
+    init {
+        // Register built-in sources
+        sourceRegistry["comix.to"] = comixSource
+    }
 
-    fun getComixSource(): MangaSource? = getMangaSource("Comix")
+    fun getComixSource(): ComixSource? {
+        return if (sourceRegistry.containsKey("comix.to")) comixSource else null
+    }
 
-    fun getAllAnimeSources(): List<AnimeSource> = animeSources.values.toList()
-    fun getAllMangaSources(): List<MangaSource> = mangaSources.values.toList()
+    fun getMangaSource(name: String): MangaSource? {
+        // Direct lookup first
+        sourceRegistry[name]?.let { return it }
+        // Alias lookup for Comix variants
+        if (name == "Comix" || name == "Comix (Built-in)" || name == comixSource.name) {
+            return sourceRegistry["comix.to"]
+        }
+        return null
+    }
+
+    fun getAllMangaSources(): List<MangaSource> {
+        return sourceRegistry.values.toList()
+    }
+
+    fun getAllExtensionIds(): List<String> {
+        return sourceRegistry.keys.toList()
+    }
+
+    fun getDefaultExtensionId(): String {
+        return sourceRegistry.keys.firstOrNull() ?: "comix.to"
+    }
+
+    fun registerSource(id: String, source: MangaSource) {
+        sourceRegistry[id] = source
+    }
+
+    fun isComixInstalled(): Boolean {
+        return sourceRegistry.containsKey("comix.to")
+    }
+
+    suspend fun installComixExtension() {
+        // Since it's built-in, just register it
+        sourceRegistry["comix.to"] = comixSource
+    }
+
+    suspend fun getAvailableExtensions(): List<RepoExtension> {
+        return extensionRepository.getAvailableExtensions()
+    }
+
+    fun getExtensionApkUrl(extension: RepoExtension): String {
+        return extensionRepository.getApkUrl(extension)
+    }
+
+    fun getAllAnimeSources(): List<AnimeSource> {
+        return listOf(aniCliSource)
+    }
+
+    fun isExtensionInstalled(pkg: String): Boolean {
+        if (pkg == "com.unifiedotaku.app") return true
+        return extensionInstaller.isInstalled(pkg)
+    }
+
+    suspend fun installExtension(extension: RepoExtension) {
+        val url = getExtensionApkUrl(extension)
+        extensionInstaller.downloadAndInstall(url, "${extension.pkg}.apk")
+    }
 }

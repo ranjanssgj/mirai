@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 import androidx.compose.ui.graphics.luminance
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -41,64 +44,62 @@ fun AppearanceSettingsScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Appearance", style = AppTypography.TitleMedium) },
+            TopAppBar(
+                title = { Text("Appearance", style = AppTypography.TitleMedium, color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                ),
-                scrollBehavior = scrollBehavior
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White
+                )
             )
-        },
-        containerColor = MaterialTheme.colorScheme.background
+        }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(32.dp),
-            contentPadding = PaddingValues(vertical = 24.dp)
+                .padding(padding),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Live Preview
             item {
-                SettingsSectionHeader("Preview")
-                Spacer(modifier = Modifier.height(12.dp))
-                PreviewCard(Color(uiState.accentColor.colorValue))
+                SettingsSectionHeader("Preview") {
+                    PreviewCard(Color(uiState.accentColor.colorValue))
+                }
             }
             
             // Theme Selection
             item {
-                SettingsSectionHeader("Theme")
-                Spacer(modifier = Modifier.height(12.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    ThemeOption("Light", Color.White, Color.Black, false, uiState.theme == AppTheme.LIGHT) { viewModel.setTheme(AppTheme.LIGHT) }
-                    ThemeOption("Dark",  Color(0xFF331926), Color.White, true, uiState.theme == AppTheme.DARK) { viewModel.setTheme(AppTheme.DARK) } // Stitch Dark Mock
-                    ThemeOption("System", Color.Gray, Color.White, true, uiState.theme == AppTheme.SYSTEM) { viewModel.setTheme(AppTheme.SYSTEM) }
+                SettingsSectionHeader("Theme") {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        ThemeOption("Light", Color.White, Color.Black, uiState.theme == AppTheme.LIGHT) { viewModel.setTheme(AppTheme.LIGHT) }
+                        ThemeOption("Dark",  Color.Black, Color.White, uiState.theme == AppTheme.DARK) { viewModel.setTheme(AppTheme.DARK) }
+                        ThemeOption("System", Color.Gray, Color.White, uiState.theme == AppTheme.SYSTEM) { viewModel.setTheme(AppTheme.SYSTEM) }
+                    }
                 }
             }
             
             // Accent Color
             item {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    SettingsSectionHeader("Accent Color")
-                    Text(
-                        uiState.accentColor.displayName,
-                        style = AppTypography.LabelSmall,
-                        color = Color(uiState.accentColor.colorValue)
-                    )
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(4.dp)
-                ) {
+                SettingsSectionHeader("Accent Color") {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            "Accent Color",
+                            style = AppTypography.BodyMedium,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        )
+                        Text(
+                            uiState.accentColor.displayName,
+                            style = AppTypography.LabelSmall,
+                            color = Color(uiState.accentColor.colorValue)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
                     // Grid of colors
                     FlowRow(
                         modifier = Modifier.padding(20.dp).fillMaxWidth(),
@@ -118,28 +119,25 @@ fun AppearanceSettingsScreen(
 
             // Pure Black Toggle
             item {
-                SettingsSectionHeader("OLED Mode")
-                Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(4.dp),
-                    onClick = { viewModel.toggleAmoledBlack() }
-                ) {
+                SettingsSectionHeader("OLED Mode") {
                     Row(
-                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column {
-                            Text("Pure Black Background", style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurface)
-                            Text("Saves battery on OLED screens", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Pure Black Background", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                            Text("Saves battery on OLED screens", style = AppTypography.BodySmall, color = AppColors.TextSecondary)
                         }
+                        
                         Switch(
                             checked = uiState.useAmoledBlack,
                             onCheckedChange = { viewModel.toggleAmoledBlack() },
                             colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
+                                checkedThumbColor = Color.White,
+                                checkedTrackColor = AppColors.TextPrimary,
+                                uncheckedThumbColor = AppColors.TextSecondary,
+                                uncheckedTrackColor = Color.Black
                             )
                         )
                     }
@@ -148,10 +146,10 @@ fun AppearanceSettingsScreen(
             
             // App Icon (Mock for now, visual only or hooked if logic existed)
             item {
-                SettingsSectionHeader("App Icon")
-                Spacer(modifier = Modifier.height(12.dp))
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    item { AppIconOption("Default", Icons.Filled.SmartDisplay, MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.primary, true) { } }
+                SettingsSectionHeader("App Icon") {
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        item { AppIconOption("Default", Icons.Filled.SmartDisplay, AppColors.DarkBackground, AppColors.TextPrimary, true) { } }
+                    }
                 }
             }
         }
@@ -159,40 +157,49 @@ fun AppearanceSettingsScreen(
 }
 
 @Composable
-fun SettingsSectionHeader(title: String) {
-    Text(
-        text = title.uppercase(),
-        style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onSurfaceVariant
-    )
+fun SettingsSectionHeader(title: String, content: (@Composable ColumnScope.() -> Unit)? = null) {
+    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+        Text(
+            text = title.uppercase(),
+            style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold),
+            color = AppColors.TextSecondary,
+            modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
+        )
+        if (content != null) {
+            ClayCard(
+                modifier = Modifier.fillMaxWidth(),
+                borderRadius = 16.dp
+            ) {
+                Column(content = content)
+            }
+        }
+    }
 }
 
 @Composable
 fun PreviewCard(accentColor: Color) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(4.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        modifier = Modifier.fillMaxWidth().height(180.dp)
+    ClayCard(
+        modifier = Modifier.fillMaxWidth().height(180.dp),
+        borderRadius = 16.dp
     ) {
         Column(Modifier.padding(16.dp)) {
             // Mock UI
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Box(Modifier.size(24.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.2f), CircleShape))
-                Box(Modifier.width(100.dp).height(8.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
+                Box(Modifier.size(24.dp).background(AppColors.TextSecondary.copy(alpha=0.2f), CircleShape))
+                Box(Modifier.width(100.dp).height(8.dp).background(AppColors.TextSecondary.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
             }
              Spacer(modifier = Modifier.height(24.dp))
              Row(Modifier.fillMaxWidth().height(80.dp)) {
-                 Box(Modifier.width(60.dp).fillMaxHeight().background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
+                Box(Modifier.width(60.dp).fillMaxHeight().background(Color.White.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
                  Spacer(modifier = Modifier.width(16.dp))
                  Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxHeight()) {
                      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                         Box(Modifier.width(120.dp).height(12.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
-                         Box(Modifier.width(80.dp).height(8.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
+                         Box(Modifier.width(120.dp).height(12.dp).background(Color.White.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
+                         Box(Modifier.width(80.dp).height(8.dp).background(Color.White.copy(alpha=0.2f), RoundedCornerShape(4.dp)))
                      }
                      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                          Box(Modifier.width(60.dp).height(24.dp).background(accentColor, RoundedCornerShape(4.dp)))
-                         Box(Modifier.width(60.dp).height(24.dp).border(1.dp, MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha=0.5f), RoundedCornerShape(4.dp)))
+                         Box(Modifier.width(60.dp).height(24.dp).border(1.dp, Color.White.copy(alpha=0.5f), RoundedCornerShape(4.dp)))
                      }
                  }
              }
@@ -201,7 +208,7 @@ fun PreviewCard(accentColor: Color) {
 }
 
 @Composable
-fun RowScope.ThemeOption(name: String, bg: Color, fg: Color, isDark: Boolean, isSelected: Boolean, onClick: () -> Unit) {
+fun RowScope.ThemeOption(name: String, bg: Color, fg: Color, isSelected: Boolean, onClick: () -> Unit) {
     Column(
         modifier = Modifier.weight(1f).clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -210,19 +217,26 @@ fun RowScope.ThemeOption(name: String, bg: Color, fg: Color, isDark: Boolean, is
         Box(
             modifier = Modifier
                 .aspectRatio(1.3f)
-                .background(bg)
-                .border(if(isSelected) 2.dp else 1.dp, if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(4.dp))
+                .background(bg, RoundedCornerShape(4.dp))
+                .border(if(isSelected) 2.dp else 1.dp, if(isSelected) Color.White else Color.Gray.copy(alpha=0.3f), RoundedCornerShape(4.dp))
         ) {
+             Text(
+                 text = "Aa",
+                 color = fg,
+                 style = AppTypography.LabelSmall,
+                 fontWeight = FontWeight.Bold,
+                 modifier = Modifier.align(Alignment.Center)
+             )
              if (isSelected) {
                  Icon(
                      Icons.Filled.CheckCircle, 
                      null, 
-                     tint = MaterialTheme.colorScheme.primary, 
+                     tint = AppColors.Primary, 
                      modifier = Modifier.align(Alignment.TopEnd).padding(4.dp).size(16.dp)
                  )
              }
         }
-        Text(name, style = AppTypography.LabelSmall, color = if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(name, style = AppTypography.LabelSmall, color = if(isSelected) Color.White else AppColors.TextSecondary)
     }
 }
 
@@ -233,7 +247,7 @@ fun ColorOption(color: Color, isSelected: Boolean, onClick: () -> Unit) {
             .size(40.dp)
             .background(color, CircleShape)
             .clickable(onClick = onClick)
-            .border(if (isSelected) 3.dp else 0.dp, MaterialTheme.colorScheme.surface, CircleShape)
+            .border(if (isSelected) 3.dp else 0.dp, Color.Black, CircleShape)
             .padding(2.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -256,16 +270,16 @@ fun AppIconOption(name: String, icon: ImageVector, bg: Color, fg: Color, isSelec
             modifier = Modifier
                 .size(64.dp)
                 .background(bg, RoundedCornerShape(16.dp))
-                .border(if(isSelected) 2.dp else 1.dp, if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp)),
+                .border(if(isSelected) 2.dp else 1.dp, if(isSelected) Color.White else Color.Gray.copy(alpha=0.3f), RoundedCornerShape(16.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(icon, null, tint = fg, modifier = Modifier.size(32.dp))
             if (isSelected) {
-                Box(Modifier.align(Alignment.TopEnd).offset(x=4.dp, y=(-4).dp).background(MaterialTheme.colorScheme.primary, CircleShape).padding(2.dp)) {
-                    Icon(Icons.Filled.Check, null, tint = Color.White, modifier = Modifier.size(10.dp))
+                Box(Modifier.align(Alignment.TopEnd).offset(x=4.dp, y=(-4).dp).background(Color.White, CircleShape).padding(2.dp)) {
+                    Icon(Icons.Filled.Check, null, tint = Color.Black, modifier = Modifier.size(10.dp))
                 }
             }
         }
-        Text(name, style = AppTypography.LabelSmall, color = if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(name, style = AppTypography.LabelSmall, color = if(isSelected) Color.White else AppColors.TextSecondary)
     }
 }

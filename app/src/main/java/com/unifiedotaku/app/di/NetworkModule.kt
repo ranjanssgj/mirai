@@ -1,7 +1,6 @@
 package com.unifiedotaku.app.di
 
 
-import com.unifiedotaku.app.data.remote.api.BackendApi
 import com.unifiedotaku.app.data.remote.api.JikanApi
 import dagger.Module
 import dagger.Provides
@@ -52,18 +51,6 @@ object NetworkModule {
     }
 
 
-    @Provides
-    @Singleton
-    @Named("BackendRetrofit")
-    fun provideBackendRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        // Backend URL (Optional for Anime, Required for Manga)
-        // Pointing to local IP as placeholder. Manga will fail if server is off.
-        return Retrofit.Builder()
-            .baseUrl("http://10.23.10.115:3000/") 
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
 
     @Provides
     @Singleton
@@ -71,11 +58,6 @@ object NetworkModule {
         return retrofit.create(JikanApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideBackendApi(@Named("BackendRetrofit") retrofit: Retrofit): BackendApi {
-        return retrofit.create(BackendApi::class.java)
-    }
 
 
     @Provides
@@ -93,5 +75,22 @@ object NetworkModule {
     @Singleton
     fun provideMalApiService(@Named("MalRetrofit") retrofit: Retrofit): com.unifiedotaku.app.data.remote.api.MalApiService {
         return retrofit.create(com.unifiedotaku.app.data.remote.api.MalApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Named("RepoRetrofit")
+    fun provideRepoRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://raw.githubusercontent.com/yuzono/manga-repo/repo/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepoService(@Named("RepoRetrofit") retrofit: Retrofit): com.unifiedotaku.app.data.remote.api.RepoService {
+        return retrofit.create(com.unifiedotaku.app.data.remote.api.RepoService::class.java)
     }
 }

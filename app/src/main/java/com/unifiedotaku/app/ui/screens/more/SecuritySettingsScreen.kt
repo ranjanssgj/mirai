@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,19 +47,19 @@ fun SecuritySettingsScreen(
                 title = { Text("Security & Privacy", style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -68,22 +71,25 @@ fun SecuritySettingsScreen(
         ) {
             item {
                 Column(modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(modifier = Modifier.size(96.dp).background(Color(0xFF22C55E).copy(alpha=0.1f), CircleShape), contentAlignment = Alignment.Center) {
-                        Icon(Icons.Filled.GppGood, null, tint = Color(0xFF22C55E), modifier = Modifier.size(48.dp))
+                    Box(modifier = Modifier.size(96.dp).background(Color.White.copy(alpha=0.1f), CircleShape), contentAlignment = Alignment.Center) {
+                        Icon(Icons.Filled.GppGood, null, tint = Color.White, modifier = Modifier.size(48.dp))
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Security Protocol Active", style = AppTypography.TitleMedium.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.onBackground)
+                    Text("Security Protocol Active", style = AppTypography.TitleMedium.copy(fontWeight = FontWeight.Bold), color = Color.White)
                 }
             }
             
             item {
                 SettingsSectionHeader("Access Control")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
+                ) {
                     Column {
-                        SwitchSettingItem(icon = Icons.Filled.Fingerprint, iconColor = Color(0xFF3B82F6), title = "App Lock", subtitle = "Biometric or PIN", checked = uiState.appLockEnabled) { viewModel.toggleAppLock() }
-                        Divider(color = MaterialTheme.colorScheme.outline.copy(alpha=0.5f))
-                        SwitchSettingItem(icon = Icons.Filled.Fingerprint, iconColor = Color(0xFF3B82F6), title = "Biometric Unlock", subtitle = "Use device security", checked = uiState.biometricUnlock) { viewModel.toggleBiometricUnlock() }
+                        SwitchSettingItem(icon = Icons.Filled.Fingerprint, iconColor = Color.White, title = "App Lock", subtitle = "Biometric or PIN", checked = uiState.appLockEnabled) { viewModel.toggleAppLock() }
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
+                        SwitchSettingItem(icon = Icons.Filled.Fingerprint, iconColor = Color.White, title = "Biometric Unlock", subtitle = "Use device security", checked = uiState.biometricUnlock) { viewModel.toggleBiometricUnlock() }
                     }
                 }
             }
@@ -91,9 +97,12 @@ fun SecuritySettingsScreen(
             item {
                  SettingsSectionHeader("Privacy")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
+                ) {
                     Column {
-                        SwitchSettingItem(icon = Icons.Filled.VisibilityOff, iconColor = Color(0xFFA855F7), title = "Incognito Mode", subtitle = "Pause history tracking", checked = uiState.incognitoMode) { viewModel.toggleIncognitoMode() }
+                        SwitchSettingItem(icon = Icons.Filled.VisibilityOff, iconColor = Color.White, title = "Incognito Mode", subtitle = "Pause history tracking", checked = uiState.incognitoMode) { viewModel.toggleIncognitoMode() }
                     }
                 }
             }
@@ -101,9 +110,12 @@ fun SecuritySettingsScreen(
             item {
                  SettingsSectionHeader("Data Management")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)) {
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
+                ) {
                     Column {
-                         ClickableSettingItem(icon = Icons.Filled.History, iconColor = Color(0xFFEF4444), title = "Clear History", subtitle = "Remove all local progress", isDestructive = true) {
+                         ClickableSettingItem(icon = Icons.Filled.History, iconColor = Color.White, title = "Clear History", subtitle = "Remove all local progress", isDestructive = true) {
                             viewModel.clearHistory()
                             scope.launch { snackbarHostState.showSnackbar("History cleared") }
                         }
@@ -120,11 +132,21 @@ private fun SwitchSettingItem(icon: ImageVector, iconColor: Color, title: String
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Box(modifier = Modifier.size(36.dp).background(iconColor.copy(alpha = 0.1f), CircleShape), contentAlignment = Alignment.Center) { Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp)) }
             Column {
-                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
-        Switch(checked = checked, onCheckedChange = onCheckedChange, colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.primary, checkedTrackColor = MaterialTheme.colorScheme.primaryContainer), modifier = Modifier.scale(0.8f))
+        Switch(
+            checked = checked, 
+            onCheckedChange = onCheckedChange, 
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.White, 
+                checkedTrackColor = AppColors.TextPrimary,
+                uncheckedThumbColor = AppColors.TextSecondary,
+                uncheckedTrackColor = Color.Black
+            ), 
+            modifier = Modifier.scale(0.8f)
+        )
     }
 }
 
@@ -134,10 +156,10 @@ private fun ClickableSettingItem(icon: ImageVector, iconColor: Color, title: Str
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Box(modifier = Modifier.size(36.dp).background(iconColor.copy(alpha = 0.1f), CircleShape), contentAlignment = Alignment.Center) { Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp)) }
             Column {
-                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = if(isDestructive) iconColor else MaterialTheme.colorScheme.onSurface)
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
-        Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(Icons.Filled.ChevronRight, null, tint = AppColors.TextSecondary)
     }
 }

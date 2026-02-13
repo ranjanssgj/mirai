@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 import kotlinx.coroutines.launch
 
@@ -44,19 +47,19 @@ fun AdvancedSettingsScreen(
                 title = { Text("Advanced Settings", style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -68,16 +71,16 @@ fun AdvancedSettingsScreen(
         ) {
             
             item {
-                Surface(
-                    color = Color(0xFFFF9F0A).copy(alpha=0.1f),
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFF9F0A).copy(alpha=0.2f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp,
+                    color = Color.White.copy(alpha=0.05f)
                 ) {
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                         Icon(Icons.Filled.Warning, null, tint = Color(0xFFFF9F0A))
+                         Icon(Icons.Filled.Warning, null, tint = Color.White)
                          Column {
-                             Text("Power User Area", style = AppTypography.LabelMedium, fontWeight = FontWeight.Bold, color = Color(0xFFFF9F0A))
-                             Text("Changing these settings may cause instability or data loss. Proceed with caution.", style = AppTypography.LabelSmall, color = Color(0xFFFF9F0A).copy(alpha=0.8f))
+                             Text("Power User Area", style = AppTypography.LabelMedium, fontWeight = FontWeight.Bold, color = Color.White)
+                             Text("Changing these settings may cause instability or data loss. Proceed with caution.", style = AppTypography.LabelSmall, color = Color.White.copy(alpha=0.7f))
                          }
                     }
                 }
@@ -86,10 +89,9 @@ fun AdvancedSettingsScreen(
             item {
                 SettingsSectionHeader("Source Management")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(8.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         ClickableSettingItem(
@@ -100,7 +102,7 @@ fun AdvancedSettingsScreen(
                             onClick = { navController.navigate(com.unifiedotaku.app.ui.navigation.Routes.SETTINGS_EXTENSIONS) }
                         )
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         ClickableSettingItem(
                             icon = Icons.Filled.FolderZip,
@@ -116,31 +118,30 @@ fun AdvancedSettingsScreen(
             item {
                 SettingsSectionHeader("Database & Storage")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(8.dp),
-                     border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         ClickableSettingItem(
                             icon = Icons.Filled.CleaningServices,
-                            iconColor = Color(0xFFF97316),
+                            iconColor = Color.White,
                             title = "Clear Image Cache",
                             subtitle = "Frees up storage",
-                            titleColor = Color(0xFFF97316)
+                            titleColor = Color.White
                         ) {
                             viewModel.clearCache()
                             scope.launch { snackbarHostState.showSnackbar("Cache cleared") }
                         }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         ClickableSettingItem(
                             icon = Icons.Filled.DeleteSweep,
-                            iconColor = Color(0xFFEF4444),
+                            iconColor = Color.White,
                             title = "Clear Library",
                             subtitle = "Remove all titles from library",
-                            titleColor = Color(0xFFEF4444)
+                            titleColor = Color.White
                         ) {
                             viewModel.clearLibrary()
                             scope.launch { snackbarHostState.showSnackbar("Library cleared") }
@@ -153,9 +154,9 @@ fun AdvancedSettingsScreen(
                  Button(
                     onClick = { viewModel.resetAllSettings() },
                     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = Color(0xFFFF453A)),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha=0.1f), contentColor = Color.White),
                     shape = RoundedCornerShape(8.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFF453A).copy(alpha=0.2f))
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha=0.2f))
                 ) {
                     Text("Reset All Settings to Default", fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp))
                 }
@@ -191,10 +192,10 @@ private fun ClickableSettingItem(
                 Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp))
             }
             Column {
-                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = titleColor ?: MaterialTheme.colorScheme.onSurface)
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = titleColor ?: Color.White)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
-        Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(Icons.Filled.ChevronRight, null, tint = AppColors.TextSecondary)
     }
 }

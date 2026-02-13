@@ -1,0 +1,500 @@
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[8] com.android.systemui/com.android.systemui._29744626, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[9] com.android.systemui/com.android.systemui._155870499, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[10] com.android.systemui/com.android.systemui._42978759, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[11] com.android.systemui/com.android.systemui._207633303, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[12] com.android.systemui/com.android.systemui._188666978, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[13] com.android.systemui/com.android.systemui._254907513, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[14] com.android.systemui/com.android.systemui._264013336, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[15] com.android.systemui/com.android.systemui._48789173, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[16] com.android.systemui/com.android.systemui._152937740, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[17] com.android.systemui/com.android.systemui._113651555, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[18] com.android.systemui/com.android.systemui._179483331, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[19] com.android.systemui/com.android.systemui._155990549, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[20] com.android.systemui/com.android.systemui._62860849, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[21] com.android.systemui/com.android.systemui._191505756, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[22] com.android.systemui/com.android.systemui._250215701, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[23] com.android.systemui/com.android.systemui._240653319, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[24] com.android.systemui/com.android.systemui._70991338, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[25] com.android.systemui/com.android.systemui._254213064, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[26] com.nothing.launcher/com.android.searchlauncher.SearchLauncher, pid:2371, fps:-1, isMultiWindow:1
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [getForegroundAPPCount] 27
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyAPPstate] foreground:com.nothing.launcher, pid:2371, uid:10186
+02-11 12:28:29.730  1034  1034 I MTK_APPList: [notifyNetdUID] 10186
+02-11 12:28:29.730  2371  3403 D BLASTBufferQueue: [VRI[SearchLauncher]#1143](f:0,a:1) acquireNextBufferLocked size=1080x2400 mFrameNumber=1 applyTransaction=true mTimestamp=248994153780456(auto) mPendingTransactions.size=0 graphicBufferId=10183367472411 transform=0
+02-11 12:28:29.731  1673  1991 D BackgroundInstallControlService: Package event received: 0
+02-11 12:28:29.731  1673  1991 D BackgroundInstallControlService: Package event received: 0
+02-11 12:28:29.731  1673  3809 I PowerHalWrapper: amsBoostNotify AMS_BOOST_PROCESS_CREATE_BOOST:true 
+02-11 12:28:29.731  1037  1104 I libPowerHal: [perfLockAcq] idx:8 hdl:117814 hint:22 pid:1037 tid:1037 duration:10000 lock_user:vendor.mediatek => ret_hdl:117814
+02-11 12:28:29.731  1037  1104 I libPowerHal: [setClusterFreq] MTKPOWER_HINT_PACK_SWITCH set cpufreq[0] min:2000000 max:-1 cpufreq[1] min:2500000 max:-1 
+02-11 12:28:29.731  1037  1104 I libPowerHal: [setGPUFreq] MTKPOWER_HINT_PACK_SWITCH user set gpu freq min:15, max:-1
+02-11 12:28:29.731  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 15
+02-11 12:28:29.731  2371  2371 I NT-TopTaskTracker: Found recent activity taskId = 6
+02-11 12:28:29.731  1673  1673 E MBrainLocalService: notifyAppSwitch failed
+02-11 12:28:29.732  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.732  1037  1104 I libPowerHal: [setGPUFreq] Soft min/max = (15, 0); Hard min/max = (35, 0)
+02-11 12:28:29.732  1037  1104 I libPowerHal: [setGPUFreq] final min/max = (15, 0)
+02-11 12:28:29.732  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 15
+02-11 12:28:29.732  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.733  1034  1034 I MTK_APPList: [notifyPID] 2371
+02-11 12:28:29.733  2371  2371 I NT-AIWidgetAIWidgetController: Lifecycle onStateChanged event=ON_RESUME
+02-11 12:28:29.733  2371  2371 I NT-AIWidgetAIWidgetInputMonitor: Lifecycle onStateChanged event=ON_RESUME
+02-11 12:28:29.733  2371  2371 D ActivityThread: handleResumeActivity#3 r.window=com.android.internal.policy.PhoneWindow@f4ef1ca.mFinished = falsewillBeVisible = true
+02-11 12:28:29.733  2071  2151 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=440
+02-11 12:28:29.734  1080  2744 I SurfaceFlinger: onHandleDestroyed: layerId=65404, name=Surface(name=150cd25 Taskbar)/@0x51b265b - animation-leash of insets_animation#65404
+02-11 12:28:29.734  1080  2744 I SurfaceFlinger: onHandleDestroyed: layerId=65405, name=Surface(name=901a5de StatusBar)/@0x8f1b49d - animation-leash of insets_animation#65405
+02-11 12:28:29.734 30105 30105 I bpas    : onResume
+02-11 12:28:29.734  1037  1104 I libPowerHal: [perfSetSysInfo] pid type:24, 2371
+02-11 12:28:29.734  1037  1104 I libPowerHal: [perfLockRel] hdl:117806, idx:-1
+02-11 12:28:29.735  1034  1034 I MTK_APPList: [notifyAPPstate] applist_idx_list[0] 58
+02-11 12:28:29.735  1034  1034 I MTK_APPList: [notifyAPPstate] AppScenarioStatusInfo[0] 0
+02-11 12:28:29.735  1034  1034 I MTK_APPList: [AppScenarioEnable] idx:58, pack:com.nothing.launcher, act:Common, fps:Common, window:Common !!!
+02-11 12:28:29.735  1034  1034 I mtkpower_client: perf_lock_acq, hdl:0, dur:0, num:14, pid:1034, tid:1034
+02-11 12:28:29.735  1673  1697 D WindowManager: [SG_DEBUG]Clear [finished]SyncGroup{id=4355 name=Transition-CLOSE} on ActivityRecord{258485480 u0 com.nothing.launcher/com.android.searchlauncher.SearchLauncher t6}
+02-11 12:28:29.735  1673  1697 D WindowManager: [SG_DEBUG]Clear [finished]SyncGroup{id=4355 name=Transition-CLOSE} on ActivityRecord{189993673 u0 com.unifiedotaku.app/.MainActivity t852 f} isExiting}
+02-11 12:28:29.735  1673  1697 D WindowManager: [SG_DEBUG]Clear [finished]SyncGroup{id=4355 name=Transition-CLOSE} on Task{28e6dce #852 type=standard A=10801:com.unifiedotaku.app}
+02-11 12:28:29.735  1673  1697 D WindowManager: [SG_DEBUG]Clear [finished]SyncGroup{id=4355 name=Transition-CLOSE} on WallpaperWindowToken{1d20efb showWhenLocked=false}
+02-11 12:28:29.735  1080  1080 I BufferQueueProducer: [com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323](this:0xb400007aeb8b94d8,id:-1,api:0,p:-1,c:1080) queueBuffer: fps=75.03 dur=1279.47 max=326.15 min=7.63
+02-11 12:28:29.736  1034  1034 I mtkpower_client: ret_hdl:117815
+02-11 12:28:29.736  1034  1034 I MTK_APPList: [notifyAPPstate] pc:1, com.unifiedotaku.app => com.nothing.launcher
+02-11 12:28:29.736  1037  1104 I libPowerHal: [perfLockAcq] idx:9 hdl:117815 hint:-1 pid:1034 tid:1034 duration:0 lock_user:vendor.mediatek => ret_hdl:117815
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408500, param:1
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408800, param:20
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408900, param:16
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408100, param:1500
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408200, param:1
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408500, param:1
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408500, param:1
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:2004000, param:0
+02-11 12:28:29.736  1037  1104 I libPowerHal: [touch_boost_enabled] value:1
+02-11 12:28:29.736  1037  1104 I libPowerHal: [PE] vendor.mediatek update cmd:3408500 param:1
+02-11 12:28:29.737  2371 20087 E FrameEvents: addRelease: Did not find frame.
+02-11 12:28:29.737  2071  3230 V WindowManagerShell: onTransitionReady(transaction=7185480545699)
+02-11 12:28:29.738  2071  2151 V WindowManagerShell: onTransitionReady (#4355) android.os.BinderProxy@fde7db0: {id=4355 t=CLOSE f=0x10 trk=0 isSameTaskSwitch=false r=[0@Point(0, 0)] c=[
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x290454f sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:         {m=CLOSE f=NONE leash=Surface(name=Task=852)/@0x6a5c4dc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d20efb showWhenLocked=false})/@0x4b809e5 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=0x0 mDragBarSize=0x0}}
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:     ]}
+02-11 12:28:29.738  2071  2151 V WindowManagerShell: Playing animation for (#4355) android.os.BinderProxy@fde7db0@0
+02-11 12:28:29.738  2071  2151 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-11 12:28:29.738  2071  2151 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=4355 t=CLOSE f=0x10 trk=0 isSameTaskSwitch=false r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x290454f sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},{m=CLOSE f=NONE leash=Surface(name=Task=852)/@0x6a5c4dc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d20efb showWhenLocked=false})/@0x4b809e5 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=0x0 mDragBarSize=0x0}}]}
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.nothing.launcher/com.android.searchlauncher.SearchLauncher} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5820abd, appThread = android.app.IApplicationThread$Stub$Proxy@2d258b2, debugName = QuickstepLaunchHome }}
+02-11 12:28:29.738  2071  2151 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.nothing.launcher/com.android.searchlauncher.SearchLauncher} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5820abd, appThread = android.app.IApplicationThread$Stub$Proxy@2d258b2, debugName = QuickstepLaunchHome }}
+02-11 12:28:29.738  2071  2151 V WindowManagerShell:  Delegate animation for (#4355) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5820abd, appThread = android.app.IApplicationThread$Stub$Proxy@2d258b2, debugName = QuickstepLaunchHome }
+02-11 12:28:29.743  1673  1945 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-11 12:28:29.744  2270  2656 D Nt-Bpf-NtBpfControl: EVENT_RTT_UID: 0
+02-11 12:28:29.744  2270  2656 D Nt-Bpf-Client: updateDataInfoSwitch: dataInfoConfig = [DataInfoConfig{feature_enable=true, if_index=17, tcp_enable=true, tcp_rtt_enable=false, tcp_rtt_uid=0, udp_enable=false, dns_enable=false, icmp_enable=true}]
+02-11 12:28:29.744  2270  2656 D Nt-Bpf-Client: dataInfoSwitch: dataInfoConfig = [DataInfoConfig{feature_enable=true, if_index=17, tcp_enable=true, tcp_rtt_enable=false, tcp_rtt_uid=0, udp_enable=false, dns_enable=false, icmp_enable=true}]
+02-11 12:28:29.744  1673  1697 D BLASTSyncEngine: [DH_DEBUG]remove timeout #4355 callback=com.android.server.wm.BLASTSyncEngine$SyncGroup$$ExternalSyntheticLambda2@b0cae4e
+02-11 12:28:29.744  1673  1945 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-11 12:28:29.744  1673  1945 D InetDiagMessage: Destroyed live tcp sockets for uids={10801} in 6ms
+02-11 12:28:29.744  2270  2669 D Nt-Bpf-Connection: sendMessage: Message{messageType=REQUEST_DATA_INFO, data={"dns_enable":false,"feature_enable":true,"icmp_enable":true,"if_index":17,"rtt_to_file":false,"rtt_uid":0,"tcp_enable":true,"udp_enable":false}, len=144}
+02-11 12:28:29.744  2668  3030 D Nt-Bpf-Recive: Recive type: 4, len: 144, data: {"dns_enable":false,"feature_enable":true,"icmp_enable":true,"if_index":17,"rtt_to_file":false,"rtt_uid":0,"tcp_enable":true,"udp_enable":false}
+02-11 12:28:29.744  1673  1945 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-11 12:28:29.745  1673  1945 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-11 12:28:29.745  1673  1945 D InetDiagMessage: Destroyed live tcp sockets for uids={20801} in 1ms
+02-11 12:28:29.746  2371  2371 I AIWidgetAIWidgetController: setWidgetsTouchable last=true, new=false, reason=NTDragLayer FloatingView isAdd=true, force=false
+02-11 12:28:29.746  2047  3586 D TopAppSceneDetector: currentFocusApp=com.nothing.launcher
+02-11 12:28:29.747  2371  2371 D b/311077782: LauncherAnimationRunner.setAnimation
+02-11 12:28:29.747  2071  2151 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@a9d0434
+02-11 12:28:29.748  1673  1817 D Dragonite: acquire handle 95
+02-11 12:28:29.748  1673  1870 D Dragonite: sceneId = 1, pid = 2371, packageName = com.nothing.launcher, duration = 60000, params = null
+02-11 12:28:29.749  2047  3586 D NearbyDetector: onTopActivityChanged: top class name: com.android.searchlauncher.SearchLauncher
+02-11 12:28:29.749  2047  3586 D NearbyDetector: onTopActivityChanged: top class name: com.google.android.gm.ui.MailActivityGmail
+02-11 12:28:29.750  2047  3586 D GameSceneDetector: Failed to call isBoostTypeGame: java.lang.ClassNotFoundException: android.util.BoostFramework
+02-11 12:28:29.750  2047  3586 D GameSceneDetector: onTopChanged=com.nothing.launcher, isBoostTypeGame=false, isCategoryGame=false, isTopGame=false
+02-11 12:28:29.750  2047  3586 D SceneManager: TopAPP=com.nothing.launcher
+02-11 12:28:29.752  1673  1693 V WindowManager: Sent Transition (#4355) createdAt=02-11 12:28:29.690 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=852 effectiveUid=10801 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.unifiedotaku.app/.MainActivity } baseActivity=ComponentInfo{com.unifiedotaku.app/com.unifiedotaku.app.MainActivity} topActivity=ComponentInfo{com.unifiedotaku.app/com.unifiedotaku.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.unifiedotaku.app/com.unifiedotaku.app.MainActivity} numActivities=1 lastActiveTime=382508950 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{5ace4a Task{28e6dce #852 type=standard A=10801:com.unifiedotaku.app}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{8c091bb com.unifiedotaku.app.MainActivity} launchCookies=[android.os.BinderProxy@80736d8] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(280, 686 - 800, 1766) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 106 - 1080, 2347) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 16, debugId = 4355 }
+02-11 12:28:29.752  1673  1693 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-11 12:28:29.752  1673  1693 V WindowManager:     info={id=4355 t=CLOSE f=0x10 trk=0 isSameTaskSwitch=false r=[0@Point(0, 0)] c=[
+02-11 12:28:29.752  1673  1693 V WindowManager:         {WCT{RemoteToken{276b93a Task{b41c366 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xc56a46d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},
+02-11 12:28:29.752  1673  1693 V WindowManager:         {WCT{RemoteToken{5ace4a Task{28e6dce #852 type=standard A=10801:com.unifiedotaku.app}}} m=CLOSE f=NONE leash=Surface(name=Task=852)/@0xe2b2fc0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=60x60 mDragBarSize=189x42}},
+02-11 12:28:29.752  1673  1693 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d20efb showWhenLocked=false})/@0x9526a97 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 ntPopUpView={mIsTryEnterWindowingMode=false mIsEnterWindowingModeLandscape=false mIsChangingWindowformBounds=false mStartPos=Point(0, 0) mEndPos=Point(0, 0) mStartScale=0.0 mEndScale=0.0 mStartCornerRadius=0.0 mEndCornerRadius=0.0 mAppBounds=Rect(0, 0 - 0, 0) mWindowCrop=Rect(0, 0 - 0, 0) mStartDragOrChangingBounds=Rect(0, 0 - 0, 0) mEndDragOrChangingBounds=Rect(0, 0 - 0, 0) mBottomLeftCornerLeash=null mBottomRightCornerLeash=null mDragBarLeash=null mCornerHintSize=0x0 mDragBarSize=0x0}}
+02-11 12:28:29.752  1673  1693 V WindowManager:     ]}
+02-11 12:28:29.755  1007  1406 W hwcomposer: [DRMDEV] paramIsSame(), id 17607, w 1080/1080, h 2400/2400, pitch 1088/1088, format 0x2/0x1, secure 0/0  
+02-11 12:28:29.757  1673  1696 D NtPerfTraceManagerImpl: packageName = com.nothing.launcher, taskId = 6
+02-11 12:28:29.758  2071  2071 V MLog    : MFW# showMagazine:false
+02-11 12:28:29.758  1037  1066 I mtkpower@impl: [setMode] type:5, enabled:0
+02-11 12:28:29.758  2071  2071 V MLog    : MFW# enableMagazineClickable
+02-11 12:28:29.758  2371  2371 D NtViewRootImpl: mPopUpViewOffsets: offset=(0.0, 0.0), scale=(1.0, 1.0)
+02-11 12:28:29.759  1037  1104 I libPowerHal: [perfLockRel] hdl:117812, idx:6
+02-11 12:28:29.759  1673  3809 I PowerHalWrapper: amsBoostStop AMS_BOOST_PACK_SWITCH:true, AMS_BOOST_ACT_SWITCH:false, AMS_BOOST_PROCESS_CREATE:true, AMS_BOOST_PROCESS_CREATE_FOR_GAME:false, AMS_BOOST_HOT_LAUNCH:false 
+02-11 12:28:29.760  1037  1066 I libPowerHal: [mtkPowerHint] hint:22, hold:500, ext:30, ext_hold:1500
+02-11 12:28:29.760  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=2
+02-11 12:28:29.761  1037  1104 I libPowerHal: [perfLockAcq] idx:6 hdl:117816 hint:22 pid:1037 tid:1037 duration:500 lock_user:vendor.mediatek => ret_hdl:117816
+02-11 12:28:29.761  1037  1104 I libPowerHal: [setClusterFreq] MTKPOWER_HINT_PACK_SWITCH set cpufreq[0] min:2000000 max:-1 cpufreq[1] min:2500000 max:-1 
+02-11 12:28:29.761  1037  1104 I libPowerHal: [setGPUFreq] MTKPOWER_HINT_PACK_SWITCH user set gpu freq min:15, max:-1
+02-11 12:28:29.761  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.761  1037  1104 I libPowerHal: [setGPUFreq] Soft min/max = (15, 0); Hard min/max = (35, 0)
+02-11 12:28:29.761  1037  1104 I libPowerHal: [setGPUFreq] final min/max = (15, 0)
+02-11 12:28:29.761  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 15
+02-11 12:28:29.761  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.761  2071  2159 D View    : [Warning] assignParent to null: this = android.widget.FrameLayout{3d9d03 G.E...... ......ID 0,0-1080,2400}
+02-11 12:28:29.762  1037  1104 I libPowerHal: [perfLockRel] hdl:117814, idx:8
+02-11 12:28:29.762  1037  1104 I libPowerHal: [unsetGPUFreq] current min:15, max:0; scn_gpu_min:15, scn_gpu_max:-1; scn_gpu_min(HL):-1, scn_gpu_max(HL):-1
+02-11 12:28:29.762  1037  1104 I libPowerHal: [setGPUFreq] Soft min/max = (15, 0); Hard min/max = (35, 0)
+02-11 12:28:29.762  1037  1104 I libPowerHal: [setGPUFreq] final min/max = (15, 0)
+02-11 12:28:29.762  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 15
+02-11 12:28:29.762  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.762  1037  1066 I mtkpower@impl: [setMode] type:6, enabled:1
+02-11 12:28:29.762  1037  1066 E mtkpower@impl: [setMode] unknown type
+02-11 12:28:29.762  1037  1066 I libPowerHal: [mtkPowerHint] hint:21, hold:6000, ext:30, ext_hold:30000
+02-11 12:28:29.763  1037  1104 I libPowerHal: [perfLockAcq] idx:11 hdl:117817 hint:30 pid:1037 tid:1037 duration:1500 lock_user:vendor.mediatek => ret_hdl:117817
+02-11 12:28:29.764  1037  1104 I libPowerHal: [perfLockAcq] idx:8 hdl:117818 hint:21 pid:1037 tid:1037 duration:6000 lock_user:vendor.mediatek => ret_hdl:117818
+02-11 12:28:29.764  1037  1104 I libPowerHal: [setClusterFreq] MTKPOWER_HINT_PROCESS_CREATE set cpufreq[0] min:2000000 max:-1 cpufreq[1] min:2500000 max:-1 
+02-11 12:28:29.765  1037  1104 I libPowerHal: [perfLockRel] hdl:117813, idx:7
+02-11 12:28:29.765  1037  1104 I libPowerHal: [perfLockAcq] idx:12 hdl:117819 hint:30 pid:1037 tid:1037 duration:30000 lock_user:vendor.mediatek => ret_hdl:117819
+02-11 12:28:29.767  1673  1906 I ImeTracker: com.nothing.launcher:47348450: onRequestHide at ORIGIN_SERVER reason HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR fromUser false
+02-11 12:28:29.768  2371  2371 D InsetsController: hide(ime(), fromIme=false)
+02-11 12:28:29.768  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=3
+02-11 12:28:29.769  2371  2371 I ImeTracker: com.nothing.launcher:47348450: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-11 12:28:29.771  1673  3660 D OomAdjuster: process : com.android.systemui, pid = 2071, isTop = false, uid = 10190, hasActivity = false
+02-11 12:28:29.771  1673  3660 D OomAdjuster: system app not need limit!
+02-11 12:28:29.771  2071  2159 D BLASTBufferQueue: [VRI[app]#5742](f:0,a:1) destructor()
+02-11 12:28:29.771  1673  1712 D OomAdjuster: set group = -1
+02-11 12:28:29.771  1673  1712 D OomAdjuster: set cpuset: -1
+02-11 12:28:29.771  2071  2159 D BufferQueueConsumer: [VRI[app]#5742(BLAST Consumer)5742](id:81700001735,api:0,p:-1,c:2071) disconnect
+02-11 12:28:29.772  2071  2159 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda12@e126fbd
+02-11 12:28:29.772  3234  3234 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2092 
+02-11 12:28:29.777  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=4
+02-11 12:28:29.782  3234  3234 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 0, locked = false
+02-11 12:28:29.783  3234  3234 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1349 onStartInput(EditorInfo{EditorInfo{packageName=com.nothing.launcher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-11 12:28:29.783  1673  3685 D WindowManager: setParent old=ActivityRecord{189993673 u0 com.unifiedotaku.app/.MainActivity t852 f} isExiting},new=null,this window=Window{ea33ec1 u0 Splash Screen com.unifiedotaku.app EXITING},callers=com.android.server.wm.WindowContainer.removeChild:896 com.android.server.wm.ActivityRecord.removeChild:4597 com.android.server.wm.ActivityRecord.removeChild:403 com.android.server.wm.WindowContainer.removeImmediately:949 com.android.server.wm.WindowState.removeImmediately:2245 com.android.server.wm.WindowState.removeIfPossible:2434 
+02-11 12:28:29.783  3234  3234 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 1, locked = false
+02-11 12:28:29.784  1673  3661 W PackageConfigPersister: App-specific configuration not found for packageName: com.nothing.launcher and userId: 0
+02-11 12:28:29.785  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=5
+02-11 12:28:29.785  1673  3809 W WindowManager: Failed looking up window session=Session{9bbd396 2071:u0a10190} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6718 com.android.server.wm.Session.setOnBackInvokedCallbackInfo:1020 android.view.IWindowSession$Stub.onTransact:1208 
+02-11 12:28:29.785  1673  3809 I WindowManager: setOnBackInvokedCallback(): No window state for package:com.android.systemui
+02-11 12:28:29.786  1080  1080 I SurfaceFlinger: onHandleDestroyed: layerId=65402, name=Splash Screen com.unifiedotaku.app#65402
+02-11 12:28:29.787  1037  1066 I mtkpower@impl: [setMode] type:6, enabled:0
+02-11 12:28:29.787  1037  1066 E mtkpower@impl: [setMode] unknown type
+02-11 12:28:29.793  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=6
+02-11 12:28:29.799  2371  2435 I NT-QuickstepModelDelegate: handleUpdate: no diff for -102
+02-11 12:28:29.802  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=7
+02-11 12:28:29.810  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=8
+02-11 12:28:29.818  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=9
+02-11 12:28:29.827  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=10
+02-11 12:28:29.835  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=11
+02-11 12:28:29.843  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=12
+02-11 12:28:29.852  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=13
+02-11 12:28:29.859  1195  1202 E md_thermal: interval=40 temp: 49500 40000 39200 39400
+02-11 12:28:29.860  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=14
+02-11 12:28:29.868  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=15
+02-11 12:28:29.877  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=16
+02-11 12:28:29.885  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=17
+02-11 12:28:29.894  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=18
+02-11 12:28:29.902  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=19
+02-11 12:28:29.910  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=20
+02-11 12:28:29.919  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=21
+02-11 12:28:29.927  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=22
+02-11 12:28:29.933  1673  3661 D Dragonite: release 95
+02-11 12:28:29.933  2371  2434 I NT-TransitionSmoothHelper: clear
+02-11 12:28:29.933  1080  2744 I SurfaceFlinger: onHandleDestroyed: layerId=65415, name=Surface(name=WallpaperWindowToken{1d20efb showWhenLocked=false})/@0x1b7ed02_transition-leash#65415
+02-11 12:28:29.934  2071  2151 D PopUpViewTransitionObserver: onTransitionFinished: transition=android.os.BinderProxy@fde7db0, taskInfo=[TaskInfo{userId=0 taskId=852 effectiveUid=10801 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.unifiedotaku.app/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{com.unifiedotaku.app/com.unifiedotaku.app.MainActivity} numActivities=0 lastActiveTime=382508981 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@f26909d} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 106 - 0, 0) topActivityInfo=null launchCookies=[android.os.BinderProxy@57c636f] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=true isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=Rect(280, 686 - 800, 1766) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=undefined}} topActivityMainWindowFrame=null}]
+02-11 12:28:29.934  2071  2151 D CaptionWindowDecorViewModel: Destroying window decoration for task 852, decoration=null, callers=com.android.wm.shell.popupview.PopUpViewTransitionObserver.onTransitionFinished:184 com.android.wm.shell.transition.Transitions.onFinish:1229 com.android.wm.shell.transition.Transitions.lambda$playTransition$3:1101 com.android.wm.shell.transition.Transitions.$r8$lambda$96XCaSAhJXxB3nlVJy1TNPeH46k:0 com.android.wm.shell.transition.Transitions$$ExternalSyntheticLambda5.onTransitionFinished:0 
+02-11 12:28:29.934  2071  2151 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#4355) android.os.BinderProxy@fde7db0@0
+02-11 12:28:29.935  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=23
+02-11 12:28:29.936  1080  2744 I SurfaceFlinger: onHandleDestroyed: layerId=65401, name=ea33ec1 Splash Screen com.unifiedotaku.app#65401
+02-11 12:28:29.937  1673  1693 V WindowManager: Finish Transition (#4355): created at 02-11 12:28:29.690 collect-started=0.08ms request-sent=0.792ms started=23.163ms ready=42.211ms sent=46.742ms commit=16.095ms finished=246.119ms
+02-11 12:28:29.939  1080  1130 I SurfaceFlinger: onHandleDestroyed: layerId=65406, name=8578293 ActivityRecordInputSink com.unifiedotaku.app/.MainActivity#65406
+02-11 12:28:29.939  1673  3661 D WindowManager: setParent old=Task{28e6dce #852 type=standard A=10801:com.unifiedotaku.app},new=null,this window=ActivityRecord{189993673 u0 com.unifiedotaku.app/.MainActivity t852 f}},callers=com.android.server.wm.WindowContainer.removeChild:896 com.android.server.wm.TaskFragment.removeChild:3274 com.android.server.wm.Task.removeChild:1569 com.android.server.wm.Task.removeChild:1552 com.android.server.wm.WindowContainer.removeImmediately:949 com.android.server.wm.WindowToken.removeImmediately:337 
+02-11 12:28:29.940  1673  3661 D WindowManager: setParent old=DefaultTaskDisplayArea@264761525,new=null,this window=Task{28e6dce #852 type=standard A=10801:com.unifiedotaku.app},callers=com.android.server.wm.WindowContainer.removeChild:896 com.android.server.wm.TaskDisplayArea.removeChildTask:357 com.android.server.wm.TaskDisplayArea.removeChild:348 com.android.server.wm.WindowContainer.removeImmediately:949 com.android.server.wm.TaskFragment.removeImmediately:3358 com.android.server.wm.Task.removeImmediately:2853 
+02-11 12:28:29.941  2071  2151 V WindowManagerShell: Track 0 became idle
+02-11 12:28:29.941  2071  2151 V WindowManagerShell: All active transition animations finished
+02-11 12:28:29.942  2371  2371 D RecentsView: onTaskRemoved: 852, not handling task stack changes
+02-11 12:28:29.942  2371  2371 D RecentsView: onTaskRemoved: 852, not handling task stack changes
+02-11 12:28:29.944  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=24
+02-11 12:28:29.944  1080  1080 I SurfaceFlinger: onHandleDestroyed: layerId=65412, name=Transition Root: Task=1#65412
+02-11 12:28:29.946  1080  1130 I SurfaceFlinger: onHandleDestroyed: layerId=65414, name=Surface(name=Task=852)/@0x2e3a9e4_transition-leash#65414
+02-11 12:28:29.946  1080  2744 I SurfaceFlinger: onHandleDestroyed: layerId=65413, name=Surface(name=Task=1)/@0x9445211_transition-leash#65413
+02-11 12:28:29.946  2071  2151 D CaptionWindowDecorViewModel: Destroying window decoration for task 852, decoration=null, callers=com.android.wm.shell.windowdecor.CaptionWindowDecorViewModel.onTaskVanished:234 com.android.wm.shell.fullscreen.FullscreenTaskListener.lambda$onTaskVanished$2:173 com.android.wm.shell.fullscreen.FullscreenTaskListener$$ExternalSyntheticLambda1.accept:0 java.util.Optional.ifPresent:178 com.android.wm.shell.fullscreen.FullscreenTaskListener.onTaskVanished:173 
+02-11 12:28:29.952  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=25
+02-11 12:28:29.953  1080  1080 I SurfaceFlinger: onHandleDestroyed: layerId=65417, name=Task=852#65417
+02-11 12:28:29.953  1080  1080 I SurfaceFlinger: onHandleDestroyed: layerId=65400, name=ActivityRecord{189993673 u0 com.unifiedotaku.app/.MainActivity t852}#65400
+02-11 12:28:29.961  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=26
+02-11 12:28:29.969  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=27
+02-11 12:28:29.195 14091 14091 I [wlan][14091]kalPerMonUpdate: (SW4 INFO) <1020ms> Tput: 0(0.000mbps) [0:0:0:0][0:0:0:0][0:0:0:0][0:0:0:0] Pending:0/4096 [0:0:0:0][0:0:0:0][0:0:0:0][0:0:0:0] LQ[0:0:92582] idle:1 lv:0 th:5 fg:0x9 TxCpu[2130695,1006310,1923767,717034,386,1096,300,382] RxCpu[0,0,0,0,0,0,0,0] TxDp[ST:BS:FO:QM:DP]:230:0:0:0:3750 Tx[SQ:TI:TM:TDD:TDM:TIC:TFP]:0:5779872:5779970:0:0:89:5779966 MgmtSub[1:37:0:1:0:0:0:0:0:0:0:69:34:0:0:0]
+02-11 12:28:29.195 14091 14091 I [wlan][14091]kalPerMonUpdate: (SW4 INFO) ndevdrp:[0:0:0:0][0:0:0:0] NAPI[1229056,0,0,0,0,0,0,0,0,0,0] RxReorder[0:1:0:0] RxPending[0:0:0:0] RfbTrack[0:60:10:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0] drv[RM,IL,RI,PA,PF,DU,DA,RT,RM,RW,RA,RB,DT,NS,IB,HS,LS,DD,ME,BD,NI,DR,TE,PE,CE,DN,FE,DE,IE,TME,CM,FB,ID,FD,NL]:1542477,0,1402492,1405479,2987,2987,0,1405009,1387,1395626,977,136,9328,0,0,0,0,43,0,100,0,8230,0,0,955,9252,0,76,0,0,0,0,0,0,0
+02-11 12:28:29.978  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=28
+02-11 12:28:29.986  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=29
+02-11 12:28:29.994  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=30
+02-11 12:28:30.002  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=31
+02-11 12:28:30.005  2071  2164 D TileLifecycleManager: Binding service Intent { act=android.service.quicksettings.action.QS_TILE xflg=0x4 cmp=com.google.android.apps.nbu.files/.quicksettings.StorageAssistantTileService (has extras) } UserHandle{0}
+02-11 12:28:30.008  1673  1991 D BackgroundInstallControlService: Package event received: 0
+02-11 12:28:30.008  1673  3685 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@765d750e does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-11 12:28:30.009  1037  1104 I mtkpower@impl: [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:117807
+02-11 12:28:30.009  1037  1104 I libPowerHal: [perfLockRel] hdl:117807, idx:10
+02-11 12:28:30.011  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=32
+02-11 12:28:29.237   305   305 I instant_current: cic_idx:0
+02-11 12:28:30.019  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=33
+02-11 12:28:30.020   986   986 D Zygote  : Forked child process 16220
+02-11 12:28:30.020  1673  1705 I ActivityManager: Start proc 16220:com.google.android.apps.nbu.files/u0a125 for service {com.google.android.apps.nbu.files/com.google.android.apps.nbu.files.quicksettings.StorageAssistantTileService}
+02-11 12:28:30.020  1673  1705 I START_DEBUG: send START_TIMEOUT message    ProcessRecord :ProcessRecord{1df9aa0 16220:com.google.android.apps.nbu.files/u0a125}
+02-11 12:28:30.020  1673  1705 I ActivityManager: ProcessObserver broadcast disabled
+02-11 12:28:30.028  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=34
+02-11 12:28:30.029 16220 16220 I .apps.nbu.files: Using CollectorTypeCMC GC.
+02-11 12:28:30.034 16220 16220 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+02-11 12:28:30.036  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=35
+02-11 12:28:30.037  1673  3685 V ActivityManager: New death recipient com.android.server.am.ActivityManagerService$AppDeathRecipient@fc9faff for thread android.os.BinderProxy@3b3c0cc
+02-11 12:28:30.038  1673  3685 I START_DEBUG: send BINDTIMEOUT    ProcessRecord :ProcessRecord{1df9aa0 16220:com.google.android.apps.nbu.files/u0a125}
+02-11 12:28:30.038  1673  3685 I START_DEBUG: remove START_TIMEOUT finish    ProcessRecord :ProcessRecord{1df9aa0 16220:com.google.android.apps.nbu.files/u0a125}
+02-11 12:28:30.039  1673  3685 D OomAdjuster: process : com.google.android.apps.nbu.files, pid = 16220, isTop = false, uid = 10125, hasActivity = false
+02-11 12:28:30.039  1673  3685 D OomAdjuster: process : com.google.android.apps.nbu.files is not top!
+02-11 12:28:30.044 16220 16220 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+02-11 12:28:30.044 16220 16220 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+02-11 12:28:30.044  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=36
+02-11 12:28:30.053  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=37
+02-11 12:28:30.058 16220 16220 W .apps.nbu.files: Failed to find entry 'classes.dex': Entry not found
+02-11 12:28:30.059 16220 16220 W .apps.nbu.files: Failed to find entry 'classes.dex': Entry not found
+02-11 12:28:30.060 16220 16220 W .apps.nbu.files: Failed to find entry 'classes.dex': Entry not found
+02-11 12:28:30.061 16220 16220 D nativeloader: Configuring clns-9 for other apk /data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/base.apk:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/split_config.arm64_v8a.apk:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/split_config.en.apk:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/split_config.xxhdpi.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/lib/arm64:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/base.apk!/lib/arm64-v8a:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/split_config.arm64_v8a.apk!/lib/arm64-v8a:/data/app/~~VOvTIE3MCvEPks_5ALbILQ==/com.google.android.apps.nbu.files-hR1jwdpE-ZumxThZ75BEGw==/split_config
+02-11 12:28:30.061  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=38
+02-11 12:28:30.064 16220 16220 I .apps.nbu.files: AssetManager2(0xb4000074a69cfff8) locale list changing from [] to [en-GB]
+02-11 12:28:30.067 16220 16220 V GraphicsEnvironment: Currently set values for:
+02-11 12:28:30.068 16220 16220 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[com.android.angle, com.linecorp.b612.android, com.campmobile.snow, com.google.android.apps.tachyon]
+02-11 12:28:30.068 16220 16220 V GraphicsEnvironment:   angle_gl_driver_selection_values=[angle, native, native, native]
+02-11 12:28:30.068 16220 16220 V GraphicsEnvironment: com.google.android.apps.nbu.files is not listed in per-application setting
+02-11 12:28:30.068 16220 16220 V GraphicsEnvironment: ANGLE allowlist from config: 
+02-11 12:28:30.068 16220 16220 V GraphicsEnvironment: com.google.android.apps.nbu.files is not listed in ANGLE allowlist or settings, returning default
+02-11 12:28:30.069  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=39
+02-11 12:28:30.071  1673  1706 D ActivityManager: uid = 10125, pid = 16220, processName = com.google.android.apps.nbu.files is not top app, set nt foreground
+02-11 12:28:30.076  1036  1053 W android.hardware.thermal-service.mediatek: parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+02-11 12:28:30.077  1036  1053 W android.hardware.thermal-service.mediatek: parseMsg:name.c_str():SKIN
+02-11 12:28:30.077  1036  1053 W android.hardware.thermal-service.mediatek: parseMsg:tz notify:SKIN
+02-11 12:28:30.077  1036  1053 I android.hardware.thermal-service.mediatek: Wait to accept a connection
+02-11 12:28:30.077  1036  1053 I android.hardware.thermal-service.mediatek: Sending notification:  Type: SKIN Name: SKIN CurrentValue: 37.724 ThrottlingStatus: LIGHT
+02-11 12:28:30.077  1036  1053 I android.hardware.thermal-service.mediatek: sendThermalChangedCallback
+02-11 12:28:30.078  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=40
+02-11 12:28:30.086  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=41
+02-11 12:28:30.087  1673  1991 D BackgroundInstallControlService: Package event received: 0
+02-11 12:28:30.088 16220 16234 W .apps.nbu.files: ClassLoaderContext classpath size mismatch. expected=1, found=0 (DLC[];PCL[base.apk*3045686230]{PCL[/system/framework/org.apache.http.legacy.jar*4247870504]#PCL[/system/framework/com.android.location.provider.jar*1570284764]#PCL[/system/framework/com.android.media.remotedisplay.jar*487574312]#PCL[/system_ext/framework/androidx.window.extensions.jar*1030441313]#PCL[/system_ext/framework/androidx.window.sidecar.jar*3860983653]} | DLC[];PCL[])
+02-11 12:28:30.095  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=42
+02-11 12:28:30.098  1673  3661 I START_DEBUG: remove BIND_TIMEOUT finish    ProcessRecord :ProcessRecord{1df9aa0 16220:com.google.android.apps.nbu.files/u0a125}
+02-11 12:28:30.103  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=43
+02-11 12:28:30.103 16220 16244 I FA      : App measurement initialized, version: 151007
+02-11 12:28:30.103 16220 16244 I FA      : To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+02-11 12:28:30.103 16220 16244 I FA      : To enable faster debug mode event logging run:
+02-11 12:28:30.103 16220 16244 I FA      :   adb shell setprop debug.firebase.analytics.app com.google.android.apps.nbu.files
+02-11 12:28:30.108  1673  3660 I ActivityManager: Killing 3026:ch.protonvpn.android:quick_tile_service/u0a344 (adj 999): empty #33
+02-11 12:28:30.108  1673  1673 D MBrainLocalService: notifyAppLifeCycle failed
+02-11 12:28:30.111 22744  2756 I .gms.persistent: AssetManager2(0xb4000074a69d7398) locale list changing from [] to [en-GB]
+02-11 12:28:30.111  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=44
+02-11 12:28:30.112  1673  3660 D FileUtils: Rounded bytes from 7784194048 to 8000000000
+02-11 12:28:30.118  3606  3641 I NTWidget-Service: CardServiceCenter Provider receive call: updateAppWidget, 55, Bundle[mParcelledData.dataSize=7404],callingPackage = com.android.systemui
+02-11 12:28:30.118  3606  3606 I NTWidget-Share: widgetId = 55, service provider updateAppWidget shareInfo = null
+02-11 12:28:30.118  3606  3606 I NTWidget-CardWidgetService: callbackAppWidgetUpdated: widgetId = 55, add update task to single thread pool.
+02-11 12:28:30.118  3606  3734 I NTWidget-CardWidgetService: Running widget update task , widgetId = 55, host = com.nothing.cardservice.model.Host@3231062
+02-11 12:28:30.119  3606  3734 I NTWidget-Service: Host HostId(packageName=com.nothing.launcher, hostId=1024) mCallBacks num = 2
+02-11 12:28:30.119  2371  2371 I NTWidget-Host: Receive callback updateAppWidgetView. appWidgetId = 55
+02-11 12:28:30.119  2371  2371 I NTWidget-Host: Receive callback updateAppWidgetView. appWidgetId = 55
+02-11 12:28:30.120  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=45
+02-11 12:28:30.123 16220 16244 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+02-11 12:28:30.128  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=46
+02-11 12:28:30.134  1673  1991 D BackgroundInstallControlService: Package event received: 0
+02-11 12:28:30.136 17209 17209 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.measurement.START xflg=0x4 pkg=com.google.android.gms }
+02-11 12:28:30.136 17209 17209 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.measurement.START xflg=0x4 pkg=com.google.android.gms }
+02-11 12:28:30.136  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=47
+02-11 12:28:30.145  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=48
+02-11 12:28:30.146  1007  1007 I hwcomposer: [HWCDisplay] [Display_0 (type:1, mode:2)] fps:86.684311,dur:1003.64,max:168.98,min:6.04  
+02-11 12:28:30.151 17209 16256 D AdvertisingIdClient: AdvertisingIdClient already created.
+02-11 12:28:30.151 17209 16256 D AdvertisingIdClient: AdvertisingIdClient is not bounded. Starting to bind it...
+02-11 12:28:30.152  1036  1036 I android.hardware.thermal-service.mediatek: getTemperaturesWithType TemperatureType: 3
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=0 tz_data[i].tz_idx[0]=10
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=1 tz_data[i].tz_idx[0]=10
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=2 tz_data[i].tz_idx[0]=7
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=3 tz_data[i].tz_idx[0]=56
+02-11 12:28:30.152  1036  1036 I android.hardware.thermal-service.mediatek: fill_temperatures filterType1 name: SKIN type: SKIN throttlingStatus: LIGHT value: 37.724 ret_temps size 0
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=4 tz_data[i].tz_idx[0]=0
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=5 tz_data[i].tz_idx[0]=51
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=6 tz_data[i].tz_idx[0]=-1
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=7 tz_data[i].tz_idx[0]=-1
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=8 tz_data[i].tz_idx[0]=-1
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=9 tz_data[i].tz_idx[0]=10
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=10 tz_data[i].tz_idx[0]=10
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=11 tz_data[i].tz_idx[0]=-1
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=12 tz_data[i].tz_idx[0]=-1
+02-11 12:28:30.152  1036  1036 W android.hardware.thermal-service.mediatek: i=13 tz_data[i].tz_idx[0]=10
+02-11 12:28:30.153  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=49
+02-11 12:28:30.154 17209 16256 D AdvertisingIdClient: AdvertisingIdClient is bounded
+02-11 12:28:30.155 17209 16256 W AdvertisingIdSettings: Package com.google.android.apps.nbu.files failed Ad Id permission check. Apps that target Android SDK 33 or higher should declare com.google.android.gms.permission.AD_ID in the app manifest to access Ad Id.
+02-11 12:28:30.155 17209 16256 I AdvertisingIdClient: shouldSendLog 382061471
+02-11 12:28:30.155 17209 16256 I AdvertisingIdClient: GetInfoInternal elapse 4ms
+02-11 12:28:29.378 30445 30445 I binder  : undelivered transaction 131048096, process died.
+02-11 12:28:29.378 30445 30445 I binder  : undelivered transaction 131048455, process died.
+02-11 12:28:29.378 30445 30445 I binder  : undelivered transaction 131048886, process died.
+02-11 12:28:29.378 30445 30445 I binder  : undelivered transaction 131092927, process died.
+02-11 12:28:29.380 30445 30445 I binder  : undelivered transaction 131048010, process died.
+02-11 12:28:30.156  1673  3660 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@92a9260 for thread android.os.BinderProxy@5f9c319
+02-11 12:28:30.156  1673  1945 D ConnectivityService: releasing NetworkRequest [ REQUEST id=446398, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10344 RequestorUid: 10344 RequestorPkg: ch.protonvpn.android UnderlyingNetworks: Null] ] (release request)
+02-11 12:28:30.157  1673  1945 D ConnectivityService: releasing NetworkRequest [ REQUEST id=446400, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10344 RequestorUid: 10344 RequestorPkg: ch.protonvpn.android UnderlyingNetworks: Null] ] (release request)
+02-11 12:28:30.157  1673  1945 D ConnectivityService: releasing NetworkRequest [ REQUEST id=446402, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10344 RequestorUid: 10344 RequestorPkg: ch.protonvpn.android UnderlyingNetworks: Null] ] (release request)
+02-11 12:28:30.158  1673  1707 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10344/pid_3026
+02-11 12:28:30.159   986   986 I Zygote  : Process 3026 exited due to signal 9 (Killed)
+02-11 12:28:30.159  1673  3660 I START_DEBUG: remove ALL_TIMEOUT cleanup   ProcessRecord :ProcessRecord{8fe2fe8 3026:ch.protonvpn.android:quick_tile_service/u0a344}
+02-11 12:28:30.159  1673  3660 I mtkpower_client: [PowerHal_Wrap_notifyAppState] ch.protonvpn.android/ch.protonvpn.android pid=3026 activityId:3026 state:3
+02-11 12:28:30.159  1034  1034 I IPCThreadState: oneway function results for code 2 on binder at 0xb400006fce696110 will be dropped but finished with status UNKNOWN_TRANSACTION
+02-11 12:28:30.160  1034  1034 I vendor.mediatek.hardware.mtkpower_applist-service.mediatek: packName: ch.protonvpn.android actName: ch.protonvpn.android pid: 3026 uid: 10344 state: 3
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] ch.protonvpn.android/ch.protonvpn.android, pid=3026, uid=10344, state:DEAD, fps:-1, win:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_count: 27
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[0] com.android.systemui/com.android.systemui._46901745, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[1] com.android.systemui/com.android.systemui._85647383, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[2] com.android.systemui/com.android.systemui._182418332, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[3] com.android.systemui/com.android.systemui._144019687, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[4] com.android.systemui/com.android.systemui._84050748, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[5] com.android.systemui/com.android.systemui._201606646, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[6] com.android.systemui/com.android.systemui._195711212, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[7] com.android.systemui/com.android.systemui._108881676, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[8] com.android.systemui/com.android.systemui._29744626, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[9] com.android.systemui/com.android.systemui._155870499, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[10] com.android.systemui/com.android.systemui._42978759, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[11] com.android.systemui/com.android.systemui._207633303, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[12] com.android.systemui/com.android.systemui._188666978, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[13] com.android.systemui/com.android.systemui._254907513, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[14] com.android.systemui/com.android.systemui._264013336, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[15] com.android.systemui/com.android.systemui._48789173, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[16] com.android.systemui/com.android.systemui._152937740, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[17] com.android.systemui/com.android.systemui._113651555, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[18] com.android.systemui/com.android.systemui._179483331, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[19] com.android.systemui/com.android.systemui._155990549, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[20] com.android.systemui/com.android.systemui._62860849, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[21] com.android.systemui/com.android.systemui._191505756, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[22] com.android.systemui/com.android.systemui._250215701, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[23] com.android.systemui/com.android.systemui._240653319, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[24] com.android.systemui/com.android.systemui._70991338, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[25] com.android.systemui/com.android.systemui._254213064, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[26] com.nothing.launcher/com.android.searchlauncher.SearchLauncher, pid:2371, fps:-1, isMultiWindow:1
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [getForegroundAPPCount] 27
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyAPPstate] pack:ch.protonvpn.android, pid:3026, STATE_DEAD
+02-11 12:28:30.160  1034  1034 I MTK_APPList: [notifyNetdUID] 10186
+02-11 12:28:30.161  1034  1034 I MTK_APPList: [notifyPID] 2371
+02-11 12:28:30.161  1037  1104 I libPowerHal: [perfSetSysInfo] pid type:24, 2371
+02-11 12:28:30.161  1034  1034 I MTK_APPList: [notifyAPPstate] applist_idx_list[0] 58
+02-11 12:28:30.161  1034  1034 I MTK_APPList: [notifyAPPstate] AppScenarioStatusInfo[0] 1
+02-11 12:28:30.161  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=50
+02-11 12:28:29.383   490   490 E SELinux : avc:  denied  { find } for pid=1673 uid=1000 name=vendor.mediatek.hardware.gpuserv.IGpuService/default scontext=u:r:system_server:s0 tcontext=u:object_r:mtk_hal_gpuserv_service:s0 tclass=service_manager permissive=0
+02-11 12:28:30.170  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=51
+02-11 12:28:30.178  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=52
+02-11 12:28:30.186  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=53
+02-11 12:28:30.193  1673  1696 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{189993673 u0 com.unifiedotaku.app/.MainActivity t-1 f}}
+02-11 12:28:30.193  1673  1696 I PowerHalWrapper: amsBoostNotify pid:2371,activity:com.android.searchlauncher.SearchLauncher, package:com.nothing.launcher, mProcessCreatePackcom.unifiedotaku.app 
+02-11 12:28:30.193  1673  1696 I PowerHalWrapper: state: 1 
+02-11 12:28:30.193  1673  1696 I mtkpower_client: [PowerHal_Wrap_notifyAppState] com.nothing.launcher/com.android.searchlauncher.SearchLauncher pid=2371 activityId:258485480 state:1
+02-11 12:28:30.193  1034  1034 I IPCThreadState: oneway function results for code 2 on binder at 0xb400006fce696110 will be dropped but finished with status UNKNOWN_TRANSACTION
+02-11 12:28:30.193  1034  1034 I vendor.mediatek.hardware.mtkpower_applist-service.mediatek: packName: com.nothing.launcher actName: com.android.searchlauncher.SearchLauncher pid: 2371 uid: 10186 state: 1
+02-11 12:28:30.193  1034  1034 I MTK_APPList: [notifyAPPstate] com.nothing.launcher/com.android.searchlauncher.SearchLauncher, pid=2371, uid=10186, state:RESUMED, fps:-1, win:1
+02-11 12:28:30.193  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_count: 27
+02-11 12:28:30.193  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[0] com.android.systemui/com.android.systemui._46901745, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[1] com.android.systemui/com.android.systemui._85647383, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[2] com.android.systemui/com.android.systemui._182418332, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[3] com.android.systemui/com.android.systemui._144019687, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[4] com.android.systemui/com.android.systemui._84050748, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[5] com.android.systemui/com.android.systemui._201606646, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[6] com.android.systemui/com.android.systemui._195711212, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:29.417   490   490 E SELinux : avc:  denied  { find } for pid=1673 uid=1000 name=vendor.mediatek.hardware.gpuserv.IGpuService/default scontext=u:r:system_server:s0 tcontext=u:object_r:mtk_hal_gpuserv_service:s0 tclass=service_manager permissive=0
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[8] com.android.systemui/com.android.systemui._29744626, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[9] com.android.systemui/com.android.systemui._155870499, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[10] com.android.systemui/com.android.systemui._42978759, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[11] com.android.systemui/com.android.systemui._207633303, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[12] com.android.systemui/com.android.systemui._188666978, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[13] com.android.systemui/com.android.systemui._254907513, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[14] com.android.systemui/com.android.systemui._264013336, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[15] com.android.systemui/com.android.systemui._48789173, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[16] com.android.systemui/com.android.systemui._152937740, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[17] com.android.systemui/com.android.systemui._113651555, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[18] com.android.systemui/com.android.systemui._179483331, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[19] com.android.systemui/com.android.systemui._155990549, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[20] com.android.systemui/com.android.systemui._62860849, pid:2071, fps:60, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[21] com.android.systemui/com.android.systemui._191505756, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[22] com.android.systemui/com.android.systemui._250215701, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[23] com.android.systemui/com.android.systemui._240653319, pid:2071, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[24] com.android.systemui/com.android.systemui._70991338, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[25] com.android.systemui/com.android.systemui._254213064, pid:2071, fps:120, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] multi_resumed_app_info[26] com.nothing.launcher/com.android.searchlauncher.SearchLauncher, pid:2371, fps:-1, isMultiWindow:1
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [getForegroundAPPCount] 27
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyAPPstate] foreground:com.nothing.launcher, pid:2371, uid:10186
+02-11 12:28:30.194  1034  1034 I MTK_APPList: [notifyNetdUID] 10186
+02-11 12:28:30.194  1673  1696 I PowerHalWrapper: amsBoostNotify AMS_BOOST_PROCESS_CREATE_BOOST:false 
+02-11 12:28:30.195  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=54
+02-11 12:28:30.195  1034  1034 I MTK_APPList: [notifyPID] 2371
+02-11 12:28:30.195  1037  1104 I libPowerHal: [perfSetSysInfo] pid type:24, 2371
+02-11 12:28:30.196  1034  1034 I MTK_APPList: [notifyAPPstate] applist_idx_list[0] 58
+02-11 12:28:30.196  1034  1034 I MTK_APPList: [notifyAPPstate] AppScenarioStatusInfo[0] 1
+02-11 12:28:30.200  1673  2256 D NtBoostAdjusterImpl: tryRestoreThreadPriority: pid = 1697, counting = 0
+02-11 12:28:30.203  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=55
+02-11 12:28:30.209  2371  2371 I AIWidgetAIWidgetController: setWidgetsTouchable last=false, new=true, reason=NTDragLayer FloatingView isAdd=false, force=false
+02-11 12:28:30.210  1080  4584 D SurfaceFlinger: calculateTimeoutTime, triggerInterval = 1 sec + 845459462 nsec
+02-11 12:28:30.210  1080  1434 D SurfaceFlinger: calculateTimeoutTime, triggerInterval = 1 sec + 845409000 nsec
+02-11 12:28:30.212  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=56
+02-11 12:28:30.213  1673  2256 D NtBoostAdjusterImpl: tryRestoreThreadPriority: pid = 8270, counting = 0
+02-11 12:28:30.220  1080  1080 E SurfaceFlinger: Out of order buffers detected for RequestedLayerState{com.nothing.launcher/com.android.searchlauncher.SearchLauncher#65323 parentId=121} producedId=1143 frameNumber=176 -> producedId=1143 frameNumber=57
+02-11 12:28:30.261  1037  1104 I mtkpower@impl: [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:117816
+02-11 12:28:30.261  1037  1104 I libPowerHal: [perfLockRel] hdl:117816, idx:6
+02-11 12:28:30.262  1037  1104 I libPowerHal: [unsetGPUFreq] current min:15, max:0; scn_gpu_min:15, scn_gpu_max:-1; scn_gpu_min(HL):-1, scn_gpu_max(HL):-1
+02-11 12:28:30.262  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 35
+02-11 12:28:30.262  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:30.262  1037  1104 I libPowerHal: [setGPUFreq] Soft min/max = (35, 0); Hard min/max = (35, 0)
+02-11 12:28:30.262  1037  1104 I libPowerHal: [setGPUFreq] final min/max = (35, 0)
+02-11 12:28:30.262  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level: 35
+02-11 12:28:30.262  1037  1104 I libPowerHal: MTKPOWER_HINT_PACK_SWITCH: set gpu opp level max: 0
+02-11 12:28:29.555   239   239 I [DISP]mtk_dsi_esd_cmp: expect[0x0], read[0x0]
+02-11 12:28:30.555  1158  1158 I touch_boost: enable=0, boost_up=1, boost_down=1, render_deboost=0, active_time=1, duration=1500, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(450000,900000,0)
+02-11 12:28:30.555  1158  1158 I mtkpower_client: perf_lock_rel, hdl:117811, tid:1158
+02-11 12:28:30.555  1158  1158 I touch_boost: set_top_grp_aware
+02-11 12:28:30.555  1158  1158 I mtkpower_client: perf_lock_acq, hdl:117787, dur:2000, num:4, pid:1158, tid:1158
+02-11 12:28:30.555  1037  1104 I libPowerHal: [perfLockRel] hdl:117811, idx:4
+02-11 12:28:30.555  1037  1104 I libPowerHal: [PD] touch_boost update cmd:1404100 param:0
+02-11 12:28:30.556  1037  1104 I libPowerHal: [PD] touch_boost update cmd:1404300 param:0
+02-11 12:28:30.556  1037  1104 I libPowerHal: [PD] touch_boost update cmd:1408100 param:0
+02-11 12:28:30.557  1158  1158 I mtkpower_client: ret_hdl:117787
+02-11 12:28:30.557  1037  1104 I libPowerHal: [perfLockAcq] idx:1 hdl:117787 hint:-1 pid:1158 tid:1158 duration:2000 lock_user:touch_boost => ret_hdl:117787
+02-11 12:28:30.557  1037  1104 I libPowerHal: [PU] scn:1, update
+02-11 12:28:30.566  1052  1052 E STABILITY-AIDL: IsPartitionExit NT_BATT_INFO_PATH does not exist.
+02-11 12:28:30.566  1052  1052 E STABILITY-AIDL: IsPartitionExit NT_BATT_INFO_PATH does not exist.
+02-11 12:28:30.567  1052  1052 E STABILITY-AIDL: IsPartitionExit NT_BATT_INFO_PATH does not exist.
+02-11 12:28:30.567  1052  1052 E STABILITY-AIDL: IsPartitionExit NT_BATT_INFO_PATH does not exist.
+02-11 12:28:29.792   374   374 I init    : ReapLogP Persist PropSet [persist.sys.LastUpdateTime] = [20495] at 382509856, Done
+02-11 12:28:30.611  2071  2170 D MobileConnectionRespositoryImpl: sim 0 callbackEvents received event: OnDataConnectionStateChanged(dataState=2)
+02-11 12:28:30.612  2071  2170 D MobileConnectionRespositoryImpl: sim 0 dataConnectionState change to:Connected
+02-11 12:28:29.855   295   295 I instant_current: cic_idx:0
+02-11 12:28:29.876   295   295 I         : Vbat=4206 vbats=4226 vbus:4631 ibus:1822 I=1539 T=35 uisoc:71 type:usb>usb pd:4 swchg_ibat:1552 cv:4490000 cmd_pp:-1
+02-11 12:28:29.876   295   295 I mtk_charger_start_timer: alarm timer start:0, 382519 941989489
+02-11 12:28:29.876   295   295 I         : [PE50]pe50_is_algo_waiver waiver = 0
+02-11 12:28:29.876   295   295 I         : [PE50]pe50_is_algo_finish ALGO FINISH  = 0
+02-11 12:28:29.876   295   295 I pd_adapter pd-adapter: pd_authentication pd type is not snk apdo
+02-11 12:28:29.876   295   295 I pe50_hal_is_pd_adapter_ready type: 4
+02-11 12:28:29.876   295   295 I         : [SW_JEITA] Battery Normal Temperature between 10 and 45 !!
+02-11 12:28:29.876   295   295 I [SW_JEITA]preState: 3 newState:3 tmp:35 cv:0
+02-11 12:28:29.883   295   295 I sc8541 11-006a: sc8541_enable_adc:1
+02-11 12:28:29.943   295   295 I sc8541 11-006a: sc8541_get_adc_data 9 40
+02-11 12:28:29.955   295   295 I tmp     : 35 (jeita:1 sm:3 cv:0 en:1) (sm:1) en:1 c:0 s:0 ov:0 0 sc:0 1 1 saf_cmd:-1 bat_mon:1 0 uisoc_ctrl:71 0
+02-11 12:28:29.955   295   295 I mtk_charger_enable_power_path_cust: area_id(0), disable_pp(u=0,p=0), en_pp = 1
+02-11 12:28:29.955   295   295 I mtk_charger_enable_power_path_cust: power path is already en = 1
+02-11 12:28:29.955   295   295 I [BC12] INPUT: 3200 ma,ICHG : 3000 ma
+02-11 12:28:29.955   295   295 I         : chg_alg_set_current_limit
+02-11 12:28:29.955   295   295 I         : [PE50]pe50_is_algo_waiver waiver = 0
+02-11 12:28:29.955   295   295 I         : [PE50]pe50_is_algo_finish ALGO FINISH  = 0
+02-11 12:28:29.955   295   295 I pd_adapter pd-adapter: pd_authentication pd type is not snk apdo
+02-11 12:28:29.955   295   295 I pe50_hal_is_pd_adapter_ready type: 4
+02-11 12:28:29.955   295   295 I         : chg_alg_set_current_limit
+02-11 12:28:29.955   295   295 I         : m:3 chg1:-1,2200,3200,2200 chg2:-1,-1,0,0 dvchg1:1100 sc:3000000 -1 0 type:4:4 usb_unlimited:0 usbif:0 usbsm:0 aicl:-1 atm:0 bm:0 b:0
+02-11 12:28:29.955   295   295 I do_algorithm is_basic: 0
+02-11 12:28:29.955   295   295 I         : chg_alg_set_current_limit
+02-11 12:28:29.955   295   295 I         : [PE50]pe50_is_algo_waiver waiver = 0
+02-11 12:28:29.955   295   295 I         : [PE50]pe50_is_algo_finish ALGO FINISH  = 0
+02-11 12:28:29.955   295   295 I pd_adapter pd-adapter: pd_authentication pd type is not snk apdo
+02-11 12:28:29.955   295   295 I pe50_hal_is_pd_adapter_ready type: 4
+02-11 12:28:29.955   295   295 I         : do_algorithm pe5 ret:ALG_TA_NOT_SUPPORT
+02-11 12:28:29.955   295   295 I         : chg_alg_set_current_limit
+02-11 12:28:29.955   295   295 I         : do_algorithm pd ret:ALG_RUNNING
+02-11 12:28:29.956 31492 31492 I <248994.379>TCPC-PE-EVT: tcp_event(get_src_cap_ext), 18, 0
+02-11 12:28:29.956 31492 31492 I <248994.379>TCPC-PE: PD-> PE_SNK_GET_SOURCE_CAP_EXT
+02-11 12:28:29.956 31492 31492 I         : <248994.379>mt6375_transmit ++
+02-11 12:28:29.956 31492 31492 I         : <248994.379>mt6375_transmit -- delta = 163us
+02-11 12:28:29.958   578   578 I <248994.381>TCPC-TCPC: Alert:0x0040, Mask:0x8e7d
+02-11 12:28:29.958   578   578 I <248994.382>TCPC-PE-EVT: good_crc
+02-11 12:28:29.963   578   578 I <248994.387>TCPC-TCPC: Alert:0x0004, Mask:0x8e7d
+02-11 12:28:29.964   295   295 I pd_adapter pd-adapter: pd_get_cap_pdo nr:1 idx:1
+02-11 12:28:29.964   295   295 I pd_adapter pd-adapter: pd_get_cap_pdo cap number = 1
+02-11 12:28:29.964   295   295 I pd_adapter pd-adapter: pd_get_cap_pdo cap[0], 5000mV, 3000mA, 15000000uW
+02-11 12:28:29.964  6606  6606 I <248994.387>TCPC-PE-EVT: no_support
+02-11 12:28:29.964  6606  6606 I <248994.387>TCPC-PE: PD-> PE_SNK_READY
+02-11 12:28:29.964  6606  6606 I <248994.387>TCPC-TCPM: bk_event_cb -> NotSupport

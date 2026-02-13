@@ -10,11 +10,21 @@ class MangaExtensionEngine {
     }
 
     async execute(extensionId, method, args) {
-        const extension = this.extensions.get('comix.to');
-        if (!extension || typeof extension[method] !== 'function') {
-            throw new Error(`Method ${method} not supported`);
+        const extension = this.extensions.get(extensionId);
+        if (!extension) {
+            throw new Error(`Extension '${extensionId}' not found. Available: ${[...this.extensions.keys()].join(', ')}`);
+        }
+        if (typeof extension[method] !== 'function') {
+            throw new Error(`Method '${method}' not supported by extension '${extensionId}'`);
         }
         return await extension[method](...args);
+    }
+
+    getInstalledExtensions() {
+        return [...this.extensions.keys()].map(id => ({
+            id,
+            name: id // Can be enhanced with display names later
+        }));
     }
 
     loadDefaultExtensions() {

@@ -30,6 +30,9 @@ import coil.compose.AsyncImage
 import com.unifiedotaku.app.data.local.database.entities.Download
 import com.unifiedotaku.app.data.local.database.entities.DownloadStatus
 import com.unifiedotaku.app.data.local.database.entities.MediaType
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,7 +61,7 @@ fun DownloadsSettingsScreen(
                 title = { Text("Downloads", style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 actions = {
@@ -67,15 +70,15 @@ fun DownloadsSettingsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White,
+                    actionIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -90,15 +93,18 @@ fun DownloadsSettingsScreen(
                     TextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search downloads...", style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        leadingIcon = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        placeholder = { Text("Search downloads...", style = AppTypography.BodyMedium, color = AppColors.TextSecondary) },
+                        leadingIcon = { Icon(Icons.Filled.Search, null, tint = AppColors.TextSecondary) },
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = MaterialTheme.colorScheme.surface,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedContainerColor = AppColors.DarkSurface,
+                            unfocusedContainerColor = AppColors.DarkSurface,
                             focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
+                            cursorColor = Color.White
                         ),
                         singleLine = true
                     )
@@ -106,10 +112,9 @@ fun DownloadsSettingsScreen(
             }
             
             item {
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier.fillMaxWidth()
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Row(modifier = Modifier.padding(4.dp)) {
                         TabButton("Anime", selectedTab == "Anime", Modifier.weight(1f)) { selectedTab = "Anime" }
@@ -120,7 +125,7 @@ fun DownloadsSettingsScreen(
 
             if (activeDownloads.isNotEmpty()) {
                 item {
-                    Text("ACTIVE DOWNLOADS", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("ACTIVE DOWNLOADS", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = AppColors.TextSecondary)
                 }
                 items(activeDownloads) { download ->
                     ActiveDownloadCard(
@@ -139,7 +144,7 @@ fun DownloadsSettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("COMPLETED", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("COMPLETED", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = AppColors.TextSecondary)
                     }
                 }
                 items(completedDownloads) { download ->
@@ -160,10 +165,10 @@ fun ActiveDownloadCard(
     val isPaused = download.status == DownloadStatus.PAUSED
     val isWaiting = download.status == DownloadStatus.PENDING
 
-    Surface(
-        color = MaterialTheme.colorScheme.surface.copy(alpha = if(isWaiting || isPaused) 0.6f else 1f),
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth()
+    ClayCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderRadius = 16.dp,
+        color = if(isWaiting || isPaused) AppColors.DarkSurface.copy(alpha=0.6f) else AppColors.DarkSurface
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -180,39 +185,39 @@ fun ActiveDownloadCard(
                 }
                 
                 Column(modifier = Modifier.weight(1f).height(IntrinsicSize.Min), verticalArrangement = Arrangement.Center) {
-                    Text("EP ${download.number}", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), fontWeight = FontWeight.Black, color = if(isWaiting) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.primary)
-                    Text(download.title ?: "Unknown Episode", style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(download.seriesTitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text("EP ${download.number}", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), fontWeight = FontWeight.Black, color = if(isWaiting) AppColors.TextSecondary else Color.White)
+                    Text(download.title ?: "Unknown Episode", style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(download.seriesTitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
                 
                 Column(verticalArrangement = Arrangement.Center) {
                     if (isPaused || isWaiting) {
                          IconButton(onClick = onResume, modifier = Modifier.size(32.dp)) {
-                            Icon(Icons.Filled.PlayArrow, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(Icons.Filled.PlayArrow, null, tint = Color.White)
                         }
                     } else {
                         IconButton(onClick = onPause, modifier = Modifier.size(32.dp)) {
-                            Icon(Icons.Filled.Pause, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(Icons.Filled.Pause, null, tint = Color.White)
                         }
                     }
                     IconButton(onClick = onCancel, modifier = Modifier.size(32.dp)) {
-                        Icon(Icons.Filled.Close, null, tint = Color.Red.copy(alpha=0.7f))
+                        Icon(Icons.Filled.Close, null, tint = Color.White.copy(alpha=0.4f))
                     }
                 }
             }
             
             Spacer(modifier = Modifier.height(12.dp))
             
-            Box(modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape).background(MaterialTheme.colorScheme.onSurface.copy(alpha=0.1f))) {
-                Box(modifier = Modifier.fillMaxWidth(download.progress / 100f).fillMaxHeight().background(if(isWaiting) Color(0xFFFB923C) else MaterialTheme.colorScheme.primary))
+            Box(modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape).background(Color.White.copy(alpha=0.1f))) {
+                Box(modifier = Modifier.fillMaxWidth(download.progress / 100f).fillMaxHeight().background(if(isWaiting) Color.White.copy(alpha=0.4f) else Color.White))
             }
             
             Spacer(modifier = Modifier.height(8.dp))
             
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("${download.progress}%", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("${download.progress}%", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = AppColors.TextSecondary)
                 if(download.status == DownloadStatus.DOWNLOADING) {
-                    Text("Downloading...", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = MaterialTheme.colorScheme.primary)
+                    Text("Downloading...", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = Color.White)
                 }
             }
         }
@@ -221,8 +226,7 @@ fun ActiveDownloadCard(
 
 @Composable
 fun DownloadedItemCard(download: Download) {
-    Surface(
-        color = Color.Transparent,
+     Box(
         modifier = Modifier.fillMaxWidth().clickable {  }
     ) {
         Row(modifier = Modifier.padding(8.dp), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -236,16 +240,16 @@ fun DownloadedItemCard(download: Download) {
             }
             
             Column(modifier = Modifier.weight(1f)) {
-                Text(download.seriesTitle, style = AppTypography.BodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(download.seriesTitle, style = AppTypography.BodyLarge, fontWeight = FontWeight.Bold, color = Color.White)
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.onSurface.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp)) {
-                        Text(download.type.name, style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Box(modifier = Modifier.background(Color.White.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp)) {
+                        Text(download.type.name, style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = AppColors.TextSecondary)
                     }
-                    Text("EP ${download.number}", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("EP ${download.number}", style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
                 }
             }
             
-            Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(Icons.Filled.ChevronRight, null, tint = AppColors.TextSecondary)
         }
     }
 }
@@ -255,7 +259,7 @@ fun TabButton(text: String, isSelected: Boolean, modifier: Modifier = Modifier, 
      Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(if (isSelected) MaterialTheme.colorScheme.onSurface.copy(alpha=0.1f) else Color.Transparent)
+            .background(if (isSelected) Color.White.copy(alpha=0.1f) else Color.Transparent)
             .clickable(onClick = onClick)
             .padding(vertical = 10.dp),
         contentAlignment = Alignment.Center
@@ -264,7 +268,7 @@ fun TabButton(text: String, isSelected: Boolean, modifier: Modifier = Modifier, 
             text, 
             style = AppTypography.LabelMedium, 
             fontWeight = if(isSelected) FontWeight.Bold else FontWeight.Medium, 
-            color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isSelected) Color.White else AppColors.TextSecondary
         )
     }
 }

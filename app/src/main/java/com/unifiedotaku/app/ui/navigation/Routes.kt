@@ -40,11 +40,11 @@ object Routes {
     const val SETTINGS_REPOS = "settings/repos"
     
     // Helper functions for navigation with arguments
-    fun seriesDetail(seriesId: String) = "series/$seriesId"
-    fun animePlayer(animeId: String, episodeNumber: Int) = "player/$animeId/$episodeNumber"
-    fun mangaReader(chapterId: String, seriesId: String = "") = "reader/$chapterId?seriesId=$seriesId"
-    fun animeViewAll(category: String) = "anime/view-all/${category}"
-    fun mangaViewAll(category: String) = "manga/view-all/${category}"
+    fun seriesDetail(seriesId: String) = "series/${Uri.encode(seriesId)}"
+    fun animePlayer(animeId: String, episodeNumber: Int) = "player/${Uri.encode(animeId)}/$episodeNumber"
+    fun mangaReader(chapterId: String, seriesId: String = "") = "reader/${Uri.encode(chapterId)}?seriesId=${Uri.encode(seriesId)}"
+    fun animeViewAll(category: String) = "anime/view-all/${Uri.encode(category)}"
+    fun mangaViewAll(category: String) = "manga/view-all/${Uri.encode(category)}"
     fun searchResults(query: String) = "search/${Uri.encode(query)}"
 }
 

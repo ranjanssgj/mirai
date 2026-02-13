@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,7 +24,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.unifiedotaku.app.domain.model.Series
 import com.unifiedotaku.app.ui.theme.AppColors
+import androidx.compose.ui.graphics.Color
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.clayShadow
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,12 +77,12 @@ fun MangaViewAllScreen(
             when {
                 uiState.isLoading -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                        CircularProgressIndicator(color = Color.White)
                     }
                 }
-                uiState.error != null && list.isEmpty() -> {
+                 uiState.error != null && list.isEmpty() -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(uiState.error ?: "Error loading data", color = AppColors.Error)
+                        Text(uiState.error ?: "Error loading data", color = Color.White)
                     }
                 }
                 list.isEmpty() -> {
@@ -111,13 +116,12 @@ internal fun MangaViewAllCard(
     series: Series,
     onClick: () -> Unit
 ) {
-    Card(
+    ClayCard(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2f / 3f)
             .clickable(onClick = onClick),
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = AppColors.DarkCard)
+        borderRadius = 12.dp
     ) {
         Box(Modifier.fillMaxSize()) {
             AsyncImage(
@@ -127,13 +131,16 @@ internal fun MangaViewAllCard(
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
             )
             
             // Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
                     .background(
                         androidx.compose.ui.graphics.Brush.verticalGradient(
                             colors = listOf(

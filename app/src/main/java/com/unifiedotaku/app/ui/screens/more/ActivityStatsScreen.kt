@@ -35,6 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,15 +61,15 @@ fun ActivityStatsScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White,
+                    actionIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -85,7 +88,7 @@ fun ActivityStatsScreen(
             }
 
             item {
-                Text("Overview", style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
+                Text("Overview", style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = Color.White)
                 Spacer(modifier = Modifier.height(12.dp))
                 OverviewGrid(uiState)
             }
@@ -108,10 +111,9 @@ fun OverviewGrid(state: SettingsUiState) {
     val hours = totalHours % 24
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Surface(
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth()
+        ClayCard(
+            modifier = Modifier.fillMaxWidth(),
+            borderRadius = 16.dp
         ) {
             Row(
                 modifier = Modifier.padding(20.dp),
@@ -119,24 +121,24 @@ fun OverviewGrid(state: SettingsUiState) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text("TOTAL TIME SPENT", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("TOTAL TIME SPENT", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = AppColors.TextSecondary)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         buildAnnotatedString {
-                            withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)) { append("$days") }
-                            withStyle(SpanStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurfaceVariant)) { append("d ") }
-                            withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)) { append("$hours") }
-                            withStyle(SpanStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurfaceVariant)) { append("h") }
+                            withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)) { append("$days") }
+                            withStyle(SpanStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = AppColors.TextSecondary)) { append("d ") }
+                            withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)) { append("$hours") }
+                            withStyle(SpanStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = AppColors.TextSecondary)) { append("h") }
                         }
                     )
                 }
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
+                        .background(Color.White.copy(alpha = 0.1f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(Icons.Outlined.Schedule, null, tint = MaterialTheme.colorScheme.primary)
+                    Icon(Icons.Outlined.Schedule, null, tint = Color.White)
                 }
             }
         }
@@ -144,21 +146,21 @@ fun OverviewGrid(state: SettingsUiState) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             MiniStatCard(
                 icon = Icons.Outlined.PlayCircle,
-                iconColor = Color(0xFF8B5CF6),
+                iconColor = Color.White,
                 value = "${state.episodesCompleted}",
                 label = "Episodes",
                 modifier = Modifier.weight(1f)
             )
-            MiniStatCard(
+             MiniStatCard(
                 icon = Icons.Outlined.MenuBook,
-                iconColor = Color(0xFF06B6D4),
+                iconColor = Color.White,
                 value = "${state.chaptersCompleted}",
                 label = "Chapters",
                 modifier = Modifier.weight(1f)
             )
-            MiniStatCard(
+             MiniStatCard(
                 icon = Icons.Outlined.Star,
-                iconColor = Color(0xFFF97316),
+                iconColor = Color.White,
                 value = String.format("%.1f", state.meanScore),
                 label = "Mean Score",
                 modifier = Modifier.weight(1f)
@@ -169,25 +171,24 @@ fun OverviewGrid(state: SettingsUiState) {
 
 @Composable
 fun HeatmapSection(heatmap: Map<String, Int>) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth()
+    ClayCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderRadius = 16.dp
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
-            Row(
+             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Activity Heatmap", style = AppTypography.TitleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text("Activity Heatmap", style = AppTypography.TitleSmall, fontWeight = FontWeight.Bold, color = Color.White)
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("Less", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    HeatmapCell(Color.DarkGray.copy(alpha=0.3f))
-                    HeatmapCell(MaterialTheme.colorScheme.primary.copy(alpha=0.4f))
-                    HeatmapCell(MaterialTheme.colorScheme.primary.copy(alpha=0.7f))
-                    HeatmapCell(MaterialTheme.colorScheme.primary)
-                    Text("More", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Less", style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
+                    HeatmapCell(Color.White.copy(alpha=0.1f))
+                    HeatmapCell(Color.White.copy(alpha=0.3f))
+                    HeatmapCell(Color.White.copy(alpha=0.6f))
+                    HeatmapCell(Color.White)
+                    Text("More", style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -198,10 +199,10 @@ fun HeatmapSection(heatmap: Map<String, Int>) {
             ) {
                 repeat(14) { col ->
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        repeat(7) { row ->
+                         repeat(7) { row ->
                             // Map to actual dates would be better, but for now we visualize the map size
                             val hasData = heatmap.size > (col * 7 + row)
-                            val color = if (hasData) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)
+                            val color = if (hasData) Color.White.copy(alpha=0.8f) else Color.White.copy(alpha = 0.05f)
                             HeatmapCell(color)
                         }
                     }
@@ -223,13 +224,12 @@ fun HeatmapCell(color: Color) {
 
 @Composable
 fun GenreDistributionSection() {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth()
+    ClayCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderRadius = 16.dp
     ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text("Genre Distribution", style = AppTypography.TitleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+         Column(modifier = Modifier.padding(20.dp)) {
+            Text("Genre Distribution", style = AppTypography.TitleSmall, fontWeight = FontWeight.Bold, color = Color.White)
             Spacer(modifier = Modifier.height(24.dp))
             
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
@@ -244,11 +244,11 @@ fun GenreDistributionSection() {
                             style = Stroke(strokeWidth)
                         )
                         
-                        val colors = listOf(
-                            Color(0xFFEE2B8C),
-                            Color(0xFF8B5CF6),
-                            Color(0xFF06B6D4),
-                            Color(0xFF10B981)
+                         val colors = listOf(
+                            Color.White,
+                            Color.White.copy(alpha=0.7f),
+                            Color.White.copy(alpha=0.4f),
+                            Color.White.copy(alpha=0.2f)
                         )
                         var startAngle = -90f
                         listOf(0.4f, 0.3f, 0.2f, 0.1f).zip(colors).forEach { (fraction, color) ->
@@ -265,9 +265,9 @@ fun GenreDistributionSection() {
                             startAngle += sweepAngle
                         }
                     }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("---", style = AppTypography.HeadlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
-                        Text("TITLES", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("---", style = AppTypography.HeadlineMedium, fontWeight = FontWeight.Bold, color = Color.White)
+                        Text("TITLES", style = AppTypography.LabelSmall, fontWeight = FontWeight.Bold, color = AppColors.TextSecondary)
                     }
                 }
             }
@@ -277,10 +277,9 @@ fun GenreDistributionSection() {
 
 @Composable
 fun MiniStatCard(icon: ImageVector, iconColor: Color, value: String, label: String, modifier: Modifier = Modifier) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier
+    ClayCard(
+        modifier = modifier,
+        borderRadius = 16.dp
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Box(
@@ -290,20 +289,19 @@ fun MiniStatCard(icon: ImageVector, iconColor: Color, value: String, label: Stri
                 contentAlignment = Alignment.Center
             ) {
                 Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp))
-            }
+             }
             Spacer(modifier = Modifier.height(12.dp))
-            Text(value, style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
-            Text(label, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(value, style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(label, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
         }
     }
 }
 
 @Composable
 fun SegmentedControl(items: List<String>, selectedItem: String, onItemSelection: (String) -> Unit) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.fillMaxWidth()
+    ClayCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderRadius = 12.dp
     ) {
         Row(
             modifier = Modifier.padding(4.dp).fillMaxWidth(),
@@ -313,9 +311,9 @@ fun SegmentedControl(items: List<String>, selectedItem: String, onItemSelection:
                 val isSelected = item == selectedItem
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                         .weight(1f)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
+                        .background(if (isSelected) Color.White.copy(alpha=0.15f) else Color.Transparent)
                         .clickable { onItemSelection(item) }
                         .padding(vertical = 8.dp),
                     contentAlignment = Alignment.Center
@@ -323,7 +321,7 @@ fun SegmentedControl(items: List<String>, selectedItem: String, onItemSelection:
                     Text(
                         text = item,
                         style = AppTypography.LabelMedium,
-                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = if (isSelected) Color.White else AppColors.TextSecondary,
                         fontWeight = FontWeight.SemiBold
                     )
                 }

@@ -54,33 +54,44 @@ router.get('/pages', async (req, res) => {
     }
 });
 
+// GET /manga/extensions
+// Returns list of installed extensions
+router.get('/extensions', async (req, res) => {
+    try {
+        const extensions = mangaExtensionEngine.getInstalledExtensions();
+        res.json({ extensions });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // GET /manga-home
 // Returns content from all installed extensions in a structured format
 router.get('/manga-home', async (req, res) => {
     try {
         console.log('Fetching manga-home content from all extensions');
 
-        // For now, we only have comix.to extension
-        // In future, loop through all registered extensions
+        const installedExtensions = mangaExtensionEngine.getInstalledExtensions();
         const extensions = [];
 
-        // Comix.to extension
-        try {
-            const comixLatest = await mangaExtensionEngine.execute('comix.to', 'search', ['latest']);
-            extensions.push({
-                id: 'comix.to',
-                name: 'Comix',
-                icon: 'https://comick.cc/favicon.ico',
-                latestUpdates: comixLatest.slice(0, 5).map(manga => ({
-                    id: manga.id,
-                    title: manga.title,
-                    cover: manga.cover,
-                    chapter: 'Latest' // Could be enhanced with actual chapter data
-                }))
-            });
-        } catch (error) {
-            console.error('Comix extension failed:', error.message);
-            // Continue with other extensions even if one fails
+        for (const ext of installedExtensions) {
+            try {
+                const latest = await mangaExtensionEngine.execute(ext.id, 'search', ['latest']);
+                extensions.push({
+                    id: ext.id,
+                    name: ext.name,
+                    icon: '',
+                    latestUpdates: latest.slice(0, 5).map(manga => ({
+                        id: manga.id,
+                        title: manga.title,
+                        cover: manga.cover,
+                        chapter: 'Latest'
+                    }))
+                });
+            } catch (error) {
+                console.error(`Extension '${ext.id}' failed:`, error.message);
+                // Continue with other extensions even if one fails
+            }
         }
 
         res.json({ extensions });

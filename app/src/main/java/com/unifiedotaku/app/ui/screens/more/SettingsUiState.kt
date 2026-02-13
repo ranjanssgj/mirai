@@ -71,6 +71,8 @@ data class SettingsUiState(
     
     // Extensions
     val installedExtensions: List<ExtensionItem> = emptyList(),
+    val availableExtensions: List<com.unifiedotaku.app.data.remote.api.RepoExtension> = emptyList(),
+    val isLoadingExtensions: Boolean = false,
 
     // Data
     val cacheSize: Long = 0L,

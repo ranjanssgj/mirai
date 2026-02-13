@@ -23,8 +23,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.unifiedotaku.app.domain.model.Series
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.clayShadow
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,28 +57,28 @@ fun ViewAllScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
+                    containerColor = AppColors.DarkBackground,
                     titleContentColor = AppColors.TextPrimary
                 )
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(MaterialTheme.colorScheme.background)
+                .background(AppColors.DarkBackground)
         ) {
             when {
                 uiState.isLoading -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                        CircularProgressIndicator(color = Color.White)
                     }
                 }
                 uiState.error != null -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(uiState.error!!, color = MaterialTheme.colorScheme.error)
+                        Text(uiState.error!!, color = Color.White)
                     }
                 }
                 else -> {
@@ -102,13 +107,12 @@ internal fun ViewAllCard(
     series: Series,
     onClick: () -> Unit
 ) {
-    Card(
+    ClayCard(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(3f / 4f)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = AppColors.DarkCard)
+        borderRadius = 12.dp
     ) {
         Column(Modifier.fillMaxSize()) {
             AsyncImage(
@@ -121,6 +125,7 @@ internal fun ViewAllCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
             )
             Text(
                 text = series.title,

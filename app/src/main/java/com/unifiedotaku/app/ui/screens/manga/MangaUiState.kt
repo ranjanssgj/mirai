@@ -13,13 +13,25 @@ data class MangaUiState(
     val selectedType: MangaType? = null,
     val isSearchExpanded: Boolean = false,
     
+    // Extension selection
+    val selectedExtensionId: String = "comix.to",
+    val installedExtensionIds: List<String> = emptyList(),
+    
     // Content sections
     val popularManga: List<Series> = emptyList(),
     val latestUpdates: List<Series> = emptyList(),
     val extensions: List<com.unifiedotaku.app.data.remote.api.ExtensionContent> = emptyList(),
+    val availableExtensions: List<com.unifiedotaku.app.data.remote.api.RepoExtension> = emptyList(),
+    val showInstallPrompt: Boolean = false,
+    val isInstallingExtension: Boolean = false,
+    val installMessage: String? = null,
     val newReleases: List<Series> = emptyList(),
     val schedule: Map<String, List<Series>> = emptyMap(),
     val selectedDay: String = "",
+    
+    // Multi-source search results (Komikku-style explorer hub)
+    val searchResultsBySource: Map<String, List<Series>> = emptyMap(),
+    val isSearching: Boolean = false,
     
     /** True when repo/backend failed and we show placeholder data. */
     val isSafeMode: Boolean = false,

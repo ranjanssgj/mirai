@@ -3,7 +3,6 @@ package com.unifiedotaku.app.data.repository
 import android.util.Log
 
 import com.unifiedotaku.app.data.model.anime.AnimeDto
-import com.unifiedotaku.app.data.remote.api.BackendApi
 import com.unifiedotaku.app.data.remote.api.JikanApi
 import com.unifiedotaku.app.data.remote.api.StreamRequest
 import com.unifiedotaku.app.data.remote.api.StreamResponse
@@ -11,7 +10,6 @@ import javax.inject.Inject
 
 class AnimeRepositoryImpl @Inject constructor(
     private val jikanApi: JikanApi,
-    private val backendApi: BackendApi,
     private val extensionManager: com.unifiedotaku.app.data.extensions.ExtensionManager,
     private val aniCliSource: com.unifiedotaku.app.data.remote.scraper.AniCliSource
 ) : AnimeRepository {

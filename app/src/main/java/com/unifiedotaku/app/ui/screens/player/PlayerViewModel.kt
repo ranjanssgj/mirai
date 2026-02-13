@@ -228,12 +228,18 @@ class PlayerViewModel @Inject constructor(
                 server.category
             )
             
-            result.onSuccess { response ->
+            result.onSuccess { response: com.unifiedotaku.app.data.remote.api.StreamResponse ->
                 val source = com.unifiedotaku.app.domain.model.StreamSource(
                     url = response.url,
                     quality = "Default",
                     name = server.name,
-                    subtitles = response.subtitles
+                    subtitles = response.subtitles.map { 
+                        com.unifiedotaku.app.domain.model.Subtitle(
+                            url = it.url,
+                            language = it.lang,
+                            label = it.label ?: it.lang
+                        )
+                    }
                 )
                 
                 _uiState.update {
@@ -247,7 +253,7 @@ class PlayerViewModel @Inject constructor(
                     )
                 }
                 showControls() // Show controls on successful load
-            }.onFailure { e ->
+            }.onFailure { e: Throwable ->
                  _uiState.update { it.copy(isLoading = false, error = e.message ?: "Failed to load stream from ${server.name}") }
             }
         }

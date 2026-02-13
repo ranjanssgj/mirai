@@ -176,4 +176,27 @@ class SettingsViewModel @Inject constructor(
     fun setPageTransition(transition: String) { _uiState.update { it.copy(pageTransition = transition) }; saveSetting("page_transition", transition) }
     fun toggleVolumeKeysScroll() { val newValue = !_uiState.value.volumeKeysScroll; _uiState.update { it.copy(volumeKeysScroll = newValue) }; saveSetting("volume_keys_scroll", newValue.toString()) }
     fun toggleKeepScreenOn() { val newValue = !_uiState.value.keepScreenOn; _uiState.update { it.copy(keepScreenOn = newValue) }; saveSetting("keep_screen_on", newValue.toString()) }
+
+    fun fetchExtensions() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoadingExtensions = true) }
+            val available = extensionManager.getAvailableExtensions()
+            _uiState.update { state ->
+                state.copy(
+                    isLoadingExtensions = false,
+                    availableExtensions = available.filter { ext -> 
+                        // Filter out already installed ones (native or otherwise)
+                        !state.installedExtensions.any { it.name.equals(ext.name, ignoreCase = true) } &&
+                        !extensionManager.isExtensionInstalled(ext.pkg)
+                    }
+                )
+            }
+        }
+    }
+
+    fun installExtension(extension: com.unifiedotaku.app.data.remote.api.RepoExtension) {
+        viewModelScope.launch {
+             extensionManager.installExtension(extension)
+        }
+    }
 }

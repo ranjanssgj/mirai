@@ -42,6 +42,10 @@ import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
 import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.clayShadow
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 /**
@@ -70,16 +74,34 @@ fun AnimePlayerScreen(
     
     // Fullscreen Logic
     LaunchedEffect(uiState.isFullscreen) {
-        val window = (context as? Activity)?.window
+        val activity = context as? Activity
+        val window = activity?.window
         if (window != null) {
             val insetsController = WindowCompat.getInsetsController(window, window.decorView)
             insetsController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             if (uiState.isFullscreen) {
                 insetsController.hide(WindowInsetsCompat.Type.systemBars())
+                // Force landscape for fullscreen
+                activity.requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             } else {
                 insetsController.show(WindowInsetsCompat.Type.systemBars())
+                // Restore portrait or sensor
+                activity.requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
         }
+    }
+
+    // Restore orientation when leaving the screen
+    DisposableEffect(Unit) {
+        onDispose {
+            val activity = context as? Activity
+            activity?.requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
+    }
+
+    // Playback Speed Logic
+    LaunchedEffect(uiState.playbackSpeed) {
+        exoPlayer.setPlaybackSpeed(uiState.playbackSpeed)
     }
     
     LaunchedEffect(uiState.selectedSource) {
@@ -198,10 +220,7 @@ fun AnimePlayerScreen(
                 onPreviousEpisode = { viewModel.previousEpisode()?.toIntOrNull()?.let { onEpisodeClick(animeId, it) } },
                 onRetry = { viewModel.retry() },
                 showControls = { viewModel.showControls() },
-                hideControls = { viewModel.hideControls() },
-                onFullscreen = { viewModel.toggleFullscreen() },
-                onSettings = {}, // TODO: Implement settings dialog
-                onCast = {} // TODO: Implement cast
+                onFullscreen = { viewModel.toggleFullscreen() }
             )
         }
         
@@ -235,16 +254,38 @@ fun AnimePlayerScreen(
             item {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     item { 
-                        PrimaryActionButton(
-                            icon = Icons.Filled.Download, 
-                            text = "Download",
-                            onClick = { viewModel.downloadEpisode() }
-                        )
+                        ClayCard(
+                            modifier = Modifier.height(48.dp).clickable { viewModel.downloadEpisode() },
+                            color = AppColors.Primary,
+                            borderRadius = 12.dp
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(Icons.Filled.Download, null, tint = Color.White, modifier = Modifier.size(20.dp))
+                                Text("Download", style = AppTypography.LabelMedium, color = Color.White)
+                            }
+                        }
                     }
                     item { 
                         var showServers by remember { mutableStateOf(false) }
                         Box {
-                            SecondaryActionButton(Icons.Filled.Dns, "Server: ${uiState.selectedServer?.name ?: "Auto"}", onClick = { showServers = true })
+                            ClayCard(
+                                modifier = Modifier.height(48.dp).clickable { showServers = true },
+                                color = AppColors.DarkSurface,
+                                borderRadius = 12.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Icon(Icons.Filled.Dns, null, tint = Color.White, modifier = Modifier.size(20.dp))
+                                    Text("Server: ${uiState.selectedServer?.name ?: "Auto"}", style = AppTypography.LabelMedium, color = Color.White)
+                                }
+                            }
                             DropdownMenu(expanded = showServers, onDismissRequest = { showServers = false }) {
                                 uiState.availableServers.forEach { server ->
                                     DropdownMenuItem(
@@ -262,26 +303,57 @@ fun AnimePlayerScreen(
                         }
                     } 
                     item { 
-                        SecondaryActionButton(
-                            icon = Icons.Filled.Autorenew, 
-                            text = if (uiState.isAutoplayEnabled) "Autoplay" else "Autoplay (Off)",
-                            onClick = { viewModel.toggleAutoplay() }
-                        )
+                        ClayCard(
+                            modifier = Modifier.height(48.dp).clickable { viewModel.toggleAutoplay() },
+                            color = AppColors.DarkSurface,
+                            borderRadius = 8.dp
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(Icons.Filled.Autorenew, null, tint = Color.White, modifier = Modifier.size(20.dp))
+                                Text(if (uiState.isAutoplayEnabled) "Autoplay" else "Autoplay (Off)", style = AppTypography.LabelMedium, color = Color.White)
+                            }
+                        }
                     } 
                     item { 
                         var showQuality by remember { mutableStateOf(false) }
                         Box {
-                            SecondaryActionButton(
-                                icon = Icons.Filled.HighQuality, 
-                                text = uiState.selectedQuality,
-                                onClick = { showQuality = true }
-                            )
+                            ClayCard(
+                                modifier = Modifier.height(48.dp).clickable { showQuality = true },
+                                color = AppColors.DarkSurface,
+                                borderRadius = 12.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    Icon(Icons.Filled.HighQuality, null, tint = Color.White, modifier = Modifier.size(20.dp))
+                                    Text(uiState.selectedQuality, style = AppTypography.LabelMedium, color = Color.White)
+                                }
+                            }
                             DropdownMenu(expanded = showQuality, onDismissRequest = { showQuality = false }) {
                                 QUALITY_OPTIONS.forEach { quality ->
                                     DropdownMenuItem(
                                         text = { Text(quality) },
                                         onClick = { 
                                             viewModel.selectQuality(quality)
+                                            // Apply quality to track selection
+                                            val params = exoPlayer.trackSelectionParameters
+                                            val newParams = params.buildUpon()
+                                            
+                                            if (quality == "auto") {
+                                                newParams.setMaxVideoSizeSd()
+                                                    .clearVideoSizeConstraints()
+                                            } else {
+                                                val height = quality.replace("p", "").toIntOrNull() ?: 1080
+                                                newParams.setMaxVideoSize(1920, height)
+                                            }
+                                            exoPlayer.trackSelectionParameters = newParams.build()
+                                            
                                             showQuality = false
                                         }
                                     )
@@ -300,15 +372,18 @@ fun AnimePlayerScreen(
                             if (uiState.isRelationsLoading) {
                                 items(3) { SeasonCardSkeleton() }
                             } else {
-                                uiState.seasons.asSequence().flatMap { it.entry }.filter { it.type == "anime" }.forEach { relation ->
-                                    item { 
-                                         SeasonCard(
-                                             title = relation.name, 
-                                             eps = relation.type, 
-                                             imageUrl = uiState.animeCover ?: "", 
-                                             isSelected = relation.malId.toString() == animeId,
-                                             onClick = { onSeriesClick(relation.malId.toString()) }
-                                         ) 
+                                val sortedRelations = com.unifiedotaku.app.utils.RelationSorter.sortRelations(uiState.seasons)
+                                sortedRelations.forEach { relationEntry ->
+                                    relationEntry.entry.filter { it.type == "anime" }.forEach { relation ->
+                                        item { 
+                                             SeasonCard(
+                                                 title = relation.name, 
+                                                 eps = relationEntry.relation, // Showing relation type like "Sequel"
+                                                 imageUrl = uiState.animeCover ?: "", // Jikan relation search might be needed for real thumbnails
+                                                 isSelected = relation.malId.toString() == animeId,
+                                                 onClick = { onSeriesClick(relation.malId.toString()) }
+                                             ) 
+                                        }
                                     }
                                 }
                             }
@@ -329,9 +404,10 @@ fun AnimePlayerScreen(
                     val isCurrent = ep.number.toInt() == uiState.episodeNumber
                     UpNextItem(
                         ep = "EP ${ep.number.toInt()}", 
-                        title = ep.title ?: "Episode ${ep.number.toInt()}", 
+                        title = ep.title, // Removed redundant elvis operator
                         duration = "24m", // Mock
                         isCurrent = isCurrent,
+                        imageUrl = ep.thumbnail ?: uiState.animeCover ?: "",
                         onClick = { if (!isCurrent) onEpisodeClick(animeId, ep.number.toInt()) }
                     )
                 }
@@ -355,10 +431,7 @@ fun PlayerOverlay(
     onPreviousEpisode: () -> Unit,
     onRetry: () -> Unit,
     showControls: () -> Unit,
-    hideControls: () -> Unit,
-    onFullscreen: () -> Unit,
-    onSettings: () -> Unit,
-    onCast: () -> Unit
+    onFullscreen: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize().clickable(onClick = showControls, indication = null, interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() })) {
         if (uiState.isLoading || uiState.isBuffering) {
@@ -367,7 +440,13 @@ fun PlayerOverlay(
 
         AnimatedVisibility(visible = uiState.showControls && !uiState.isLoading, enter = fadeIn(), exit = fadeOut()) {
             Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.4f))) {
-                TopControls(uiState, onBackClick)
+                TopControls(
+                    uiState = uiState, 
+                    onBack = { 
+                        if (uiState.isFullscreen) onFullscreen() 
+                        else onBackClick() 
+                    }
+                )
                 CenterControls(uiState, togglePlay, onSkipBack, onSkipFwd, onPreviousEpisode, onNextEpisode)
                 BottomControls(
                     uiState = uiState, 
@@ -399,22 +478,39 @@ private fun LoadingIndicator(error: String?, onRetry: () -> Unit) {
 }
 
 @Composable
-private fun BoxScope.TopControls(uiState: PlayerUiState, onBackClick: () -> Unit) {
+private fun BoxScope.TopControls(uiState: PlayerUiState, onBack: () -> Unit) {
     Row(
         Modifier.fillMaxWidth().align(Alignment.TopCenter).padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = onBackClick) { Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color.White) }
-        Text(
-            text = "Ep ${uiState.episodeNumber}: ${uiState.episodeTitle}",
-            color = Color.White,
-            style = AppTypography.LabelLarge,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
-        )
-        // Removed non-functional cast and 3-dot menu icons
+        IconButton(onClick = onBack) { 
+            Icon(
+                imageVector = if (uiState.isFullscreen) Icons.Filled.Close else Icons.AutoMirrored.Filled.ArrowBack, 
+                contentDescription = if (uiState.isFullscreen) "Exit Fullscreen" else "Back", 
+                tint = Color.White
+            ) 
+        }
+        
+        if (uiState.isFullscreen) {
+            Text(
+                text = uiState.animeTitle ?: "",
+                color = Color.White,
+                style = AppTypography.TitleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f).padding(horizontal = 16.dp)
+            )
+        } else {
+            Text(
+                text = "Ep ${uiState.episodeNumber}: ${uiState.episodeTitle}",
+                color = Color.White,
+                style = AppTypography.LabelLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
+            )
+        }
     }
 }
 
@@ -439,8 +535,13 @@ private fun BoxScope.CenterControls(
             Icon(Icons.Filled.SkipPrevious, null, tint = if(uiState.hasPreviousEpisode) Color.White else Color.Gray, modifier = Modifier.size(42.dp))
         }
         
-        IconButton(onClick = togglePlay, modifier = Modifier.size(64.dp).background(AppColors.Primary.copy(alpha=0.9f), CircleShape)) {
-            Icon(if (uiState.isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow, null, tint = Color.White, modifier = Modifier.size(36.dp))
+        ClayCard(
+            modifier = Modifier.size(64.dp).clickable(onClick = togglePlay),
+            borderRadius = 32.dp
+        ) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Icon(if (uiState.isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow, null, tint = Color.White, modifier = Modifier.size(36.dp))
+            }
         }
         
         IconButton(onClick = onNextEpisode, enabled = uiState.hasNextEpisode) {
@@ -517,15 +618,14 @@ private fun BoxScope.BottomControls(
 // Remaining UI Components
 @Composable
 fun PrimaryActionButton(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String, onClick: () -> Unit = {}) {
-    Surface(
-        color = AppColors.Primary.copy(alpha=0.1f),
-        shape = RoundedCornerShape(50),
-        modifier = Modifier.height(40.dp).clickable(onClick = onClick)
+    ClayCard(
+        modifier = Modifier.height(40.dp).clickable(onClick = onClick),
+        borderRadius = 20.dp
     ) {
         Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-             Icon(icon, null, tint = AppColors.Primary, modifier = Modifier.size(18.dp))
+             Icon(icon, null, tint = Color.White, modifier = Modifier.size(18.dp))
              Spacer(modifier = Modifier.width(8.dp))
-             Text(text, style = AppTypography.LabelMedium.copy(fontWeight = FontWeight.Bold), color = AppColors.Primary)
+             Text(text, style = AppTypography.LabelMedium.copy(fontWeight = FontWeight.Bold), color = Color.White)
         }
     }
 }
@@ -575,7 +675,7 @@ fun SeasonCard(title: String, eps: String, imageUrl: String, isSelected: Boolean
 }
 
 @Composable
-fun UpNextItem(ep: String, title: String, duration: String, isCurrent: Boolean = false, onClick: () -> Unit = {}) {
+fun UpNextItem(ep: String, title: String, duration: String, imageUrl: String = "", isCurrent: Boolean = false, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -585,7 +685,16 @@ fun UpNextItem(ep: String, title: String, duration: String, isCurrent: Boolean =
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(Modifier.width(120.dp).aspectRatio(16/9f).clip(RoundedCornerShape(4.dp)).background(Color.Gray)) // Mock thumbnail
+        Box(Modifier.width(120.dp).aspectRatio(16/9f).clip(RoundedCornerShape(4.dp)).background(Color.Gray)) {
+            if (imageUrl.isNotEmpty()) {
+                AsyncImage(
+                    model = imageUrl, 
+                    contentDescription = null, 
+                    contentScale = ContentScale.Crop, 
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
         
         Column(Modifier.weight(1f)) {
             Text(ep, style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold), color = if (isCurrent) AppColors.Primary else AppColors.TextSecondary)

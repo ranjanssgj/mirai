@@ -68,13 +68,13 @@ fun LockScreen(
                 modifier = Modifier
                     .size(80.dp)
                     .clip(CircleShape)
-                    .background(AppColors.PrimaryPurple.copy(alpha = 0.2f)),
+                    .background(Color.White.copy(alpha = 0.2f)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Filled.Lock,
                     contentDescription = null,
-                    tint = AppColors.PrimaryPurple,
+                    tint = Color.White,
                     modifier = Modifier.size(40.dp)
                 )
             }
@@ -116,7 +116,7 @@ fun LockScreen(
                             .size(20.dp)
                             .clip(CircleShape)
                             .background(
-                                if (index < currentPin.length) AppColors.PrimaryPurple
+                                if (index < currentPin.length) Color.White
                                 else AppColors.DarkSurfaceVariant
                             )
                     )
@@ -228,7 +228,7 @@ private fun NumberPad(
                     Icon(
                         imageVector = Icons.Filled.Fingerprint,
                         contentDescription = "Biometric",
-                        tint = AppColors.PrimaryPurple,
+                        tint = Color.White,
                         modifier = Modifier.size(32.dp)
                     )
                 }

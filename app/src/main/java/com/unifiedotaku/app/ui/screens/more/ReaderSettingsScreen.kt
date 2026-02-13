@@ -32,6 +32,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.unifiedotaku.app.ui.screens.reader.ReadingMode
 import com.unifiedotaku.app.ui.screens.reader.ReaderBackground
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,18 +61,18 @@ fun ReaderSettingsScreen(
                 title = { Text("Manga Reader", style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -112,10 +115,9 @@ fun ReaderSettingsScreen(
             item {
                 SettingsSectionHeader("Direction")
                 Spacer(modifier = Modifier.height(12.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.fillMaxWidth()
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 8.dp
                 ) {
                     Row(modifier = Modifier.padding(4.dp)) {
                         DirectionOption("Right to Left (RTL)", uiState.defaultRtl, Modifier.weight(1f)) { viewModel.toggleDefaultRtl() }
@@ -126,7 +128,7 @@ fun ReaderSettingsScreen(
                 Text(
                     "Standard manga is read from Right to Left.",
                     style = AppTypography.LabelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
@@ -135,10 +137,9 @@ fun ReaderSettingsScreen(
             item {
                 SettingsSectionHeader("Display & Visuals")
                 Spacer(modifier = Modifier.height(12.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         // Brightness
@@ -149,26 +150,26 @@ fun ReaderSettingsScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                    Box(modifier = Modifier.background(Color(0xFFF97316).copy(alpha=0.15f), RoundedCornerShape(8.dp)).padding(6.dp)) {
-                                        Icon(Icons.Filled.Brightness6, null, tint = Color(0xFFF97316), modifier = Modifier.size(20.dp))
+                                    Box(modifier = Modifier.background(Color.White.copy(alpha=0.1f), RoundedCornerShape(8.dp)).padding(6.dp)) {
+                                        Icon(Icons.Filled.Brightness6, null, tint = Color.White, modifier = Modifier.size(20.dp))
                                     }
-                                    Text("Brightness Overlay", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text("Brightness Overlay", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
                                 }
-                                Text("${brightness.toInt()}%", style = AppTypography.BodySmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                                Text("${brightness.toInt()}%", style = AppTypography.BodySmall, fontWeight = FontWeight.Bold, color = Color.White)
                             }
                             Slider(
                                 value = brightness,
                                 onValueChange = { viewModel.setReaderBrightness(it) },
                                 valueRange = 0f..100f,
                                 colors = SliderDefaults.colors(
-                                    thumbColor = MaterialTheme.colorScheme.primary,
-                                    activeTrackColor = MaterialTheme.colorScheme.primary,
-                                    inactiveTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                                    thumbColor = Color.White,
+                                    activeTrackColor = Color.White,
+                                    inactiveTrackColor = Color.White.copy(alpha=0.1f)
                                 )
                             )
                         }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         // Default Zoom
                         Column(modifier = Modifier.padding(20.dp)) {
@@ -178,10 +179,10 @@ fun ReaderSettingsScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                    Box(modifier = Modifier.background(Color(0xFF3B82F6).copy(alpha=0.15f), RoundedCornerShape(8.dp)).padding(6.dp)) {
-                                        Icon(Icons.Filled.ZoomIn, null, tint = Color(0xFF3B82F6), modifier = Modifier.size(20.dp))
+                                    Box(modifier = Modifier.background(Color.White.copy(alpha=0.1f), RoundedCornerShape(8.dp)).padding(6.dp)) {
+                                        Icon(Icons.Filled.ZoomIn, null, tint = Color.White, modifier = Modifier.size(20.dp))
                                     }
-                                    Text("Default Zoom", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text("Default Zoom", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
                                 }
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -191,14 +192,14 @@ fun ReaderSettingsScreen(
                             }
                         }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.2f))
                         
                         // Page Transitions
                          DropdownSettingItem(
                              title = "Page Transitions", 
                              subtitle = "Effect when turning pages",
                              icon = Icons.Filled.Animation,
-                             iconColor = Color(0xFFA855F7), // Purple
+                             iconColor = Color.White, // Monochrome
                              currentValue = pageTransition,
                              options = listOf("None", "Slide", "Curl", "Fade")
                          ) { viewModel.setPageTransition(it) }
@@ -210,10 +211,9 @@ fun ReaderSettingsScreen(
             item {
                 SettingsSectionHeader("Controls")
                 Spacer(modifier = Modifier.height(12.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                      SwitchSettingItem(
                         icon = null,
@@ -222,10 +222,10 @@ fun ReaderSettingsScreen(
                         subtitle = "Use physical buttons for navigation",
                         checked = volumeKeysScroll
                      ) { viewModel.toggleVolumeKeysScroll() }
-
-                     Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
-
-                     SwitchSettingItem(
+ 
+                      HorizontalDivider(color = Color.White.copy(alpha=0.1f))
+ 
+                      SwitchSettingItem(
                         icon = null,
                         iconColor = Color.Transparent,
                         title = "Keep Screen On",
@@ -240,22 +240,19 @@ fun ReaderSettingsScreen(
 
 @Composable
 fun ReadingModeCard(title: String, icon: ImageVector, isSelected: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Surface(
-        color = if(isSelected && false) MaterialTheme.colorScheme.primary.copy(alpha=0.1f) else MaterialTheme.colorScheme.surface, 
-        // Note: Code.html says bg-white dark:bg-surface-dark group-hover:bg-gray-50. 
-        // Custom radio logic: border color changes, bg tint.
-        shape = RoundedCornerShape(8.dp),
-        border = androidx.compose.foundation.BorderStroke(2.dp, if(isSelected) MaterialTheme.colorScheme.primary else Color.Transparent),
-        modifier = modifier.height(100.dp).clickable(onClick = onClick)
+    ClayCard(
+        modifier = modifier.height(100.dp).clickable(onClick = onClick),
+        borderRadius = 8.dp,
+        color = if(isSelected) Color.White.copy(alpha=0.1f) else AppColors.DarkBackground
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(8.dp).background(if(isSelected) MaterialTheme.colorScheme.primary.copy(alpha=0.08f) else Color.Transparent)
+            modifier = Modifier.padding(8.dp)
         ) {
-            Icon(icon, null, tint = if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(32.dp))
+            Icon(icon, null, tint = if(isSelected) Color.White else AppColors.TextSecondary, modifier = Modifier.size(32.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            Text(title, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = if(isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
+            Text(title, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = if(isSelected) Color.White else Color.White.copy(alpha=0.7f))
         }
     }
 }
@@ -265,7 +262,7 @@ fun DirectionOption(text: String, isSelected: Boolean, modifier: Modifier = Modi
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent)
+            .background(if (isSelected) Color.White.copy(alpha=0.1f) else Color.Transparent)
             .clickable(onClick = onClick)
             .padding(vertical = 10.dp),
         contentAlignment = Alignment.Center
@@ -274,7 +271,7 @@ fun DirectionOption(text: String, isSelected: Boolean, modifier: Modifier = Modi
             text, 
             style = AppTypography.LabelSmall, 
             fontWeight = FontWeight.Medium, 
-            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isSelected) Color.White else AppColors.TextSecondary
         )
     }
 }
@@ -284,7 +281,7 @@ fun ZoomOption(text: String, isSelected: Boolean, modifier: Modifier = Modifier,
      Box(
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant.copy(alpha=0.5f))
+            .background(if (isSelected) Color.White.copy(alpha=0.2f) else Color.White.copy(alpha=0.05f))
             .clickable(onClick = onClick)
             .padding(vertical = 10.dp),
         contentAlignment = Alignment.Center
@@ -293,7 +290,7 @@ fun ZoomOption(text: String, isSelected: Boolean, modifier: Modifier = Modifier,
             text, 
             style = AppTypography.LabelSmall.copy(fontSize = 11.sp), 
             fontWeight = FontWeight.Bold, 
-            color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isSelected) Color.White else AppColors.TextSecondary
         )
     }
 }
@@ -325,8 +322,8 @@ private fun DropdownSettingItem(
                 Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp))
             }
             Column {
-                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
         
@@ -335,8 +332,8 @@ private fun DropdownSettingItem(
              Row(
                  verticalAlignment = Alignment.CenterVertically
              ) {
-                 Text(currentValue, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
-                 // Icon(Icons.Filled.ExpandMore, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) // Not in this specific section design, showing value is enough or dropdown box style
+                 Text(currentValue, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = Color.White)
+                 // Icon(Icons.Filled.ExpandMore, null, tint = AppColors.TextSecondary) // Not in this specific section design, showing value is enough or dropdown box style
              }
              DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 options.forEach { option ->
@@ -371,18 +368,18 @@ private fun SwitchSettingItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
-            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-            Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+            Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
         }
         
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                checkedThumbColor = Color.White,
+                checkedTrackColor = AppColors.TextPrimary,
+                uncheckedThumbColor = AppColors.TextSecondary,
+                uncheckedTrackColor = Color.Black
             ),
              modifier = Modifier.scale(0.8f)
         )

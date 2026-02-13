@@ -27,12 +27,23 @@ class ReaderViewModel @Inject constructor(
     private val historyDao: HistoryDao,
     private val libraryDao: com.unifiedotaku.app.data.local.database.dao.LibraryDao,
     private val syncRepository: com.unifiedotaku.app.data.repository.SyncRepository,
-    private val settingsDao: com.unifiedotaku.app.data.local.database.dao.SettingsDao
+    private val settingsDao: com.unifiedotaku.app.data.local.database.dao.SettingsDao,
+    private val extensionManager: com.unifiedotaku.app.data.extensions.ExtensionManager
 ) : ViewModel() {
 
     private val chapterId: String = savedStateHandle.get<String>("chapterId") ?: ""
     private val seriesId: String = savedStateHandle.get<String>("seriesId") ?: ""
     
+    // Parse extension from prefixed seriesId (format: "manga:{extensionId}:{rawId}")
+    private val extensionId: String
+    private val rawSeriesId: String
+    
+    init {
+        val parsed = parseExtensionId(seriesId)
+        extensionId = parsed?.first ?: extensionManager.getDefaultExtensionId()
+        rawSeriesId = parsed?.second ?: seriesId
+    }
+
     private val _uiState = MutableStateFlow(ReaderUiState(chapterId = chapterId))
     val uiState: StateFlow<ReaderUiState> = _uiState.asStateFlow()
 
@@ -45,16 +56,21 @@ class ReaderViewModel @Inject constructor(
     }
 
     /**
-     * Load chapter pages from scraper.
+     * Parse a prefixed manga ID into its extension ID and raw manga ID.
+     * Format: "manga:{extensionId}:{rawMangaId}"
      */
+    private fun parseExtensionId(prefixedId: String): Pair<String, String>? {
+        if (!prefixedId.startsWith("manga:")) return null
+        val parts = prefixedId.split(":", limit = 3)
+        return if (parts.size == 3) Pair(parts[1], parts[2]) else null
+    }
+
     private fun loadChapterPages() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             
             try {
-                // Default extension for now, ideally passed or stored in settings
-                val extension = "comix.to"
-                val result = mangaRepository.getMangaPages(chapterId, extension)
+                val result = mangaRepository.getMangaPages(chapterId, extensionId)
                 
                 result.onSuccess { pages ->
                     if (pages.isNotEmpty()) {
@@ -65,6 +81,8 @@ class ReaderViewModel @Inject constructor(
                                 totalPages = pages.size
                             )
                         }
+                        // Resolve chapter context (prev/next, number, title)
+                        resolveChapterContext(extensionId)
                     } else {
                         _uiState.update {
                             it.copy(
@@ -89,6 +107,36 @@ class ReaderViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    /**
+     * Fetch the full chapter list for the series and determine prev/next chapter IDs.
+     * Chapters come in desc order (newest first), so index 0 = latest chapter.
+     */
+    private suspend fun resolveChapterContext(extension: String) {
+        if (rawSeriesId.isEmpty()) return
+        try {
+            val chaptersResult = mangaRepository.getMangaChapters(rawSeriesId, extension)
+            chaptersResult.onSuccess { chapters ->
+                val currentIndex = chapters.indexOfFirst { it.id == chapterId }
+                if (currentIndex >= 0) {
+                    _uiState.update {
+                        it.copy(
+                            chapterNumber = chapters[currentIndex].number,
+                            chapterTitle = chapters[currentIndex].title,
+                            // Chapters are desc: index 0 = newest. "Next" = toward newer (index-1), "Previous" = toward older (index+1)
+                            nextChapterId = chapters.getOrNull(currentIndex - 1)?.id,
+                            hasNextChapter = currentIndex > 0,
+                            previousChapterId = chapters.getOrNull(currentIndex + 1)?.id,
+                            hasPreviousChapter = currentIndex < chapters.size - 1
+                        )
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            // Non-critical: prev/next just won't work
+            e.printStackTrace()
         }
     }
 

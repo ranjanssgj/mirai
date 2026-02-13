@@ -45,6 +45,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 import kotlinx.coroutines.launch
 
 /**
@@ -171,12 +173,12 @@ fun MangaReaderScreen(
 
         // Page indicator
         if (uiState.showPageNumber && uiState.pages.isNotEmpty()) {
-            Surface(
+            ClayCard(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 16.dp),
-                color = Color.Black.copy(alpha = 0.6f),
-                shape = RoundedCornerShape(16.dp)
+                borderRadius = 16.dp,
+                color = Color.Black.copy(alpha = 0.8f)
             ) {
                 Text(
                     text = "${uiState.currentPage + 1} / ${uiState.totalPages}",
@@ -516,7 +518,17 @@ private fun ReaderSettingsSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        containerColor = AppColors.DarkSurface
+        containerColor = AppColors.DarkBackground,
+        dragHandle = {
+            Box(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .width(32.dp)
+                    .height(4.dp)
+                    .clip(CircleShape)
+                    .background(Color.White.copy(alpha = 0.2f))
+            )
+        }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

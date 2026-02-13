@@ -37,6 +37,11 @@ import com.unifiedotaku.app.data.remote.api.MalForumPost
 import com.unifiedotaku.app.data.remote.api.MalForumTopic
 import com.unifiedotaku.app.data.remote.api.MalUser
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.clayShadows
+import com.unifiedotaku.app.ui.theme.clayInnerShadows
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -53,12 +58,12 @@ fun ForumScreen(
     }
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = AppColors.DarkBackground,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { /* TODO: Create Topic */ },
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = Color.White,
+                contentColor = Color.Black,
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Row(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -124,7 +129,7 @@ private fun ForumHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
+            .background(AppColors.DarkBackground)
             .padding(vertical = 8.dp)
     ) {
         Row(
@@ -135,25 +140,27 @@ private fun ForumHeader(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (showBack) {
-                IconButton(
-                    onClick = onBack,
+                Box(
                     modifier = Modifier
                         .size(48.dp)
-                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+                        .clayShadows(color = AppColors.ClayCard, borderRadius = 12.dp)
+                        .clickable(onClick = onBack),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = AppColors.TextPrimary
                     )
                 }
             }
 
-            Surface(
-                modifier = Modifier.weight(1f).height(48.dp),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surface,
-                shadowElevation = 2.dp
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp)
+                    .clayInnerShadows(color = AppColors.ClayContainer, borderRadius = 12.dp),
+                contentAlignment = Alignment.CenterStart
             ) {
                 Row(
                     modifier = Modifier.fillMaxSize().clickable(onClick = onSearch),
@@ -163,19 +170,19 @@ private fun ForumHeader(
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(48.dp)
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                            .background(AppColors.ClayContainer),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Search,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = AppColors.Primary
                         )
                     }
                     Text(
                         text = if (showBack) title else "Search threads...",
                         style = AppTypography.BodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = AppColors.TextSecondary,
                         modifier = Modifier.padding(horizontal = 12.dp),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -183,17 +190,18 @@ private fun ForumHeader(
                 }
             }
 
-            Surface(
-                modifier = Modifier.size(48.dp).clickable(onClick = onNotification),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surface,
-                shadowElevation = 2.dp
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clayShadows(color = AppColors.ClayCard, borderRadius = 12.dp)
+                    .clickable(onClick = onNotification),
+                contentAlignment = Alignment.Center
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Notifications",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = AppColors.TextSecondary
                     )
                 }
             }
@@ -204,7 +212,7 @@ private fun ForumHeader(
 @Composable
 private fun LoadingView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        CircularProgressIndicator(color = Color.White)
     }
 }
 
@@ -212,11 +220,11 @@ private fun LoadingView() {
 private fun NotConnectedView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(32.dp)) {
-            Icon(Icons.Outlined.Forum, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(64.dp))
+            Icon(Icons.Outlined.Forum, null, tint = Color.White, modifier = Modifier.size(64.dp))
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Connect to MAL", style = AppTypography.HeadlineSmall, color = MaterialTheme.colorScheme.onBackground)
+            Text("Connect to MAL", style = AppTypography.HeadlineSmall, color = Color.White)
             Spacer(modifier = Modifier.height(8.dp))
-            Text("Sign in to access forums", style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Sign in to access forums", style = AppTypography.BodyMedium, color = AppColors.TextSecondary)
         }
     }
 }
@@ -225,8 +233,8 @@ private fun NotConnectedView() {
 private fun ErrorView(error: String, onRetry: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(error, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(16.dp))
-            Button(onClick = onRetry) { Text("Retry") }
+            Text(error, color = Color.White, modifier = Modifier.padding(16.dp))
+            Button(onClick = onRetry, colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)) { Text("Retry") }
         }
     }
 }
@@ -246,7 +254,7 @@ private fun BoardsView(
                 Text(
                     text = "FOLLOWED SERIES",
                     style = AppTypography.Metadata.copy(fontWeight = FontWeight.Bold),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 
@@ -260,49 +268,48 @@ private fun BoardsView(
                                 modifier = Modifier
                                     .size(64.dp)
                                     .clip(CircleShape)
-                                    .border(2.dp, MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f), CircleShape)
+                                    .border(2.dp, Color.White.copy(alpha = 0.3f), CircleShape)
                                     .clickable { /* TODO */ },
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(Icons.Default.Add, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Icon(Icons.Default.Add, null, tint = Color.White)
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("Add New", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("Add New", style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
                         }
                     }
                     
                     items(3) { index ->
                         val (name, color) = when(index) {
-                            0 -> "One Piece" to MaterialTheme.colorScheme.primary
-                            1 -> "Jujutsu Kaisen" to MaterialTheme.colorScheme.secondary
-                            else -> "Bleach" to Color(0xFFEAB308)
+                            0 -> "One Piece" to Color.White
+                            1 -> "Jujutsu Kaisen" to Color.White.copy(alpha = 0.6f)
+                            else -> "Bleach" to Color.White.copy(alpha = 0.3f)
                         }
                         
                         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(64.dp)) {
                             Box(
                                 modifier = Modifier.size(64.dp)
                             ) {
-                                Surface(
+                                ClayCard(
                                     modifier = Modifier.fillMaxSize(),
-                                    shape = CircleShape,
-                                    color = color,
-                                    border = androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.background)
+                                    borderRadius = 32.dp,
+                                    color = color
                                 ) {
                                     Box(contentAlignment = Alignment.Center) {
-                                        Text(name.take(1), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
+                                        Text(name.take(1), color = if (color == Color.White) Color.Black else Color.White, fontWeight = FontWeight.Bold)
                                     }
                                 }
                                 Box(
                                     modifier = Modifier
                                         .align(Alignment.BottomEnd)
-                                        .background(MaterialTheme.colorScheme.primary, CircleShape)
+                                        .background(Color.White, CircleShape)
                                         .padding(horizontal = 4.dp, vertical = 1.dp)
                                 ) {
-                                    Text("${(index + 1) * 5}", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = MaterialTheme.colorScheme.onPrimary)
+                                    Text("${(index + 1) * 5}", style = AppTypography.LabelSmall.copy(fontSize = 10.sp), color = Color.Black)
                                 }
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(name, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(name, style = AppTypography.LabelSmall, color = AppColors.TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }
@@ -314,7 +321,7 @@ private fun BoardsView(
                 Text(
                     text = category.title,
                     style = AppTypography.TitleLarge,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = Color.White,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
@@ -328,31 +335,29 @@ private fun BoardsView(
 
 @Composable
 private fun BoardItem(board: MalForumBoard, onClick: () -> Unit) {
-    Surface(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
-            .clickable(onClick = onClick),
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp),
-        shadowElevation = 2.dp
+            .clayShadows(color = AppColors.ClayCard, borderRadius = 16.dp)
+            .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(board.title, style = AppTypography.TitleMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(board.title, style = AppTypography.TitleMedium, color = Color.White)
             if (board.description.isNotBlank()) {
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(board.description, style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(board.description, style = AppTypography.BodySmall, color = AppColors.TextSecondary)
             }
             
             if (!board.subboards.isNullOrEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     board.subboards.take(3).forEach { sub ->
-                        Surface(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(8.dp)) {
+                        ClayCard(color = Color.White.copy(alpha=0.1f), borderRadius = 8.dp) {
                             Text(
                                 sub.title,
                                 style = AppTypography.LabelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = Color.White,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                             )
                         }
@@ -377,7 +382,7 @@ private fun TopicsView(
             Text(
                 text = boardTitle ?: "Discussion",
                 style = AppTypography.TitleLarge,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = Color.White,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -391,22 +396,22 @@ private fun TopicsView(
 
 @Composable
 private fun TopicCard(topic: MalForumTopic, onClick: () -> Unit) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp),
-        shadowElevation = 2.dp
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clayShadows(color = AppColors.ClayCard, borderRadius = 16.dp)
+            .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Surface(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(50)
+                ClayCard(
+                    color = Color.White.copy(alpha = 0.1f),
+                    borderRadius = 12.dp
                 ) {
                     Text(
                         text = topic.created_by.name,
                         style = AppTypography.Badge,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = Color.White,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                     )
                 }
@@ -414,7 +419,7 @@ private fun TopicCard(topic: MalForumTopic, onClick: () -> Unit) {
                 Text(
                     text = formatDate(topic.created_at),
                     style = AppTypography.Metadata,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = AppColors.TextSecondary
                 )
             }
             
@@ -423,7 +428,7 @@ private fun TopicCard(topic: MalForumTopic, onClick: () -> Unit) {
             Text(
                 text = topic.title,
                 style = AppTypography.TitleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = Color.White,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -433,14 +438,14 @@ private fun TopicCard(topic: MalForumTopic, onClick: () -> Unit) {
              Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+                    .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp))
                     .padding(12.dp),
                 verticalAlignment = Alignment.Top
              ) {
                  AsyncImage(
                     model = topic.created_by.forum_avator,
                     contentDescription = null,
-                    modifier = Modifier.size(32.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceVariant),
+                    modifier = Modifier.size(32.dp).clip(CircleShape).background(Color.White.copy(alpha=0.1f)),
                     contentScale = ContentScale.Crop
                  )
                  Spacer(modifier = Modifier.width(12.dp))
@@ -448,29 +453,15 @@ private fun TopicCard(topic: MalForumTopic, onClick: () -> Unit) {
                      Text(
                          text = topic.created_by.name,
                          style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold),
-                         color = MaterialTheme.colorScheme.onBackground
+                         color = Color.White
                      )
                      Text(
                          text = "${topic.number_of_posts} replies in this thread",
                          style = AppTypography.BodySmall,
-                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                         color = AppColors.TextSecondary,
                          maxLines = 2
                      )
                  }
-             }
-             
-             Spacer(modifier = Modifier.height(12.dp))
-             
-             Row(
-                 modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
-                 horizontalArrangement = Arrangement.SpaceBetween
-             ) {
-                 Row(verticalAlignment = Alignment.CenterVertically) {
-                     Icon(Icons.Outlined.Forum, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
-                     Spacer(modifier = Modifier.width(4.dp))
-                     Text("${topic.number_of_posts} replies", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                 }
-                 Text("View Thread", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
              }
         }
     }
@@ -484,7 +475,7 @@ private fun PostsView(topic: MalForumTopic?, posts: List<MalForumPost>) {
     ) {
         topic?.let {
             item {
-                Text(it.title, style = AppTypography.HeadlineSmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(it.title, style = AppTypography.HeadlineSmall, color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
@@ -496,9 +487,10 @@ private fun PostsView(topic: MalForumTopic?, posts: List<MalForumPost>) {
 
 @Composable
 private fun PostCard(post: MalForumPost) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(16.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clayShadows(color = AppColors.ClayCard, borderRadius = 16.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -510,12 +502,12 @@ private fun PostCard(post: MalForumPost) {
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(post.created_by.name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground)
-                    Text(formatDate(post.created_at), style = AppTypography.Metadata, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(post.created_by.name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(formatDate(post.created_at), style = AppTypography.Metadata, color = AppColors.TextSecondary)
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Text(post.body, style = AppTypography.BodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(post.body, style = AppTypography.BodyMedium, color = AppColors.TextSecondary)
         }
     }
 }

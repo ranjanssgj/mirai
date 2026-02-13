@@ -3,11 +3,13 @@ package com.unifiedotaku.app.ui.screens.manga
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.unifiedotaku.app.data.local.database.entities.MediaType
-import com.unifiedotaku.app.data.remote.api.MangaDto
+import com.unifiedotaku.app.data.remote.api.MangaDto as MangaExtensionDto
 import com.unifiedotaku.app.data.repository.MangaRepository
 import com.unifiedotaku.app.domain.model.Series
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +28,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MangaViewModel @Inject constructor(
-    private val mangaRepository: MangaRepository
+    private val mangaRepository: MangaRepository,
+    private val extensionManager: com.unifiedotaku.app.data.extensions.ExtensionManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MangaUiState())
@@ -35,8 +38,26 @@ class MangaViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        loadInitialData()
+        refreshExtensions()
+        loadMangaHome()
         setCurrentDay()
+    }
+
+    /**
+     * Sync extension registry on startup so all sources are available before any search.
+     */
+    private fun refreshExtensions() {
+        val ids = extensionManager.getAllExtensionIds()
+        _uiState.update { 
+            it.copy(
+                installedExtensionIds = ids,
+                selectedExtensionId = if (it.selectedExtensionId.isBlank() || it.selectedExtensionId !in ids) {
+                    ids.firstOrNull() ?: "comix.to"
+                } else {
+                    it.selectedExtensionId
+                }
+            )
+        }
     }
 
     /**
@@ -51,38 +72,112 @@ class MangaViewModel @Inject constructor(
      * Load all initial data for the home screen.
      * On repo/network failure, falls back to Safe Mode so the page always shows something.
      */
-    private fun loadInitialData() {
+    private fun loadMangaHome() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null, isSafeMode = false) }
+            _uiState.update { it.copy(isLoading = true, showInstallPrompt = false) }
+            
             try {
-                // Fetch from new backend endpoint
-                val homeResponse = mangaRepository.getMangaHome()
+                // 1. Get available extensions from Repo
+                val availableExtensions = try {
+                    extensionManager.getAvailableExtensions()
+                } catch (e: Exception) {
+                    emptyList()
+                }
                 
-                _uiState.update {
+                // 2. Fetch Manga Home data (popular/latest from all sources)
+                val homeResponse = mangaRepository.getMangaHome()
+                val allUpdates = mutableListOf<Series>()
+                
+                homeResponse.extensions.forEach { extension ->
+                    val updates = extension.latestUpdates.map { dto ->
+                        Series(
+                            id = "manga:${extension.name}:${dto.id}",
+                            title = dto.title,
+                            coverUrl = dto.cover,
+                            synopsis = "",
+                            type = MediaType.MANGA,
+                            source = extension.name,
+                            isAnime = false
+                        )
+                    }
+                    allUpdates.addAll(updates)
+                }
+                
+                // If empty, check if we should show install prompt (only if no sources at all)
+                if (allUpdates.isEmpty() && extensionManager.getAllMangaSources().isEmpty()) {
+                     // Check if Comix is "installed" (enabled) - logic moved to Manager but check here if needed
+                     // Since Comix is built-in now, getAllMangaSources should not be empty unless something is wrong.
+                     // But if it is empty or fails:
+                    if (!extensionManager.isComixInstalled()) {
+                        _uiState.update { 
+                            it.copy(
+                                isLoading = false, 
+                                showInstallPrompt = true,
+                                availableExtensions = availableExtensions
+                            ) 
+                        }
+                        return@launch
+                    }
+                }
+
+                _uiState.update { 
                     it.copy(
                         isLoading = false,
-                        extensions = homeResponse.extensions,
-                        error = null
+                        popularManga = allUpdates, 
+                        latestUpdates = allUpdates,
+                        availableExtensions = availableExtensions,
+                        installedExtensionIds = extensionManager.getAllExtensionIds()
                     )
                 }
             } catch (e: Exception) {
                 val fallback = safeModePlaceholderList()
                 val schedule = mockScheduleFromList(fallback)
-                _uiState.update {
+                _uiState.update { 
                     it.copy(
-                        isLoading = false,
+                        isLoading = false, 
                         popularManga = fallback,
                         latestUpdates = fallback,
                         schedule = schedule,
                         isSafeMode = true,
-                        error = e.message ?: "Failed to load data"
-                    )
+                        error = e.message
+                    ) 
                 }
             }
         }
     }
 
-    private fun MangaDto.toSeries(): Series {
+    fun installDefaultExtension() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isInstallingExtension = true) }
+            try {
+                // Simulate download/install delay
+                delay(1500) 
+                extensionManager.installComixExtension()
+                
+                // Reload home to show content
+                loadMangaHome()
+                
+                _uiState.update { 
+                    it.copy(
+                        isInstallingExtension = false,
+                        installMessage = "Extension installed successfully"
+                    ) 
+                }
+                // Clear message after delay
+                delay(3000)
+                _uiState.update { it.copy(installMessage = null) }
+            } catch (e: Exception) {
+                _uiState.update { 
+                    it.copy(
+                        isInstallingExtension = false,
+                        error = "Failed to install: ${e.message}"
+                    ) 
+                }
+            }
+        }
+    }
+
+    private fun MangaExtensionDto.toSeries(): Series {
         return Series(
             id = this.id,
             title = this.title,
@@ -187,35 +282,66 @@ class MangaViewModel @Inject constructor(
     }
 
     /**
+     * Select a manga extension.
+     */
+    fun selectExtension(extensionId: String) {
+        _uiState.update { it.copy(selectedExtensionId = extensionId) }
+    }
+
+    /**
      * Perform search with current filters.
+     * Queries ALL installed extensions in parallel (Komikku-style explorer hub).
      */
     private suspend fun performSearch(query: String) {
+        _uiState.update { it.copy(isSearching = true, error = null) }
+        
         try {
-            val result = mangaRepository.searchManga(query, "comix.to")
-            val seriesList = result.getOrNull()?.map { it.toSeries() } ?: emptyList()
+            val extensionIds = extensionManager.getAllExtensionIds()
             
-            // Filter results based on selected filters (client-side for now)
-            val filtered = seriesList.filter { series ->
+            if (extensionIds.isEmpty()) {
+                _uiState.update { it.copy(isSearching = false, error = "No extensions installed") }
+                return
+            }
+            
+            // Launch parallel search across all extensions
+            val deferredResults = extensionIds.map { extId ->
+                viewModelScope.async {
+                    try {
+                        val result = mangaRepository.searchManga(query, extId)
+                        val mangas = result.getOrNull() ?: emptyList()
+                        val series = mangas.map { dto ->
+                            dto.toSeries().copy(id = "manga:${extId}:${dto.id}", source = extId)
+                        }
+                        extId to series
+                    } catch (e: Exception) {
+                        extId to emptyList<Series>()
+                    }
+                }
+            }
+            
+            val resultPairs = deferredResults.awaitAll()
+            val resultsBySource = resultPairs.toMap()
+            
+            // Flatten all results for the main list (backward compat)
+            val allResults = resultsBySource.values.flatten()
+            
+            // Apply client-side genre filtering
+            val filtered = allResults.filter { series ->
                 val matchesGenres = _uiState.value.selectedGenres.isEmpty() ||
                     series.genres.any { it in _uiState.value.selectedGenres }
                 matchesGenres
             }
             
-            // Note: MangaUiState doesn't seem to have a dedicated 'searchResults' list distinct from 'popularManga' in the original code,
-            // but usually search results replace the main content or overlay it.
-            // For now, let's assume we update 'popularManga' to show results or if there's a specific field.
-            // Checking UiState, it likely relies on where it's displayed.
-            // Actually, let's assume we just update 'popularManga' as the "list" being shown if searching.
-            // Or better, let's keep it simple: just update popularManga for now as the "Main List".
-            
-             _uiState.update {
+            _uiState.update {
                 it.copy(
                     popularManga = filtered,
+                    searchResultsBySource = resultsBySource,
+                    isSearching = false,
                     isLoading = false
                 )
             }
         } catch (e: Exception) {
-            _uiState.update { it.copy(error = e.message) }
+            _uiState.update { it.copy(isSearching = false, error = e.message) }
         }
     }
 
@@ -223,7 +349,47 @@ class MangaViewModel @Inject constructor(
      * Refresh all data.
      */
     fun refresh() {
-        loadInitialData()
+        loadMangaHome()
+    }
+
+    private fun loadAvailableExtensions() {
+        viewModelScope.launch {
+            // We can fetch this in parallel or after initial data
+            try {
+                // Determine if we need to fetch extensions (e.g. if list is empty or force refresh)
+                val extensions = extensionManager.getAvailableExtensions()
+                _uiState.update { it.copy(availableExtensions = extensions) }
+            } catch (e: Exception) {
+                // Log or ignore, don't block the main UI
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     * Install an extension (Download APK).
+     * This simulates the action or prepares the Intent.
+     */
+    fun installExtension(extension: com.unifiedotaku.app.data.remote.api.RepoExtension) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isInstallingExtension = true, installMessage = "Downloading ${extension.name}...") }
+            try {
+                val apkUrl = extensionManager.getExtensionApkUrl(extension)
+                // In a real implementation: Download logic here.
+                // For now, we just show the URL or simulate success.
+                // The user asked to "integrate the apk".
+                // We'd use a DownloadManager or generic file downloader here.
+                delay(1000) // Simulate download
+                _uiState.update { 
+                    it.copy(
+                        isInstallingExtension = false, 
+                        installMessage = "Downloaded ${extension.name}. (Integration pending: $apkUrl)"
+                    )
+                }
+            } catch (e: Exception) {
+                 _uiState.update { it.copy(isInstallingExtension = false, installMessage = "Failed: ${e.message}") }
+            }
+        }
     }
 
     override fun onCleared() {

@@ -31,6 +31,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,23 +63,23 @@ fun PlayerSettingsScreen(
                 title = { Text("Anime Player", style = AppTypography.TitleMedium) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White)
                     }
                 },
                 actions = {
                     TextButton(onClick = { /* Reset Logic */ }) {
-                        Text("Reset", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium)
+                        Text("Reset", color = Color.White, fontWeight = FontWeight.Medium)
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -91,14 +94,13 @@ fun PlayerSettingsScreen(
             item {
                 SettingsSectionHeader("Streaming Quality")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         DropdownSettingItem("Default Quality", "Preferred resolution over Wi-Fi", quality, listOf("1080p", "720p", "480p", "360p", "auto")) { viewModel.setDefaultQuality(it) }
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         DropdownSettingItem("Buffer Size", "Preload amount (affects data usage)", bufferSize, listOf("Small", "Normal", "Large")) { viewModel.setBufferSize(it) }
                     }
                 }
@@ -108,33 +110,32 @@ fun PlayerSettingsScreen(
             item {
                 SettingsSectionHeader("Playback Behavior")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         SwitchSettingItem(
                             icon = Icons.Filled.QueuePlayNext, 
-                            iconColor = Color(0xFF3B82F6), // Blue
+                            iconColor = Color.White, 
                             title = "Auto-play Next", 
                             checked = autoPlayNext
                         ) { viewModel.toggleAutoNext() }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         SwitchSettingItem(
                             icon = Icons.Filled.FastForward, 
-                            iconColor = Color(0xFFA855F7), // Purple
+                            iconColor = Color.White, 
                             title = "Auto-skip Intro", 
                             checked = skipIntro
                         ) { viewModel.toggleSkipIntro() }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         SwitchSettingItem(
                             icon = Icons.Filled.SkipNext, 
-                            iconColor = Color(0xFFF97316), // Orange
+                            iconColor = Color.White, 
                             title = "Auto-skip Outro", 
                             checked = skipOutro
                         ) { viewModel.toggleSkipOutro() }
@@ -144,7 +145,7 @@ fun PlayerSettingsScreen(
                 Text(
                     "Skipping works best on verified sources. Some older anime may not support accurate timestamps.",
                     style = AppTypography.LabelSmall.copy(fontSize = 11.sp),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
@@ -153,10 +154,9 @@ fun PlayerSettingsScreen(
             item {
                 SettingsSectionHeader("Subtitle Style")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         // Preview Area
@@ -207,10 +207,10 @@ fun PlayerSettingsScreen(
                              horizontalArrangement = Arrangement.SpaceBetween,
                              verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Font Size", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+                            Text("Font Size", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
                             Row(
                                 modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(8.dp))
+                                    .background(Color.Black.copy(alpha=0.2f), RoundedCornerShape(8.dp))
                                     .padding(4.dp),
                                 horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
@@ -220,7 +220,7 @@ fun PlayerSettingsScreen(
                             }
                         }
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         // Color Controls
                         Row(
@@ -230,22 +230,22 @@ fun PlayerSettingsScreen(
                              horizontalArrangement = Arrangement.SpaceBetween,
                              verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Text Color", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+                            Text("Text Color", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
                             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                                 PlayerColorOption(Color.White, subColor == Color.White) { viewModel.setSubtitleColor(android.graphics.Color.WHITE) }
                                 PlayerColorOption(Color.Yellow, subColor == Color.Yellow) { viewModel.setSubtitleColor(android.graphics.Color.YELLOW) }
                                 PlayerColorOption(Color.Cyan, subColor == Color.Cyan) { viewModel.setSubtitleColor(android.graphics.Color.CYAN) }
                                 // Custom mocked button
                                 Box(
-                                    modifier = Modifier.size(24.dp).background(MaterialTheme.colorScheme.surfaceVariant, CircleShape).clickable {},
+                                    modifier = Modifier.size(24.dp).background(Color.White.copy(alpha=0.1f), CircleShape).clickable {},
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Icon(Icons.Filled.Add, null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                                    Icon(Icons.Filled.Add, null, tint = Color.White, modifier = Modifier.size(16.dp))
                                 }
                             }
                         }
 
-                         Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                         HorizontalDivider(color = Color.White.copy(alpha=0.1f))
 
                         // Background Control
                         DropdownSettingItem("Background", null, subBackground, listOf("None", "Outline", "Drop Shadow", "Dimmed Box", "Solid Box")) { viewModel.setSubtitleBackground(it) }
@@ -275,17 +275,17 @@ fun SwitchSettingItem(icon: ImageVector, iconColor: Color, title: String, checke
             ) {
                 Icon(icon, null, tint = iconColor, modifier = Modifier.size(18.dp))
             }
-            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
         }
         
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                checkedThumbColor = Color.White,
+                checkedTrackColor = AppColors.TextPrimary,
+                uncheckedThumbColor = AppColors.TextSecondary,
+                uncheckedTrackColor = Color.Black
             ),
             modifier = Modifier.scale(0.8f)
         )
@@ -305,16 +305,16 @@ fun DropdownSettingItem(title: String, subtitle: String?, currentValue: String, 
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
-            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
              if (subtitle != null) {
-                Text(subtitle, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(subtitle, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
             }
         }
         
         Box {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(currentValue, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = if(subtitle!=null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface)
-                Icon(Icons.Filled.ExpandMore, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(currentValue, style = AppTypography.BodySmall, fontWeight = FontWeight.SemiBold, color = Color.White)
+                Icon(Icons.Filled.ExpandMore, null, tint = AppColors.TextSecondary)
             }
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 options.forEach { option ->
@@ -336,7 +336,7 @@ fun FontSizeOption(text: String, size: androidx.compose.ui.unit.TextUnit, isSele
      Box(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
-            .background(if (isSelected) MaterialTheme.colorScheme.surface else Color.Transparent)
+            .background(if (isSelected) Color.White.copy(alpha=0.1f) else Color.Transparent)
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 6.dp),
         contentAlignment = Alignment.Center
@@ -345,7 +345,7 @@ fun FontSizeOption(text: String, size: androidx.compose.ui.unit.TextUnit, isSele
             text, 
             fontSize = size, 
             fontWeight = FontWeight.Bold, 
-            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isSelected) Color.White else AppColors.TextSecondary
         )
     }
 }
@@ -359,7 +359,7 @@ private fun PlayerColorOption(color: Color, isSelected: Boolean, onClick: () -> 
             .clickable(onClick = onClick)
             .border(
                 width = if (isSelected) 2.dp else 1.dp, 
-                color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Gray.copy(alpha=0.5f), 
+                color = if (isSelected) Color.White else Color.Gray.copy(alpha=0.5f), 
                 shape = CircleShape
             )
             .padding(2.dp),

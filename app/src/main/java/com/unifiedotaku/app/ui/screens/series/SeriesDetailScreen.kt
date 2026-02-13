@@ -41,6 +41,10 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.unifiedotaku.app.ui.navigation.Routes
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.theme.clayShadow
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
 import com.unifiedotaku.app.data.local.database.entities.LibraryStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,7 +97,7 @@ fun SeriesDetailScreen(
             confirmButton = {
                 if (uiState.libraryStatus != null) {
                     TextButton(onClick = { viewModel.removeFromLibrary(); showLibraryDialog = false }) {
-                        Text("Remove from Library", color = MaterialTheme.colorScheme.error)
+                        Text("Remove from Library", color = Color.White)
                     }
                 }
             }
@@ -103,15 +107,15 @@ fun SeriesDetailScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(AppColors.DarkBackground)
     ) {
         if (uiState.isLoading && series == null) {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                CircularProgressIndicator(color = Color.White)
             }
         } else if (series == null) {
              Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                 Text(text = uiState.error ?: "Series not found", color = MaterialTheme.colorScheme.onBackground)
+                 Text(text = uiState.error ?: "Series not found", color = Color.White)
              }
         } else {
             LazyColumn(
@@ -124,7 +128,7 @@ fun SeriesDetailScreen(
                             .fillMaxWidth()
                             .shadow(elevation = 24.dp, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
                             .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
-                            .background(MaterialTheme.colorScheme.background)
+                            .background(AppColors.DarkBackground)
                     ) {
                         AsyncImage(
                             model = series.bannerUrl ?: series.coverUrl,
@@ -133,7 +137,13 @@ fun SeriesDetailScreen(
                             contentScale = ContentScale.Crop
                         )
                         Box(modifier = Modifier.fillMaxWidth().height(500.dp).background(
-                            Brush.verticalGradient(colors = listOf(MaterialTheme.colorScheme.background.copy(alpha = 0.4f), MaterialTheme.colorScheme.background.copy(alpha = 0.8f), MaterialTheme.colorScheme.background))
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = 0.05f),
+                                    Color.Transparent,
+                                    AppColors.DarkBackground
+                                )
+                            )
                         ))
                         IconButton(
                             onClick = { navController.popBackStack() },
@@ -143,7 +153,10 @@ fun SeriesDetailScreen(
                         }
                         Column(modifier = Modifier.padding(top = 100.dp).padding(horizontal = 20.dp).padding(bottom = 24.dp)) {
                              Row(verticalAlignment = Alignment.Top) {
-                                 Card(shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(12.dp), modifier = Modifier.width(112.dp).aspectRatio(0.7f)) {
+                                 ClayCard(
+                                     modifier = Modifier.width(112.dp).aspectRatio(0.7f),
+                                     borderRadius = 16.dp
+                                 ) {
                                      AsyncImage(model = series.coverUrl, contentDescription = "Poster", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                                  }
                                  Spacer(modifier = Modifier.width(20.dp))
@@ -151,30 +164,30 @@ fun SeriesDetailScreen(
                                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { TinyTag("MAL"); TinyTag("AL") }
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(series.title, style = AppTypography.DisplayMedium, color = Color.White)
-                                    Text("${series.titleAlternate ?: series.title} (${series.year ?: "?"}); ${series.status}", style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        DetailTag("R-17+")
-                                        DetailTag(series.status)
-                                        DetailTag(icon = Icons.Filled.ClosedCaption)
-                                    }
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Row(modifier = Modifier.padding(end = 8.dp)) { repeat(4) { Icon(Icons.Filled.Star, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp)) }; Icon(Icons.Filled.StarHalf, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp)) }
-                                        Text(text = series.userScore?.toString() ?: "N/A", style = AppTypography.BodySmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
-                                        Text(text = " by Users", style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                    }
+                                     Text("${series.titleAlternate ?: series.title} (${series.year ?: "?"}); ${series.status}", style = AppTypography.BodySmall, color = AppColors.TextSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                     Spacer(modifier = Modifier.height(12.dp))
+                                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                         DetailTag("R-17+")
+                                         DetailTag(series.status)
+                                         DetailTag(icon = Icons.Filled.ClosedCaption)
+                                     }
+                                     Spacer(modifier = Modifier.height(12.dp))
+                                     Row(verticalAlignment = Alignment.CenterVertically) {
+                                         Row(modifier = Modifier.padding(end = 8.dp)) { repeat(4) { Icon(Icons.Filled.Star, null, tint = Color(0xFFFFD700), modifier = Modifier.size(14.dp)) }; Icon(Icons.Filled.StarHalf, null, tint = Color(0xFFFFD700), modifier = Modifier.size(14.dp)) }
+                                         Text(text = series.userScore?.toString() ?: "N/A", style = AppTypography.BodySmall.copy(fontWeight = FontWeight.Bold), color = Color.White)
+                                         Text(text = " by Users", style = AppTypography.BodySmall, color = AppColors.TextSecondary)
+                                     }
                                  }
                              }
                              Spacer(modifier = Modifier.height(24.dp))
-                             Text(series.synopsis ?: "No description available.", style = AppTypography.BodyMedium.copy(lineHeight = 22.sp), color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = if (showMoreInfo) Int.MAX_VALUE else 4, overflow = TextOverflow.Ellipsis)
-                             Spacer(modifier = Modifier.height(16.dp))
-                             Box(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable { showMoreInfo = !showMoreInfo }.background(Color.White.copy(alpha = 0.05f)).padding(vertical = 8.dp), contentAlignment = Alignment.Center) {
-                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                     Text(if (showMoreInfo) "Show Less" else "See More Info", style = AppTypography.LabelMedium, color = MaterialTheme.colorScheme.primary)
-                                     Icon(if (showMoreInfo) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
-                                 }
-                             }
+                              Text(series.synopsis ?: "No description available.", style = AppTypography.BodyMedium.copy(lineHeight = 22.sp), color = AppColors.TextSecondary, maxLines = if (showMoreInfo) Int.MAX_VALUE else 4, overflow = TextOverflow.Ellipsis)
+                              Spacer(modifier = Modifier.height(16.dp))
+                              Box(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable { showMoreInfo = !showMoreInfo }.background(Color.White.copy(alpha = 0.05f)).padding(vertical = 8.dp), contentAlignment = Alignment.Center) {
+                                  Row(verticalAlignment = Alignment.CenterVertically) {
+                                      Text(if (showMoreInfo) "Show Less" else "See More Info", style = AppTypography.LabelMedium, color = Color.White)
+                                      Icon(if (showMoreInfo) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                                  }
+                              }
                              AnimatedVisibility(visible = showMoreInfo, enter = expandVertically() + fadeIn(), exit = shrinkVertically() + fadeOut()) {
                                  Column(modifier = Modifier.fillMaxWidth().padding(top = 12.dp).border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                      MetadataRow("Premiered:", "${series.season} ${series.year}")
@@ -194,7 +207,7 @@ fun SeriesDetailScreen(
                             icon = if (isInLibrary) Icons.Filled.Check else Icons.Filled.Add,
                             label = if (isInLibrary) "In Library" else "Add to Library",
                             onClick = { showLibraryDialog = true },
-                            tint = if (isInLibrary) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (isInLibrary) Color.White else AppColors.TextSecondary
                         )
                         ActionIconButton(icon = Icons.Filled.Timer, label = "Schedule", onClick = { })
                         ActionIconButton(icon = Icons.Filled.BarChart, label = "Trackers", onClick = { })
@@ -202,31 +215,47 @@ fun SeriesDetailScreen(
                     }
                 }
                 
-                if (uiState.episodes.isNotEmpty()) {
-                    item {
-                        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(Icons.Filled.PlayCircle, null, tint = MaterialTheme.colorScheme.primary)
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Anime (" + uiState.episodes.size + ")", style = AppTypography.TitleLarge, color = Color.White)
-                                }
+                item {
+                    Column(modifier = Modifier.padding(horizontal = 20.dp).padding(top = 24.dp)) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.PlayCircle, null, tint = Color.White)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Anime (" + uiState.episodes.size + ")", style = AppTypography.TitleLarge, color = Color.White)
                             }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            if (uiState.isStreamLoading) {
-                                Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-                                    CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.primary)
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Loading Stream...", style = AppTypography.LabelMedium, color = MaterialTheme.colorScheme.primary)
-                                }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        if (uiState.isStreamLoading) {
+                            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.White)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Loading Stream...", style = AppTypography.LabelMedium, color = Color.White)
                             }
+                        }
+
+                        if (uiState.episodes.isEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
+                                    .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp))
+                                    .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(12.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "No Episodes Available",
+                                    style = AppTypography.BodyMedium,
+                                    color = AppColors.TextSecondary
+                                )
+                            }
+                        } else {
                             Column(modifier = Modifier.heightIn(max = 500.dp).verticalScroll(rememberScrollState())) {
                                 uiState.episodes.forEach { episode ->
                                     EpisodeCard(
                                         number = episode.number, 
                                         title = episode.title ?: "Episode ${episode.number}", 
+                                        placeholderUrl = series.coverUrl,
                                         onClick = { 
-                                            // Navigate directly to player with Anime ID and Episode Number
                                             navController.navigate(Routes.animePlayer(series.id, episode.number))
                                         }
                                     )
@@ -237,23 +266,70 @@ fun SeriesDetailScreen(
                     }
                 }
 
-                if (uiState.chapters.isNotEmpty()) {
+                if (uiState.relatedSeasons.isNotEmpty()) {
                     item {
-                         Column(modifier = Modifier.padding(horizontal = 20.dp).padding(top = 24.dp)) {
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(Icons.Outlined.MenuBook, null, tint = MaterialTheme.colorScheme.primary)
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Manga (" + uiState.chapters.size + ")", style = AppTypography.TitleLarge, color = Color.White)
-                                }
+                        Column(modifier = Modifier.padding(vertical = 24.dp)) {
+                            Row(modifier = Modifier.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Filled.List, null, tint = Color.White)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Relations", style = AppTypography.TitleLarge, color = Color.White)
                             }
                             Spacer(modifier = Modifier.height(16.dp))
-                            uiState.chapters.forEach { chapter ->
-                                ChapterCard(number = chapter.number.toInt(), title = chapter.title ?: "", onClick = { navController.navigate(Routes.mangaReader(chapter.id, uiState.series?.id ?: "")) })
-                                Spacer(modifier = Modifier.height(8.dp))
+                            LazyRow(
+                                contentPadding = PaddingValues(horizontal = 20.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                items(uiState.relatedSeasons) { relation ->
+                                    RelationCard(
+                                        relation = relation,
+                                        onClick = { navController.navigate(Routes.seriesDetail(relation.malId.toString())) }
+                                    )
+                                }
                             }
-                         }
+                        }
                     }
+                }
+
+                item {
+                     Column(modifier = Modifier.padding(horizontal = 20.dp).padding(top = 24.dp)) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Outlined.MenuBook, null, tint = Color.White)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Manga (" + uiState.chapters.size + ")", style = AppTypography.TitleLarge, color = Color.White)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        if (uiState.chapters.isEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
+                                    .background(Color.White.copy(alpha = 0.05f), RoundedCornerShape(12.dp))
+                                    .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(12.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "No Chapters Found",
+                                    style = AppTypography.BodyMedium,
+                                    color = AppColors.TextSecondary
+                                )
+                            }
+                        } else {
+                            Column(modifier = Modifier.heightIn(max = 500.dp).verticalScroll(rememberScrollState())) {
+                                uiState.chapters.forEach { chapter ->
+                                    ChapterCard(
+                                        number = chapter.number, 
+                                        title = chapter.title ?: "Chapter ${chapter.number}", 
+                                        date = chapter.releaseDate,
+                                        onClick = { navController.navigate(Routes.mangaReader(chapter.id, chapter.seriesId)) }
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                }
+                            }
+                        }
+                     }
                 }
             }
         }
@@ -261,43 +337,130 @@ fun SeriesDetailScreen(
 }
 
 @Composable
-private fun ActionIconButton(icon: ImageVector, label: String, onClick: () -> Unit, tint: Color = MaterialTheme.colorScheme.primary) {
+private fun ActionIconButton(icon: ImageVector, label: String, onClick: () -> Unit, tint: Color = AppColors.Primary) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Surface(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.surface, shadowElevation = 4.dp, modifier = Modifier.size(56.dp).clickable(onClick = onClick)) {
-            Box(contentAlignment = Alignment.Center) { Icon(icon, null, tint = tint, modifier = Modifier.size(24.dp)) }
+        ClayCard(
+            modifier = Modifier
+                .size(56.dp)
+                .clickable(onClick = onClick),
+            borderRadius = 16.dp
+        ) {
+             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                 Icon(icon, null, tint = tint, modifier = Modifier.size(24.dp))
+             }
         }
-        Text(label, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(label, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
     }
 }
 
 @Composable
-private fun EpisodeCard(number: Int, title: String, onClick: () -> Unit = {}) {
-    Surface(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(16.dp), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline), modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)) {
+private fun EpisodeCard(number: Int, title: String, placeholderUrl: String = "", onClick: () -> Unit = {}) {
+    ClayCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        borderRadius = 16.dp
+    ) {
         Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.width(96.dp).aspectRatio(16f / 9f).clip(RoundedCornerShape(8.dp)).background(Color.DarkGray)) {
-                 Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha=0.3f)), contentAlignment = Alignment.Center) {
-                     Icon(Icons.Filled.PlayArrow, null, tint = Color.White.copy(alpha=0.8f))
+                if (placeholderUrl.isNotEmpty()) {
+                    AsyncImage(
+                        model = placeholderUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize().alpha(0.5f)
+                    )
+                }
+                Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha=0.3f)), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Filled.PlayArrow, null, tint = Color.White.copy(alpha=0.8f))
                  }
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text("EP $number", style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.primary, modifier = Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal=6.dp, vertical=2.dp))
+                Text("EP $number", style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold), color = AppColors.TextPrimary, modifier = Modifier.background(AppColors.Primary.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal=6.dp, vertical=2.dp))
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(title, style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.SemiBold), color = MaterialTheme.colorScheme.onBackground, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(title, style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.SemiBold), color = AppColors.TextPrimary, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     }
 }
 
 @Composable
-private fun ChapterCard(number: Int, title: String, onClick: () -> Unit = {}) {
-    Surface(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(16.dp), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline), modifier = Modifier.fillMaxWidth().clickable(onClick = onClick)) {
-        Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            Column {
-                Text("Chapter $number", style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.SemiBold), color = MaterialTheme.colorScheme.onBackground)
-                Text(title, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+private fun RelationCard(relation: RelatedEntry, onClick: () -> Unit) {
+    ClayCard(
+        modifier = Modifier
+            .width(160.dp)
+            .clickable(onClick = onClick),
+        borderRadius = 12.dp
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(
+                text = relation.relation,
+                style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold),
+                color = AppColors.Primary,
+                modifier = Modifier.background(AppColors.Primary.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal=6.dp, vertical=2.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = relation.name,
+                style = AppTypography.BodySmall.copy(fontWeight = FontWeight.SemiBold),
+                color = AppColors.TextPrimary,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
+}
+
+@Composable
+private fun ChapterCard(number: Float, title: String, date: Long? = null, onClick: () -> Unit = {}) {
+    ClayCard(
+        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+        borderRadius = 16.dp
+    ) {
+        Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.White.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = if (number % 1f == 0f) number.toInt().toString() else number.toString(),
+                    style = AppTypography.TitleMedium.copy(fontWeight = FontWeight.Bold),
+                    color = Color.White
+                )
             }
-            Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Chapter ${if (number % 1f == 0f) number.toInt() else number}",
+                    style = AppTypography.LabelSmall.copy(fontWeight = FontWeight.Bold),
+                    color = Color.White,
+                    modifier = Modifier.background(Color.White.copy(alpha=0.1f), RoundedCornerShape(4.dp)).padding(horizontal=6.dp, vertical=2.dp)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = title,
+                    style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                if (date != null && date > 0) {
+                    val formattedDate = remember(date) {
+                         val sdf = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault())
+                         sdf.format(java.util.Date(date))
+                    }
+                    Text(
+                        text = formattedDate,
+                        style = AppTypography.LabelSmall,
+                        color = AppColors.TextSecondary
+                    )
+                }
+            }
+            Icon(Icons.Filled.ChevronRight, null, tint = AppColors.TextSecondary)
         }
     }
 }
@@ -322,7 +485,7 @@ private fun DetailTag(text: String? = null, icon: ImageVector? = null) {
 @Composable
 private fun MetadataRow(label: String, value: String, isStatus: Boolean = false) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(label, style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.width(80.dp))
-        Text(value, style = AppTypography.BodySmall, color = if (isStatus) MaterialTheme.colorScheme.primary else Color.White, fontWeight = if (isStatus) FontWeight.Medium else FontWeight.Normal)
+        Text(label, style = AppTypography.BodySmall, color = AppColors.TextSecondary, modifier = Modifier.width(80.dp))
+        Text(value, style = AppTypography.BodySmall, color = if (isStatus) Color.White else Color.White, fontWeight = if (isStatus) FontWeight.Medium else FontWeight.Normal)
     }
 }

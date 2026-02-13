@@ -28,6 +28,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,25 +52,27 @@ fun AboutSettingsScreen(
                         modifier = Modifier.padding(end = 16.dp)
                     ) {
                         Column(horizontalAlignment = Alignment.End) {
-                            Text("OtakuMaster", style = AppTypography.LabelLarge, fontWeight = FontWeight.Bold)
-                            Text("Premium Member", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("OtakuMaster", style = AppTypography.LabelLarge, fontWeight = FontWeight.Bold, color = Color.White)
+                            Text("Premium Member", style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
                         }
                         Box(
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .background(Color.LightGray)
+                                .background(Color.White.copy(alpha=0.1f))
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White,
+                    actionIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -84,31 +89,30 @@ fun AboutSettingsScreen(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = RoundedCornerShape(20.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f)),
+                    ClayCard(
+                        borderRadius = 20.dp,
                         modifier = Modifier.size(112.dp)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
-                            Icon(Icons.Filled.PlayCircle, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(64.dp))
+                            Icon(Icons.Filled.PlayCircle, null, tint = Color.White, modifier = Modifier.size(64.dp))
                         }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
-                    Text("UnifiedHub", style = AppTypography.HeadlineSmall.copy(fontWeight = FontWeight.Bold)) // Using App Name
+                    Text("UnifiedHub", style = AppTypography.HeadlineSmall.copy(fontWeight = FontWeight.Bold), color = Color.White) // Using App Name
                     Spacer(modifier = Modifier.height(8.dp))
-                    Surface(
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha=0.5f),
-                        shape = CircleShape
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha=0.1f))
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text("v2.4.0", style = AppTypography.LabelMedium, fontWeight = FontWeight.Medium)
-                            Box(modifier = Modifier.size(4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, CircleShape))
-                            Text("Build 309", style = AppTypography.LabelMedium, fontWeight = FontWeight.Medium)
+                            Text("v2.4.0", style = AppTypography.LabelMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                            Box(modifier = Modifier.size(4.dp).background(Color.White.copy(alpha=0.4f), CircleShape))
+                            Text("Build 309", style = AppTypography.LabelMedium, fontWeight = FontWeight.Medium, color = Color.White)
                         }
                     }
                 }
@@ -119,9 +123,9 @@ fun AboutSettingsScreen(
                 Button(
                     onClick = {},
                     modifier = Modifier.fillMaxWidth().height(56.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
                     shape = RoundedCornerShape(12.dp),
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Filled.Favorite, null)
@@ -132,7 +136,7 @@ fun AboutSettingsScreen(
                 Text(
                     "Your support helps keep the servers running and features coming.", 
                     style = AppTypography.LabelSmall, 
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
                 )
@@ -140,33 +144,32 @@ fun AboutSettingsScreen(
             
             // Community and Updates
             item {
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
-                        ClickableSettingItem(
+                         ClickableSettingItem(
                             icon = Icons.Filled.SystemUpdate,
-                            iconColor = Color(0xFF3B82F6), // Blue
+                            iconColor = Color.White, 
                             title = "Check for Updates",
                             trailingIcon = Icons.Filled.ChevronRight
                         ) {}
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         ClickableSettingItem(
                             icon = Icons.Filled.Forum,
-                            iconColor = Color(0xFF6366F1), // Indigo
+                            iconColor = Color.White, 
                             title = "Join Discord",
                             trailingIcon = Icons.Filled.OpenInNew
                         ) {}
                         
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         
                         ClickableSettingItem(
                             icon = Icons.Filled.Public,
-                            iconColor = Color(0xFFF97316), // Orange
+                            iconColor = Color.White, 
                             title = "Visit Reddit",
                             trailingIcon = Icons.Filled.OpenInNew
                         ) {}
@@ -178,18 +181,17 @@ fun AboutSettingsScreen(
             item {
                 SettingsSectionHeader("Open Source Libraries")
                 Spacer(modifier = Modifier.height(8.dp))
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(12.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 12.dp
                 ) {
                     Column {
                         LibraryItem("ExoPlayer", "Media Playback", "v2.18.1")
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         LibraryItem("Retrofit", "Networking", "v2.9.0")
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         LibraryItem("Glide", "Image Loading", "v4.14.2")
-                        Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.2f))
+                        HorizontalDivider(color = Color.White.copy(alpha=0.1f))
                         LibraryItem("Room", "Database", "v2.5.0")
                     }
                 }
@@ -200,7 +202,7 @@ fun AboutSettingsScreen(
                 Text(
                     "Made with ♥ for Anime Fans",
                     style = AppTypography.LabelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
                 )
@@ -229,14 +231,14 @@ private fun ClickableSettingItem(
             Box(
                 modifier = Modifier
                     .size(36.dp)
-                    .background(iconColor.copy(alpha = 0.1f), CircleShape),
+                    .background(Color.White.copy(alpha = 0.1f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(icon, null, tint = iconColor, modifier = Modifier.size(20.dp))
+                Icon(icon, null, tint = Color.White, modifier = Modifier.size(20.dp))
             }
-            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
+            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
         }
-        Icon(trailingIcon, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(trailingIcon, null, tint = AppColors.TextSecondary)
     }
 }
 
@@ -250,16 +252,16 @@ private fun LibraryItem(name: String, description: String, version: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
-            Text(name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-            Text(description, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+            Text(description, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
         }
         
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(4.dp))
+                .background(Color.White.copy(alpha=0.1f), RoundedCornerShape(4.dp))
                 .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
-            Text(version, style = AppTypography.LabelSmall.copy(fontSize = 10.sp), fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(version, style = AppTypography.LabelSmall.copy(fontSize = 10.sp), fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace, color = Color.White)
         }
     }
 }

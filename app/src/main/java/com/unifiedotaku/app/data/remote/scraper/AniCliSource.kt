@@ -1,6 +1,7 @@
 package com.unifiedotaku.app.data.remote.scraper
 
 import android.util.Log
+import com.unifiedotaku.app.data.extensions.AnimeSource
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
@@ -12,7 +13,8 @@ import kotlinx.coroutines.withContext
 @Singleton
 class AniCliSource @Inject constructor(
     private val client: OkHttpClient
-) {
+) : AnimeSource {
+    override val name = "AllAnime"
     private val host = "https://api.allanime.day/api"
     private val headers = mapOf(
         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0",

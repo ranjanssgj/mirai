@@ -51,7 +51,7 @@ data class PlayerUiState(
     val playbackSpeed: Float = 1.0f,
     val volume: Float = 1.0f,
     val isMuted: Boolean = false,
-    val isFullscreen: Boolean = true,
+    val isFullscreen: Boolean = false,
     val aspectRatio: AspectRatio = AspectRatio.FIT,
     val skipIntroEnabled: Boolean = true,
     

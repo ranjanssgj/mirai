@@ -33,4 +33,7 @@ interface JikanApi {
     ): JikanResponse
     @GET("anime/{id}/relations")
     suspend fun getAnimeRelations(@Path("id") id: String): com.unifiedotaku.app.data.model.anime.JikanRelationsResponse
+
+    @GET("manga/{id}")
+    suspend fun getMangaDetails(@Path("id") id: String): com.unifiedotaku.app.data.model.anime.JikanMangaSingleResponse
 }

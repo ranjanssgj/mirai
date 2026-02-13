@@ -19,6 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
 import com.unifiedotaku.app.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,14 +58,15 @@ fun ExtensionRepoScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    containerColor = AppColors.DarkBackground,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White,
+                    actionIconContentColor = Color.White
                 ),
                 scrollBehavior = scrollBehavior
             )
         },
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = AppColors.DarkBackground
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -73,15 +77,16 @@ fun ExtensionRepoScreen(
             contentPadding = PaddingValues(vertical = 12.dp)
         ) {
             item {
-                Surface(
-                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha=0.3f),
-                    shape = RoundedCornerShape(8.dp)
+                ClayCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    borderRadius = 8.dp,
+                    color = Color.White.copy(alpha=0.05f)
                 ) {
                     Text(
                         "Repositories are used to find and update extensions.",
                         style = AppTypography.BodySmall,
                         modifier = Modifier.padding(12.dp),
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = Color.White.copy(alpha=0.7f)
                     )
                 }
             }
@@ -112,11 +117,10 @@ data class RepoItem(
 )
 
 @Composable
-fun RepoCard(item: RepoItem, onDelete: () -> Unit) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(12.dp),
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
+ fun RepoCard(item: RepoItem, onDelete: () -> Unit) {
+    ClayCard(
+        modifier = Modifier.fillMaxWidth(),
+        borderRadius = 12.dp
     ) {
         Row(
             modifier = Modifier
@@ -127,27 +131,27 @@ fun RepoCard(item: RepoItem, onDelete: () -> Unit) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(item.name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold)
+                    Text(item.name, style = AppTypography.BodyMedium, fontWeight = FontWeight.Bold, color = Color.White)
                     if (item.isVerified) {
-                        Surface(
-                            color = Color(0xFF22C55E).copy(alpha=0.2f),
-                            shape = RoundedCornerShape(4.dp)
+                        Box(
+                            modifier = Modifier
+                                .background(Color.White.copy(alpha=0.1f), RoundedCornerShape(4.dp))
+                                .padding(horizontal = 4.dp, vertical = 2.dp)
                         ) {
                              Text(
                                  "VERIFIED", 
                                  style = AppTypography.LabelSmall.copy(fontSize = 10.sp), 
                                  fontWeight = FontWeight.Bold,
-                                 color = Color(0xFF22C55E),
-                                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                                 color = Color.White
                              )
                         }
                     }
                 }
-                Text(item.url, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+                Text(item.url, style = AppTypography.LabelSmall, color = AppColors.TextSecondary, maxLines = 1)
             }
             
             IconButton(onClick = onDelete) {
-                Icon(Icons.Filled.Delete, "Delete", tint = Color.Red.copy(alpha=0.7f))
+                Icon(Icons.Filled.Delete, "Delete", tint = Color.White.copy(alpha=0.4f))
             }
         }
     }
@@ -160,31 +164,46 @@ fun AddRepoDialog(onDismiss: () -> Unit, onAdd: (String, String) -> Unit) {
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Repository") },
+        containerColor = AppColors.DarkSurface,
+        titleContentColor = Color.White,
+        textContentColor = AppColors.TextSecondary,
+        title = { Text("Add Repository", style = AppTypography.TitleMedium) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
-                    singleLine = true
+                    label = { Text("Name", color = Color.White.copy(alpha=0.6f)) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.White.copy(alpha=0.3f),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
                 )
                 OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
-                    label = { Text("URL") },
-                    singleLine = true
+                    label = { Text("URL", color = Color.White.copy(alpha=0.6f)) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.White.copy(alpha=0.3f),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
+                    )
                 )
             }
         },
         confirmButton = {
             TextButton(onClick = { onAdd(name, url) }) {
-                Text("Add")
+                Text("Add", color = Color.White, fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("Cancel", color = AppColors.TextSecondary)
             }
         }
     )

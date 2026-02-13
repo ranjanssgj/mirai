@@ -1,0 +1,104 @@
+> Task :app:clean
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:generateDebugResValues
+> Task :app:mapDebugSourceSetPaths
+> Task :app:generateDebugResources
+> Task :app:checkDebugAarMetadata
+> Task :app:packageDebugResources
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:parseDebugLocalResources
+> Task :app:javaPreCompileDebug
+> Task :app:mergeDebugShaders
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug
+> Task :app:checkDebugDuplicateClasses
+> Task :app:writeDebugAppMetadata
+> Task :app:mergeDebugResources
+> Task :app:mergeLibDexDebug
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+
+> Task :app:kspDebugKotlin
+w: [ksp] /home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/local/database/UnifiedOtakuDatabase.kt:24: Schema export directory was not provided to the annotation processor so Room cannot export the schema. You can either provide `room.schemaLocation` annotation processor argument by applying the Room Gradle plugin (id 'androidx.room') OR set exportSchema to false.
+
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/manga/ComixSource.kt:77:33 Variable 'slug' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/remote/scraper/AnimeScraper.kt:453:31 Variable 'content' initializer is redundant
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/remote/scraper/AnimeScraper.kt:471:37 Variable 'mp4' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/remote/scraper/AnimeScraper.kt:616:21 Variable 'cardContent' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/remote/scraper/AnimeScraper.kt:617:21 Variable 'title' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/navigation/Routes.kt:69:37 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/navigation/Routes.kt:70:41 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/anime/AnimeViewModel.kt:50:21 Variable 'upcoming' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/forum/ForumScreen.kt:244:5 Parameter 'user' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/library/LibraryScreen.kt:75:58 'Sort: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.Sort
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/lock/LockScreen.kt:250:48 'Backspace: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Backspace
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaScreen.kt:34:5 Parameter 'onViewAllClick' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaScreen.kt:148:15 Parameter 'id' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/AboutSettingsScreen.kt:39:5 Parameter 'navController' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/AboutSettingsScreen.kt:165:57 'OpenInNew: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.OpenInNew
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/AboutSettingsScreen.kt:174:57 'OpenInNew: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.OpenInNew
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/AboutSettingsScreen.kt:217:5 Parameter 'iconColor' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ActivityStatsScreen.kt:155:39 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/AdvancedSettingsScreen.kt:41:9 Variable 'devMode' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ExtensionSettingsScreen.kt:37:9 Variable 'scope' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/MoreScreen.kt:85:47 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/MoreScreen.kt:200:52 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/MoreScreen.kt:201:52 'ShowChart: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.ShowChart
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ReaderSettingsScreen.kt:50:9 Variable 'readingMode' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ReaderSettingsScreen.kt:51:9 Variable 'direction' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ReaderSettingsScreen.kt:355:5 Parameter 'icon' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/ReaderSettingsScreen.kt:356:5 Parameter 'iconColor' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/more/SecuritySettingsScreen.kt:154:104 Parameter 'isDestructive' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/player/AnimePlayerScreen.kt:58:5 Parameter 'episodeNumber' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/player/AnimePlayerScreen.kt:497:43 Elvis operator (?:) always returns the left operand of non-nullable type String
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/reader/MangaReaderScreen.kt:58:5 Parameter 'chapterId' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/reader/MangaReaderScreen.kt:63:9 Variable 'scope' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/reader/MangaReaderScreen.kt:346:5 Parameter 'isRtl' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesDetailScreen.kt:53:5 Parameter 'seriesId' is never used
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesDetailScreen.kt:152:47 'ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesDetailScreen.kt:176:211 'StarHalf: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.StarHalf
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesDetailScreen.kt:273:51 'List: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.List
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesDetailScreen.kt:297:53 'MenuBook: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Outlined.MenuBook
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/series/SeriesViewModel.kt:141:92 Unnecessary non-null assertion (!!) on a non-null receiver of type String
+w: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/theme/ClayUtils.kt:18:5 Parameter 'color' is never used
+
+> Task :app:compileDebugJavaWithJavac
+> Task :app:hiltAggregateDepsDebug
+> Task :app:hiltJavaCompileDebug
+> Task :app:processDebugJavaRes
+> Task :app:transformDebugClassesWithAsm
+> Task :app:mergeDebugJavaResource
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+
+[Incubating] Problems report is available at: file:///home/ice/Devlopment/UnifiedHub/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 38s
+39 actionable tasks: 39 executed

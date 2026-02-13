@@ -24,6 +24,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.unifiedotaku.app.ui.navigation.Routes
 import com.unifiedotaku.app.ui.theme.AppTypography
+import com.unifiedotaku.app.ui.components.ClayCard
+import com.unifiedotaku.app.ui.components.ClayContainer
+import com.unifiedotaku.app.ui.theme.AppColors
+import com.unifiedotaku.app.ui.theme.clayShadows
+import com.unifiedotaku.app.ui.theme.clayInnerShadows
 
 /**
  * More/Settings Screen - Stitch Design Implementation.
@@ -36,7 +41,7 @@ fun MoreScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Box(modifier = Modifier.fillMaxSize().background(AppColors.DarkBackground)) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 100.dp)
@@ -75,14 +80,14 @@ fun MoreScreen(
                         subtitle = "Subtitle, quality",
                         onClick = { navController.navigate(Routes.SETTINGS_PLAYER) }
                     )
-                    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.MenuBook,
                         title = "Manga Reader",
                         subtitle = "Reading mode, zoom",
                         onClick = { navController.navigate(Routes.SETTINGS_READER) }
                     )
-                    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.Download,
                         title = "Downloads",
@@ -102,7 +107,7 @@ fun MoreScreen(
                         showBadge = uiState.malConnected || uiState.aniListConnected,
                         onClick = { navController.navigate(Routes.SETTINGS_ACCOUNTS) }
                     )
-                    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.Storage,
                         title = "Data & Storage",
@@ -121,18 +126,18 @@ fun MoreScreen(
                         subtitle = "App lock, incognito",
                         onClick = { navController.navigate(Routes.SETTINGS_SECURITY) }
                     )
-                    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.SettingsApplications,
                         title = "Advanced",
                         subtitle = "Developer, network",
                         onClick = { navController.navigate(Routes.SETTINGS_ADVANCED) }
                     )
-                    Divider(color = MaterialTheme.colorScheme.outline, modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.Info,
                         title = "About",
-                        subtitle = "v2.4.0",
+                        subtitle = "v2.5.0",
                         onClick = { navController.navigate(Routes.SETTINGS_ABOUT) }
                     )
                 }
@@ -142,7 +147,7 @@ fun MoreScreen(
                 Text(
                     text = "Made with ❤️ for Anime Fans",
                     style = AppTypography.BodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = AppColors.TextSecondary,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 16.dp)
                 )
@@ -156,7 +161,7 @@ private fun SettingsHeader(username: String, isPremium: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f))
+            .background(AppColors.DarkBackground)
             .padding(16.dp)
             .padding(top = 24.dp)
     ) {
@@ -168,17 +173,17 @@ private fun SettingsHeader(username: String, isPremium: Boolean) {
             Text(
                 "Settings",
                 style = AppTypography.DisplayMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                color = Color.White
             )
             
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(horizontalAlignment = Alignment.End) {
-                    Text(username, style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.onBackground)
-                    Text(if (isPremium) "Premium Member" else "Free Account", style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(username, style = AppTypography.BodyMedium.copy(fontWeight = FontWeight.Bold), color = Color.White)
+                    Text(if (isPremium) "Premium Member" else "Free Account", style = AppTypography.LabelSmall, color = Color.White)
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Box(modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceVariant)) {
-                     Icon(Icons.Outlined.Person, null, modifier = Modifier.padding(8.dp).fillMaxSize(), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Box(modifier = Modifier.size(40.dp).clip(CircleShape).background(Color.White.copy(alpha=0.1f))) {
+                     Icon(Icons.Outlined.Person, null, modifier = Modifier.padding(8.dp).fillMaxSize(), tint = Color.White)
                 }
             }
         }
@@ -188,7 +193,7 @@ private fun SettingsHeader(username: String, isPremium: Boolean) {
 @Composable
 private fun ActivityStatsSection(onViewDetailed: () -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-        Text("YOUR ACTIVITY", style = AppTypography.Metadata.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.tertiary)
+        Text("YOUR ACTIVITY", style = AppTypography.Metadata.copy(fontWeight = FontWeight.Bold), color = Color.White)
         Spacer(modifier = Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             ActivityStatCard(icon = Icons.Outlined.Schedule, value = "120h", label = "Watched", modifier = Modifier.weight(1f))
@@ -196,19 +201,21 @@ private fun ActivityStatsSection(onViewDetailed: () -> Unit) {
             ActivityStatCard(icon = Icons.Outlined.ShowChart, value = "85", label = "Tracked", modifier = Modifier.weight(1f))
         }
          Spacer(modifier = Modifier.height(12.dp))
-        Surface(
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(12.dp),
-            onClick = onViewDetailed
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp)
+                .clayShadows(color = AppColors.ClayCard, borderRadius = 12.dp)
+                .clickable(onClick = onViewDetailed),
+            contentAlignment = Alignment.Center
         ) {
             Row(
                  modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
                  horizontalArrangement = Arrangement.SpaceBetween,
                  verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("View Detailed Activity", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-                Icon(Icons.Outlined.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("View Detailed Activity", style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+                Icon(Icons.Outlined.ChevronRight, null, tint = AppColors.TextSecondary)
             }
         }
     }
@@ -216,20 +223,19 @@ private fun ActivityStatsSection(onViewDetailed: () -> Unit) {
 
 @Composable
 private fun ActivityStatCard(icon: ImageVector, value: String, label: String, modifier: Modifier = Modifier) {
-    Surface(
+    ClayCard(
         modifier = modifier.height(100.dp),
-        color = MaterialTheme.colorScheme.surface,
-        shape = RoundedCornerShape(12.dp)
+        borderRadius = 12.dp
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.fillMaxSize().padding(8.dp)
         ) {
-            Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(28.dp))
+            Icon(icon, null, tint = Color.White, modifier = Modifier.size(28.dp))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(value, style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-            Text(label, style = AppTypography.LabelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(value, style = AppTypography.TitleMedium, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(label, style = AppTypography.LabelSmall, color = AppColors.TextSecondary)
         }
     }
 }
@@ -237,12 +243,12 @@ private fun ActivityStatCard(icon: ImageVector, value: String, label: String, mo
 @Composable
 private fun SettingsSection(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-        Text(title.uppercase(), style = AppTypography.Metadata.copy(fontWeight = FontWeight.Bold), color = MaterialTheme.colorScheme.tertiary, modifier = Modifier.padding(start = 4.dp))
+        Text(title.uppercase(), style = AppTypography.Metadata.copy(fontWeight = FontWeight.Bold), color = Color.White, modifier = Modifier.padding(start = 4.dp))
         Spacer(modifier = Modifier.height(8.dp))
-        Surface(
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth()
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clayShadows(color = AppColors.ClayCard, borderRadius = 16.dp)
         ) {
             Column(content = content)
         }
@@ -264,27 +270,27 @@ private fun SettingsTile(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape),
-            contentAlignment = Alignment.Center
+        ClayContainer(
+            modifier = Modifier.size(36.dp),
+            borderRadius = 12.dp
         ) {
-            Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Icon(icon, null, tint = Color.White, modifier = Modifier.size(20.dp))
+            }
         }
         
         Spacer(modifier = Modifier.width(16.dp))
         
         Column(modifier = Modifier.weight(1f)) {
-            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-            Text(subtitle, style = AppTypography.BodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(title, style = AppTypography.BodyMedium, fontWeight = FontWeight.Medium, color = Color.White)
+            Text(subtitle, style = AppTypography.BodySmall, color = AppColors.TextSecondary)
         }
         
         if (showBadge) {
-             Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary, CircleShape).size(8.dp))
+             Box(modifier = Modifier.background(AppColors.Primary, CircleShape).size(8.dp))
              Spacer(modifier = Modifier.width(8.dp))
         }
         
-        Icon(Icons.Outlined.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(Icons.Outlined.ChevronRight, null, tint = AppColors.TextSecondary)
     }
 }
