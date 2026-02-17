@@ -14,7 +14,7 @@ data class MangaUiState(
     val isSearchExpanded: Boolean = false,
     
     // Extension selection
-    val selectedExtensionId: String = "comix.to",
+    val selectedExtensionId: String = "",
     val installedExtensionIds: List<String> = emptyList(),
     
     // Content sections

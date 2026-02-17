@@ -5,6 +5,7 @@ build_check_final_v2.log
 build_error.log
 
 backend/node_modules
+Dependencies
 
 # Built application files
 *.apk

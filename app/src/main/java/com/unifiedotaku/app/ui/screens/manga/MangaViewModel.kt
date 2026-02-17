@@ -47,12 +47,14 @@ class MangaViewModel @Inject constructor(
      * Sync extension registry on startup so all sources are available before any search.
      */
     private fun refreshExtensions() {
+        // Trigger dynamic extension loading from installed APKs
+        extensionManager.loadInstalledExtensions()
         val ids = extensionManager.getAllExtensionIds()
         _uiState.update { 
             it.copy(
                 installedExtensionIds = ids,
                 selectedExtensionId = if (it.selectedExtensionId.isBlank() || it.selectedExtensionId !in ids) {
-                    ids.firstOrNull() ?: "comix.to"
+                    ids.firstOrNull() ?: ""
                 } else {
                     it.selectedExtensionId
                 }
@@ -103,21 +105,16 @@ class MangaViewModel @Inject constructor(
                     allUpdates.addAll(updates)
                 }
                 
-                // If empty, check if we should show install prompt (only if no sources at all)
+                // If empty, show install prompt if no sources are installed
                 if (allUpdates.isEmpty() && extensionManager.getAllMangaSources().isEmpty()) {
-                     // Check if Comix is "installed" (enabled) - logic moved to Manager but check here if needed
-                     // Since Comix is built-in now, getAllMangaSources should not be empty unless something is wrong.
-                     // But if it is empty or fails:
-                    if (!extensionManager.isComixInstalled()) {
-                        _uiState.update { 
-                            it.copy(
-                                isLoading = false, 
-                                showInstallPrompt = true,
-                                availableExtensions = availableExtensions
-                            ) 
-                        }
-                        return@launch
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false, 
+                            showInstallPrompt = true,
+                            availableExtensions = availableExtensions
+                        ) 
                     }
+                    return@launch
                 }
 
                 _uiState.update { 

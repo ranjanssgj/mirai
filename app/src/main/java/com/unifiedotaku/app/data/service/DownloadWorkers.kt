@@ -196,9 +196,9 @@ class MangaDownloadWorker @AssistedInject constructor(
             // Extract extension from seriesId (format: "manga:{extensionId}:{rawId}")
             val seriesId = inputData.getString(KEY_SERIES_ID) ?: ""
             val extension = if (seriesId.startsWith("manga:")) {
-                seriesId.split(":", limit = 3).getOrNull(1) ?: "comix.to"
+                seriesId.split(":", limit = 3).getOrNull(1) ?: ""
             } else {
-                "comix.to" // Fallback for old-format IDs
+                "" // Fallback for old-format IDs
             }
 
             // Get chapter pages via Repository (Extension)

@@ -296,6 +296,31 @@ class SeriesViewModel @Inject constructor(
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load manga info") }
             }
         }
+
+        // ── Manga → Anime Bridge ──
+        // Try to find an anime adaptation via Jikan anime search
+        val seriesTitle = _uiState.value.series?.title
+        if (seriesTitle != null) {
+            try {
+                val animeSearchResult = animeRepository.searchAnime(seriesTitle)
+                val animeMatch = animeSearchResult.getOrNull()?.firstOrNull()
+                if (animeMatch != null) {
+                    val animeSeries = com.unifiedotaku.app.domain.model.Series(
+                        id = animeMatch.malId.toString(),
+                        title = animeMatch.title,
+                        coverUrl = animeMatch.images?.jpg?.largeImageUrl ?: animeMatch.images?.jpg?.imageUrl ?: "",
+                        synopsis = animeMatch.synopsis,
+                        genres = animeMatch.genres?.map { it.name } ?: emptyList(),
+                        status = animeMatch.status ?: "Unknown",
+                        type = com.unifiedotaku.app.data.local.database.entities.MediaType.ANIME,
+                        isAnime = true
+                    )
+                    _uiState.update { it.copy(adaptationAnimeId = animeMatch.malId.toString(), adaptationAnime = animeSeries) }
+                }
+            } catch (_: Exception) {
+                // Silently fail — adaptation search is a best-effort feature
+            }
+        }
     }
     
     private fun AnimeDto.toSeries(): com.unifiedotaku.app.domain.model.Series {

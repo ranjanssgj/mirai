@@ -290,6 +290,42 @@ fun SeriesDetailScreen(
                     }
                 }
 
+                // ── Cross-Media Adaptation Cards ──
+                // Show adaptation manga when viewing anime
+                val adaptationManga = uiState.adaptationManga
+                if (adaptationManga != null) {
+                    item {
+                        AdaptationCard(
+                            label = "Manga Source",
+                            title = adaptationManga.title,
+                            coverUrl = adaptationManga.coverUrl,
+                            onClick = {
+                                val mangaId = uiState.adaptationMangaId
+                                if (mangaId != null) {
+                                    navController.navigate(Routes.seriesDetail(mangaId))
+                                }
+                            }
+                        )
+                    }
+                }
+                // Show adaptation anime when viewing manga
+                val adaptationAnime = uiState.adaptationAnime
+                if (adaptationAnime != null) {
+                    item {
+                        AdaptationCard(
+                            label = "Anime Adaptation",
+                            title = adaptationAnime.title,
+                            coverUrl = adaptationAnime.coverUrl,
+                            onClick = {
+                                val animeId = uiState.adaptationAnimeId
+                                if (animeId != null) {
+                                    navController.navigate(Routes.seriesDetail(animeId))
+                                }
+                            }
+                        )
+                    }
+                }
+
                 item {
                      Column(modifier = Modifier.padding(horizontal = 20.dp).padding(top = 24.dp)) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
@@ -487,5 +523,62 @@ private fun MetadataRow(label: String, value: String, isStatus: Boolean = false)
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(label, style = AppTypography.BodySmall, color = AppColors.TextSecondary, modifier = Modifier.width(80.dp))
         Text(value, style = AppTypography.BodySmall, color = if (isStatus) Color.White else Color.White, fontWeight = if (isStatus) FontWeight.Medium else FontWeight.Normal)
+    }
+}
+
+@Composable
+fun AdaptationCard(
+    label: String,
+    title: String,
+    coverUrl: String,
+    onClick: () -> Unit
+) {
+    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.SwapHoriz, null, tint = AppColors.Primary, modifier = Modifier.size(20.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(label, style = AppTypography.TitleSmall, color = Color.White, fontWeight = FontWeight.SemiBold)
+        }
+        Spacer(Modifier.height(12.dp))
+        Surface(
+            modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
+            color = Color.White.copy(alpha = 0.06f),
+            shape = RoundedCornerShape(16.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.08f))
+        ) {
+            Row(
+                modifier = Modifier.padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ClayCard(
+                    modifier = Modifier.size(width = 56.dp, height = 80.dp),
+                    borderRadius = 10.dp
+                ) {
+                    AsyncImage(
+                        model = coverUrl,
+                        contentDescription = title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Spacer(Modifier.width(16.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = title,
+                        style = AppTypography.TitleMedium,
+                        color = Color.White,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "Tap to view",
+                        style = AppTypography.LabelSmall,
+                        color = AppColors.TextSecondary
+                    )
+                }
+                Icon(Icons.Filled.ChevronRight, null, tint = AppColors.TextSecondary)
+            }
+        }
     }
 }

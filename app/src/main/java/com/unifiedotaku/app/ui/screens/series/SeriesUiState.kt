@@ -33,7 +33,9 @@ data class SeriesUiState(
     val isStreamLoading: Boolean = false,
     val relatedSeasons: List<RelatedEntry> = emptyList(),
     val adaptationMangaId: String? = null,
-    val adaptationManga: Series? = null
+    val adaptationManga: Series? = null,
+    val adaptationAnimeId: String? = null,
+    val adaptationAnime: Series? = null
 )
 
 /**

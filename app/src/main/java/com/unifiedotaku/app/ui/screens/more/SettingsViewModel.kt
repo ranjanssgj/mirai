@@ -180,6 +180,23 @@ class SettingsViewModel @Inject constructor(
     fun fetchExtensions() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoadingExtensions = true) }
+
+            // Ensure dynamic extension loading has run
+            extensionManager.loadInstalledExtensions()
+
+            // Populate installed list from dynamically loaded extensions
+            val loaded = extensionManager.loadedExtensions.value
+            val installedItems = loaded.map { ext ->
+                ExtensionItem(
+                    name = ext.name,
+                    version = ext.versionName,
+                    isEnabled = true, // All loaded extensions are enabled by default
+                    lang = ext.pkgName.substringAfterLast(".", "all")
+                )
+            }
+            _uiState.update { it.copy(installedExtensions = installedItems) }
+
+            // Fetch available from repo, filtering out already installed
             val available = extensionManager.getAvailableExtensions()
             _uiState.update { state ->
                 state.copy(

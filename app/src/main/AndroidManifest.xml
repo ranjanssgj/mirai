@@ -9,6 +9,19 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- Scan for installed Tachiyomi/Komikku extension APKs on Android 11+ -->
+    <queries>
+        <!-- Match by package prefix -->
+        <package android:name="eu.kanade.tachiyomi.extension" />
+        <package android:name="com.unifiedotaku.extension" />
+        <!-- Match by feature flag -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
 
     <application
         android:name=".UnifiedOtakuApp"
