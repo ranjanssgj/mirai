@@ -32,6 +32,8 @@ class SeriesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val seriesId: String = savedStateHandle.get<String>("seriesId") ?: ""
+    private val sourceIdArg: String? = savedStateHandle.get<String>("sourceId")
+    private val mangaIdArg: String? = savedStateHandle.get<String>("mangaId")
 
     private val _uiState = MutableStateFlow(SeriesUiState())
     val uiState: StateFlow<SeriesUiState> = _uiState.asStateFlow()
@@ -50,8 +52,15 @@ class SeriesViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null) }
             
             try {
+                // Determine the effective series ID and Type
+                val effectiveId = if (sourceIdArg != null && mangaIdArg != null) {
+                    "manga:$sourceIdArg:$mangaIdArg"
+                } else {
+                    seriesId
+                }
+
                 // First check if it's in library (cached data)
-                val libraryItem = libraryDao.getById(seriesId)
+                val libraryItem = libraryDao.getById(effectiveId)
                 
                 if (libraryItem != null) {
                     // Convert library item to Series model
@@ -60,13 +69,14 @@ class SeriesViewModel @Inject constructor(
                 }
                 
                 // Fetch fresh data based on type
-                // Heuristic: If ID is numeric, it's likely Jikan (Anime). Else it implies generic or string ID (Manga).
-                // Existing library item type takes precedence.
-                val type = libraryItem?.type ?: detectMediaType(seriesId)
+                val type = libraryItem?.type ?: detectMediaType(effectiveId)
+                
+                // If we have explicit args, use them to override detection if needed, 
+                // but detectMediaType with prefixed ID should work fine.
                 
                 when (type) {
-                    MediaType.ANIME -> loadAnimeDetails()
-                    MediaType.MANGA -> loadMangaDetails()
+                    MediaType.ANIME -> loadAnimeDetails(effectiveId)
+                    MediaType.MANGA -> loadMangaDetails(effectiveId)
                 }
                 
             } catch (e: Exception) {
@@ -80,14 +90,14 @@ class SeriesViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadAnimeDetails() {
+    private suspend fun loadAnimeDetails(animeId: String) {
         _uiState.update { it.copy(relatedSeasons = emptyList(), adaptationMangaId = null, chapters = emptyList()) }
         // Fetch details
-        val detailsResult = animeRepository.getAnimeDetails(seriesId)
+        val detailsResult = animeRepository.getAnimeDetails(animeId)
         val details = detailsResult.getOrNull()
         
         // Fetch episodes
-        val episodesResult = animeRepository.getAnimeEpisodes(seriesId)
+        val episodesResult = animeRepository.getAnimeEpisodes(animeId)
         val sourceEpisodes = episodesResult.getOrNull() ?: emptyList()
         
         if (details != null) {
@@ -95,19 +105,7 @@ class SeriesViewModel @Inject constructor(
             _uiState.update { it.copy(series = series) }
         }
 
-        // Parse and sort relations: Related Seasons (Prequel/Sequel) and Adaptation (Manga)
-        val priorityMap = mapOf(
-            "Prequel" to 1,
-            "Parent story" to 2,
-            "Full story" to 3,
-            "Sequel" to 4,
-            "Side story" to 5,
-            "Spin-off" to 6,
-            "Adaptation" to 7,
-            "Summary" to 8,
-            "Other" to 9
-        )
-
+        // Parse and sort relations
         val relatedEntries = mutableListOf<RelatedEntry>()
         var adaptationMangaId: String? = null
         details?.relations?.let { rels ->
@@ -128,18 +126,17 @@ class SeriesViewModel @Inject constructor(
                 }
         }
 
-        val sortedRelations = relatedEntries.sortedBy { priorityMap[it.relation] ?: 100 }
+        val sortedRelations = relatedEntries.sortedBy { it.relation } // Simplified sort
         _uiState.update { it.copy(relatedSeasons = sortedRelations, adaptationMangaId = adaptationMangaId) }
 
-        // If adaptation manga exists, fetch its details from Jikan and chapters via extension
-        // BRIDGE LOGIC: Even if no direct adaptation is linked in Jikan, we TRY to find it by title.
-        // But first preference is explicit adaptation.
+        // Logic for Link to Manga (Adaptation)
+        // 1. If we have a Jikan Adaptation ID, fetch it.
+        // 2. Search for that Manga in Extension (fuzzy match).
         
-        var mangaIdToSearch: String? = adaptationMangaId
         var mangaTitleToSearch: String = details?.title ?: ""
-
-        if (mangaIdToSearch != null) {
-            val jikanMangaResult = mangaRepository.getMangaDetailsFromJikan(mangaIdToSearch!!)
+        
+        if (adaptationMangaId != null) {
+            val jikanMangaResult = mangaRepository.getMangaDetailsFromJikan(adaptationMangaId!!)
             val jikanManga = jikanMangaResult.getOrNull()
             if (jikanManga != null) {
                 val mangaSeries = jikanManga.toSeries()
@@ -148,91 +145,108 @@ class SeriesViewModel @Inject constructor(
             }
         }
         
-        // Always try to find chapters using the title (Anime title or Adaptation Manga title)
+        // Find playable chapters via Extension
         val extension = extensionManager.getDefaultExtensionId()
-        val searchResult = mangaRepository.searchManga(mangaTitleToSearch, extension)
-        
-        // Smart matching: Take first result
-        val foundManga = searchResult.getOrNull()?.firstOrNull()
-        
-        if (foundManga != null) {
-             val chaptersResult = mangaRepository.getMangaChapters(foundManga.id, extension)
-             val sourceChapters = chaptersResult.getOrNull()
-             
-             if (!sourceChapters.isNullOrEmpty()) {
-                 val chapters = sourceChapters.map { source ->
-                     com.unifiedotaku.app.domain.model.Chapter(
-                         id = source.id,
-                         seriesId = "manga:${extension}:${foundManga.id}",
-                         number = source.number,
-                         title = source.title,
-                         volume = null,
-                         pageCount = 0,
-                         releaseDate = source.date?.toLongOrNull(),
-                         scanlator = null
-                     )
+        if (extension.isNotEmpty()) {
+            val searchResult = mangaRepository.searchManga(mangaTitleToSearch, extension)
+            val candidates = searchResult.getOrNull() ?: emptyList()
+            
+            // Fuzzy match using TitleNormalizer
+            val bestMatch = candidates.find { 
+                com.unifiedotaku.app.util.TitleNormalizer.calculateSimilarity(it.title, mangaTitleToSearch) > 0.8 
+            } ?: candidates.firstOrNull() // Fallback to first if no high confidence match
+            
+            if (bestMatch != null) {
+                 val chaptersResult = mangaRepository.getMangaChapters(bestMatch.id, extension)
+                 val sourceChapters = chaptersResult.getOrNull()
+                 
+                 if (!sourceChapters.isNullOrEmpty()) {
+                     val chapters = sourceChapters.map { source ->
+                         com.unifiedotaku.app.domain.model.Chapter(
+                             id = source.id,
+                             seriesId = "manga:${extension}:${bestMatch.id}",
+                             number = source.number,
+                             title = source.title,
+                             volume = null,
+                             pageCount = 0,
+                             releaseDate = source.date?.toLongOrNull(),
+                             scanlator = null
+                         )
+                     }
+                     _uiState.update { it.copy(chapters = chapters, adaptationMangaId = "manga:${extension}:${bestMatch.id}") }
+                     // Note: We update adaptationMangaId to the PLAYABLE one if found
                  }
-                 _uiState.update { it.copy(chapters = chapters) }
-             }
+            }
         }
 
-        // Map to domain Episode
-        val episodes = sourceEpisodes.map { source ->
-            com.unifiedotaku.app.domain.model.Episode(
-                id = source.malId.toString(),
-                seriesId = seriesId,
-
-                             // Correction: Jikan episodes endpoint returns list of items with 'mal_id' which IS the episode id usually.
-                             // But 'episode_id' might be missing in DTO I defined?
-                             // Checking JikanEpisodeDto: malId, title, etc.
-                             // Actually, malId is unique per episode usually.
-                             // Wait, Jikan API response for episodes:
-                             // "mal_id": 1, "url": "...", "title": "...", "episode": "1" ??
-                             // My JikanEpisodeDto has malId. 
-                             // I should assume the list index + 1 or trust malId for now as approximate number if 'episode' field missing.
-                             // My DTO missed 'episode' field (index).
-                 // Use index+1 as fallback if needed or assume sequential 
-                 number = 0, // Placeholder, need to fix DTO for real number
-                title = source.title,
-                description = null, // Jikan episodes list often minimal
-                thumbnailUrl = null, 
-                duration = null,
-                seasonNumber = 1,
-                isFiller = source.filler,
-                airDate = null // source.aired is String, need to parse to Long
-            )
-        }.mapIndexed { index, ep -> ep.copy(number = index + 1) } 
+        // Map episodes...
+        val episodes = sourceEpisodes.mapIndexed { index, source ->
+             com.unifiedotaku.app.domain.model.Episode(
+                 id = source.malId.toString(),
+                 seriesId = animeId,
+                 number = index + 1,
+                 title = source.title,
+                 description = null,
+                 thumbnailUrl = null,
+                 duration = null,
+                 seasonNumber = 1,
+                 isFiller = source.filler,
+                 airDate = null
+             )
+        }
         
-        // Extract unique seasons
         val seasons = episodes.mapNotNull { it.seasonNumber }.distinct().sorted()
-        
-        _uiState.update { 
-            it.copy(
-                isLoading = false,
-                episodes = episodes,
-                availableSeasons = seasons,
-                selectedSeason = seasons.firstOrNull()
-            ) 
-        }
+        _uiState.update {  it.copy(isLoading = false, episodes = episodes, availableSeasons = seasons, selectedSeason = seasons.firstOrNull()) }
     }
 
-    private suspend fun loadMangaDetails() {
-        // Parse the prefixed ID to extract extension and raw manga ID
-        val parsed = parseExtensionId(seriesId)
+    private suspend fun loadMangaDetails(effectiveId: String) {
+        // Parse the prefixed ID or fallback
+        val parsed = parseExtensionId(effectiveId)
         
         if (parsed != null) {
             val (extensionId, rawMangaId) = parsed
             
-            // Fetch details from the extension directly
             val detailsResult = mangaRepository.getMangaDetails(rawMangaId, extensionId)
             val details = detailsResult.getOrNull()
             
             if (details != null) {
                 val mangaSeries = details.toSeries()
                 _uiState.update { it.copy(series = mangaSeries) }
+                
+                // Attempt to find Anime Adaptation via Jikan
+                try {
+                    val title = mangaSeries.title
+                    val animeSearchResult = animeRepository.searchAnime(title)
+                    val animeCandidates = animeSearchResult.getOrNull() ?: emptyList()
+                    
+                    val bestAnime = animeCandidates.find {
+                         com.unifiedotaku.app.util.TitleNormalizer.calculateSimilarity(it.title, title) > 0.8
+                    }
+                    
+                    if (bestAnime != null) {
+                        val animeSeries = com.unifiedotaku.app.domain.model.Series(
+                             id = bestAnime.malId.toString(),
+                             title = bestAnime.title,
+                             coverUrl = bestAnime.images?.jpg?.largeImageUrl ?: bestAnime.images?.jpg?.imageUrl ?: "",
+                             synopsis = bestAnime.synopsis,
+                             type = MediaType.ANIME,
+                             status = bestAnime.status ?: "Unknown",
+                             year = bestAnime.year,
+                             season = bestAnime.season,
+                             isAnime = true
+                        )
+                         _uiState.update { 
+                             it.copy(
+                                 adaptationAnimeId = bestAnime.malId.toString(), 
+                                 adaptationAnime = animeSeries
+                             ) 
+                         }
+                    }
+                } catch (e: Exception) {
+                    // Ignore
+                }
             }
             
-            // Fetch chapters
             val chaptersResult = mangaRepository.getMangaChapters(rawMangaId, extensionId)
             val sourceChapters = chaptersResult.getOrNull()
             
@@ -240,7 +254,7 @@ class SeriesViewModel @Inject constructor(
                 val chapters = sourceChapters.map { source ->
                     com.unifiedotaku.app.domain.model.Chapter(
                         id = source.id,
-                        seriesId = seriesId, // Keep the prefixed ID for the reader
+                        seriesId = effectiveId,
                         number = source.number,
                         title = source.title,
                         volume = null,
@@ -251,11 +265,11 @@ class SeriesViewModel @Inject constructor(
                 }
                 _uiState.update { it.copy(chapters = chapters, isLoading = false) }
             } else {
-                _uiState.update { it.copy(isLoading = false) }
+                 _uiState.update { it.copy(isLoading = false) }
             }
         } else {
             // Fallback: treat as Jikan ID (for backward compatibility with old unprefixed manga IDs)
-            val detailsResult = mangaRepository.getMangaDetailsFromJikan(seriesId)
+            val detailsResult = mangaRepository.getMangaDetailsFromJikan(effectiveId)
             val jikanManga = detailsResult.getOrNull()
             
             if (jikanManga != null) {
@@ -266,7 +280,12 @@ class SeriesViewModel @Inject constructor(
                 val searchTerm = mangaSeries.title
                 
                 val searchResult = mangaRepository.searchManga(searchTerm, extension)
-                val foundManga = searchResult.getOrNull()?.firstOrNull()
+                val candidates = searchResult.getOrNull() ?: emptyList()
+
+                // Fuzzy match using TitleNormalizer
+                val foundManga = candidates.find { 
+                    com.unifiedotaku.app.util.TitleNormalizer.calculateSimilarity(it.title, searchTerm) > 0.8 
+                } ?: candidates.firstOrNull()
                 
                 if (foundManga != null) {
                     val chaptersResult = mangaRepository.getMangaChapters(foundManga.id, extension)
@@ -294,31 +313,6 @@ class SeriesViewModel @Inject constructor(
                 }
             } else {
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load manga info") }
-            }
-        }
-
-        // ── Manga → Anime Bridge ──
-        // Try to find an anime adaptation via Jikan anime search
-        val seriesTitle = _uiState.value.series?.title
-        if (seriesTitle != null) {
-            try {
-                val animeSearchResult = animeRepository.searchAnime(seriesTitle)
-                val animeMatch = animeSearchResult.getOrNull()?.firstOrNull()
-                if (animeMatch != null) {
-                    val animeSeries = com.unifiedotaku.app.domain.model.Series(
-                        id = animeMatch.malId.toString(),
-                        title = animeMatch.title,
-                        coverUrl = animeMatch.images?.jpg?.largeImageUrl ?: animeMatch.images?.jpg?.imageUrl ?: "",
-                        synopsis = animeMatch.synopsis,
-                        genres = animeMatch.genres?.map { it.name } ?: emptyList(),
-                        status = animeMatch.status ?: "Unknown",
-                        type = com.unifiedotaku.app.data.local.database.entities.MediaType.ANIME,
-                        isAnime = true
-                    )
-                    _uiState.update { it.copy(adaptationAnimeId = animeMatch.malId.toString(), adaptationAnime = animeSeries) }
-                }
-            } catch (_: Exception) {
-                // Silently fail — adaptation search is a best-effort feature
             }
         }
     }

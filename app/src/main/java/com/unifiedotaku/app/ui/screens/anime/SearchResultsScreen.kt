@@ -32,7 +32,7 @@ import com.unifiedotaku.app.ui.theme.AppTypography
 fun SearchResultsScreen(
     query: String,
     onBack: () -> Unit,
-    onSeriesClick: (String) -> Unit,
+    onSeriesClick: (String, String?, String?) -> Unit,
     viewModel: SearchResultsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -96,7 +96,12 @@ fun SearchResultsScreen(
                         items(uiState.list) { series ->
                             ViewAllCard(
                                 series = series,
-                                onClick = { onSeriesClick(series.id) }
+                                onClick = {
+                                    val parts = series.id.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val mangaId = if (parts.size == 3) parts[2] else null
+                                    onSeriesClick(series.id, sourceId, mangaId)
+                                }
                             )
                         }
                     }

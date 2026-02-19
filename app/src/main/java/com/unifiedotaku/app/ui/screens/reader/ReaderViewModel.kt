@@ -78,7 +78,8 @@ class ReaderViewModel @Inject constructor(
                             it.copy(
                                 isLoading = false,
                                 pages = pages.mapIndexed { index, url -> com.unifiedotaku.app.domain.model.MangaPage(index, url) },
-                                totalPages = pages.size
+                                totalPages = pages.size,
+                                headers = extensionManager.getMangaSource(extensionId)?.headers ?: emptyMap()
                             )
                         }
                         // Resolve chapter context (prev/next, number, title)

@@ -40,7 +40,7 @@ import com.unifiedotaku.app.ui.components.ClayCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaScreen(
-    onSeriesClick: (String) -> Unit,
+    onSeriesClick: (String, String?, String?) -> Unit,
     onViewAllClick: (String) -> Unit = {},
     viewModel: MangaViewModel = hiltViewModel()
 ) {
@@ -211,7 +211,12 @@ fun MangaScreen(
                                 id = manga.id,
                                 title = manga.title,
                                 coverUrl = manga.coverUrl,
-                                onClick = { onSeriesClick(manga.id) }
+                                onClick = {
+                                    val parts = manga.id.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val mangaId = if (parts.size == 3) parts[2] else null
+                                    onSeriesClick(manga.id, sourceId, mangaId)
+                                }
                             )
                         }
                     }
@@ -293,7 +298,7 @@ fun ExtensionChipRow(
 @Composable
 fun GroupedSearchResults(
     resultsBySource: Map<String, List<Series>>,
-    onSeriesClick: (String) -> Unit
+    onSeriesClick: (String, String?, String?) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -320,7 +325,12 @@ fun GroupedSearchResults(
                                 id = manga.id,
                                 title = manga.title,
                                 coverUrl = manga.coverUrl,
-                                onClick = { onSeriesClick(manga.id) },
+                                onClick = { 
+                                    val parts = manga.id.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val mangaId = if (parts.size == 3) parts[2] else null
+                                    onSeriesClick(manga.id, sourceId, mangaId)
+                                },
                                 modifier = Modifier.width(110.dp)
                             )
                         }

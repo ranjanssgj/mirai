@@ -19,6 +19,7 @@ data class ReaderUiState(
     val pages: List<MangaPage> = emptyList(),
     val currentPage: Int = 0,
     val totalPages: Int = 0,
+    val headers: Map<String, String> = emptyMap(),
     
     // Reader settings - Basic
     val readingMode: ReadingMode = ReadingMode.VERTICAL,

@@ -37,26 +37,9 @@ class ExtensionLoader @Inject constructor(
 ) {
     companion object {
         private const val TAG = "ExtensionLoader"
-
-        /** Feature flag that marks a package as a Tachiyomi extension */
+        private const val METADATA_SOURCE_CLASS = "unifiedotaku.extension.class"
         private const val EXTENSION_FEATURE = "tachiyomi.extension"
-
-        /** Metadata key for the source class name(s), semicolon-separated */
-        private const val METADATA_SOURCE_CLASS = "tachiyomi.extension.class"
-
-        /** Package prefixes we recognise */
-        private val EXTENSION_PREFIXES = listOf(
-            "eu.kanade.tachiyomi.extension.",
-            "com.unifiedotaku.extension."
-        )
     }
-
-    @Suppress("DEPRECATION")
-    private val packageFlags =
-        PackageManager.GET_CONFIGURATIONS or
-        PackageManager.GET_META_DATA or
-        PackageManager.GET_SIGNATURES or
-        (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) PackageManager.GET_SIGNING_CERTIFICATES else 0)
 
     /**
      * Load all installed extension APKs and return a list of
@@ -64,14 +47,14 @@ class ExtensionLoader @Inject constructor(
      */
     fun loadExtensions(): List<LoadedExtension> {
         val pm = context.packageManager
-        val installedPkgs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(packageFlags.toLong()))
+        val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pm.getInstalledPackages(PackageManager.PackageInfoFlags.of(PackageManager.GET_CONFIGURATIONS.toLong() or PackageManager.GET_META_DATA.toLong() or PackageManager.GET_SIGNATURES.toLong()))
         } else {
             @Suppress("DEPRECATION")
-            pm.getInstalledPackages(packageFlags)
+            pm.getInstalledPackages(PackageManager.GET_CONFIGURATIONS or PackageManager.GET_META_DATA or PackageManager.GET_SIGNATURES)
         }
 
-        return installedPkgs
+        return packages
             .filter { isExtensionPackage(it) }
             .mapNotNull { loadExtension(it) }
     }
@@ -81,14 +64,12 @@ class ExtensionLoader @Inject constructor(
      */
     fun loadExtensionByPkg(pkgName: String): LoadedExtension? {
         return try {
+            val flags = PackageManager.GET_CONFIGURATIONS or PackageManager.GET_META_DATA or PackageManager.GET_SIGNATURES
             val pkgInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                context.packageManager.getPackageInfo(
-                    pkgName,
-                    PackageManager.PackageInfoFlags.of(packageFlags.toLong())
-                )
+                context.packageManager.getPackageInfo(pkgName, PackageManager.PackageInfoFlags.of(flags.toLong()))
             } else {
                 @Suppress("DEPRECATION")
-                context.packageManager.getPackageInfo(pkgName, packageFlags)
+                context.packageManager.getPackageInfo(pkgName, flags)
             }
             if (isExtensionPackage(pkgInfo)) loadExtension(pkgInfo) else null
         } catch (e: PackageManager.NameNotFoundException) {
@@ -97,15 +78,8 @@ class ExtensionLoader @Inject constructor(
         }
     }
 
-    /**
-     * Check whether a PackageInfo is a Tachiyomi extension:
-     * either has the feature flag, or has a matching package prefix.
-     */
     private fun isExtensionPackage(pkgInfo: PackageInfo): Boolean {
-        val hasFeature = pkgInfo.reqFeatures?.any { it.name == EXTENSION_FEATURE } == true
-        val hasPrefix = EXTENSION_PREFIXES.any { pkgInfo.packageName.startsWith(it) }
-        val hasMeta = pkgInfo.applicationInfo?.metaData?.getString(METADATA_SOURCE_CLASS) != null
-        return (hasFeature || hasPrefix) && hasMeta
+        return pkgInfo.applicationInfo?.metaData?.getString(METADATA_SOURCE_CLASS) != null
     }
 
     /**
@@ -116,39 +90,56 @@ class ExtensionLoader @Inject constructor(
         val appInfo = pkgInfo.applicationInfo ?: return null
         val pm = context.packageManager
 
+        // Security: Validate signature (basic check - ensure it has a signature)
+        // In a real production environment, you should check against a known trusted certificate hash.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (pkgInfo.signingInfo == null && pkgInfo.signatures == null) {
+                Log.w(TAG, "Extension $pkgName is unsigned. Skipping.")
+                return null
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            if (pkgInfo.signatures == null || pkgInfo.signatures.isEmpty()) {
+                Log.w(TAG, "Extension $pkgName is unsigned. Skipping.")
+                return null
+            }
+        }
+
         val extName = pm.getApplicationLabel(appInfo).toString()
             .removePrefix("Tachiyomi: ")
             .removePrefix("Komikku: ")
         val versionName = pkgInfo.versionName ?: "0"
 
-        // Get the APK path for class loading
         val apkPath = appInfo.sourceDir ?: return null
+        // Optimized directory for DexClassLoader (Required for API 26+)
+        val optimizedDir = context.getDir("dex", Context.MODE_PRIVATE)
 
-        // Read which source class(es) to instantiate
         val classNames = appInfo.metaData?.getString(METADATA_SOURCE_CLASS)
             ?.split(";")
-            ?.map { raw ->
-                val trimmed = raw.trim()
-                if (trimmed.startsWith(".")) pkgName + trimmed else trimmed
-            }
+            ?.map { it.trim() }
+            ?.filter { it.isNotEmpty() }
+            ?.map { if (it.startsWith(".")) pkgName + it else it }
             ?: return null
 
-        // Create a class loader that can see the extension APK
         val classLoader = try {
-            PathClassLoader(apkPath, null, context.classLoader)
+            dalvik.system.DexClassLoader(
+                apkPath,
+                optimizedDir.absolutePath,
+                null,
+                context.classLoader // Parent MUST be context.classLoader
+            )
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to create classloader for $pkgName", e)
+            Log.e(TAG, "Failed to create DexClassLoader for $pkgName", e)
             return null
         }
 
-        // Instantiate sources
         val sources = mutableListOf<MangaSource>()
         for (className in classNames) {
             try {
                 val clazz = Class.forName(className, false, classLoader)
                 val instance = clazz.getDeclaredConstructor().newInstance()
 
-                // Check if the object is a SourceFactory (creates multiple sources)
+                // Check for generic SourceFactory or direct Source
                 val factoryMethod = try {
                     clazz.getMethod("createSources")
                 } catch (_: NoSuchMethodException) { null }
@@ -168,7 +159,6 @@ class ExtensionLoader @Inject constructor(
         }
 
         if (sources.isEmpty()) {
-            Log.w(TAG, "No sources loaded from $pkgName")
             return null
         }
 

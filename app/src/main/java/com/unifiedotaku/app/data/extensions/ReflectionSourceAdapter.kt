@@ -42,13 +42,47 @@ class ReflectionSourceAdapter(
         sourceClass.getMethod("getBaseUrl").invoke(sourceObj) as? String ?: ""
     } catch (_: Exception) { "" }
 
-    val id: Long = try {
+    override val id: Long = try {
         sourceClass.getMethod("getId").invoke(sourceObj) as? Long ?: 0L
     } catch (_: Exception) { 0L }
 
     val lang: String = try {
         sourceClass.getMethod("getLang").invoke(sourceObj) as? String ?: "en"
     } catch (_: Exception) { "en" }
+
+    @Suppress("UNCHECKED_CAST")
+    override val headers: Map<String, String> = try {
+        val headersMethod = sourceClass.getMethod("getHeaders")
+        // Headers might be okhttp3.Headers or Map<String, String>.
+        // If it's okhttp3.Headers, we need to convert it. 
+        // For now, let's assume standard Map or try to convert.
+        // Actually, Tachiyomi sources return okhttp3.Headers.
+        val headersObj = headersMethod.invoke(sourceObj)
+        if (headersObj is Map<*, *>) {
+             headersObj as Map<String, String>
+        } else {
+            // Fallback for okhttp3.Headers: iterate and put into map
+            // Since we don't have dependency, we can't cast to it. 
+            // We can treat it as basic object and reflect 'toMultimap()' or just return empty for now if incompatible.
+            // Preferred: reflection on 'toMultimap()' which returns Map<String, List<String>>
+            // Or 'names()' and 'values(name)'.
+            // Simpler: just stringify? No.
+            // Let's return empty map if it's not a Map, to be safe for now, 
+            // properly resolving Headers requires more complex reflection or dependency.
+            // HOWEVER, many extensions extend Source which has 'val headers: Headers'.
+            // Let's try to reflect 'toMultimap' if it exists.
+            try {
+                val toMultimap = headersObj?.javaClass?.getMethod("toMultimap")
+                val multiMap = toMultimap?.invoke(headersObj) as? Map<String, List<String>>
+                multiMap?.mapValues { it.value.joinToString(",") } ?: emptyMap()
+            } catch (e: Exception) {
+               emptyMap()
+            }
+        }
+    } catch (e: Exception) {
+        Log.w(TAG, "Failed to get headers from $name ($extensionPkg). Using empty headers.")
+        emptyMap()
+    }
 
     // ──────────────────── reflection helpers ────────────────────
 

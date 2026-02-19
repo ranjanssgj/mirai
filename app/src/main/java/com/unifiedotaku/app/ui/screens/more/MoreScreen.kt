@@ -88,11 +88,19 @@ fun MoreScreen(
                         onClick = { navController.navigate(Routes.SETTINGS_READER) }
                     )
                     HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
                     SettingsTile(
                         icon = Icons.Outlined.Download,
                         title = "Downloads",
                         subtitle = "Location, quality",
                         onClick = { navController.navigate(Routes.SETTINGS_DOWNLOADS) }
+                    )
+                    HorizontalDivider(color = Color.White.copy(alpha=0.1f), modifier = Modifier.padding(start = 56.dp))
+                    SettingsTile(
+                        icon = Icons.Outlined.Extension,
+                        title = "Extensions",
+                        subtitle = "Manage sources",
+                        onClick = { navController.navigate(Routes.SETTINGS_EXTENSIONS) }
                     )
                 }
             }

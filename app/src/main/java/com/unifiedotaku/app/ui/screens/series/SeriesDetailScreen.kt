@@ -302,7 +302,10 @@ fun SeriesDetailScreen(
                             onClick = {
                                 val mangaId = uiState.adaptationMangaId
                                 if (mangaId != null) {
-                                    navController.navigate(Routes.seriesDetail(mangaId))
+                                    val parts = mangaId.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val realMangaId = if (parts.size == 3) parts[2] else null
+                                    navController.navigate(Routes.seriesDetail(mangaId, sourceId, realMangaId))
                                 }
                             }
                         )
@@ -319,7 +322,11 @@ fun SeriesDetailScreen(
                             onClick = {
                                 val animeId = uiState.adaptationAnimeId
                                 if (animeId != null) {
-                                    navController.navigate(Routes.seriesDetail(animeId))
+                                    // Anime usually uses just partial ID or numeric ID, handled by SeriesViewModel defaults
+                                    val parts = animeId.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val realAnimeId = if (parts.size == 3) parts[2] else null
+                                    navController.navigate(Routes.seriesDetail(animeId, sourceId, realAnimeId))
                                 }
                             }
                         )

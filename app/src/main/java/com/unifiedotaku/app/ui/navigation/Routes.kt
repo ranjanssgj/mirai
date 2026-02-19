@@ -18,7 +18,8 @@ object Routes {
     const val MORE = "more"
     
     // Detail screens
-    const val SERIES_DETAIL = "series/{seriesId}"
+    // Detail screens
+    const val SERIES_DETAIL = "series_detail/{seriesId}?sourceId={sourceId}&mangaId={mangaId}"
     const val ANIME_PLAYER = "player/{animeId}/{episodeNumber}"
     const val MANGA_READER = "reader/{chapterId}?seriesId={seriesId}"
     const val ANIME_VIEW_ALL = "anime/view-all/{category}"
@@ -40,7 +41,14 @@ object Routes {
     const val SETTINGS_REPOS = "settings/repos"
     
     // Helper functions for navigation with arguments
-    fun seriesDetail(seriesId: String) = "series/${Uri.encode(seriesId)}"
+    fun seriesDetail(seriesId: String, sourceId: String? = null, mangaId: String? = null): String {
+        val base = "series_detail/${Uri.encode(seriesId)}"
+        val params = mutableListOf<String>()
+        if (sourceId != null) params.add("sourceId=${Uri.encode(sourceId)}")
+        if (mangaId != null) params.add("mangaId=${Uri.encode(mangaId)}")
+        
+        return if (params.isEmpty()) base else "$base?${params.joinToString("&")}"
+    }
     fun animePlayer(animeId: String, episodeNumber: Int) = "player/${Uri.encode(animeId)}/$episodeNumber"
     fun mangaReader(chapterId: String, seriesId: String = "") = "reader/${Uri.encode(chapterId)}?seriesId=${Uri.encode(seriesId)}"
     fun animeViewAll(category: String) = "anime/view-all/${Uri.encode(category)}"

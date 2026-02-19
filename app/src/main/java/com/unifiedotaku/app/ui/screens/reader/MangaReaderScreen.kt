@@ -124,8 +124,9 @@ fun MangaReaderScreen(
                 // Reader content based on mode
                 when (uiState.readingMode) {
                     ReadingMode.VERTICAL, ReadingMode.WEBTOON -> {
-                        VerticalReader(
+                            VerticalReader(
                             pages = uiState.pages.map { it.imageUrl },
+                            headers = uiState.headers,
                             currentPage = uiState.currentPage,
                             isSeamless = uiState.readingMode == ReadingMode.WEBTOON,
                             onPageChange = viewModel::goToPage,
@@ -136,6 +137,7 @@ fun MangaReaderScreen(
                     ReadingMode.HORIZONTAL, ReadingMode.SINGLE_PAGE -> {
                         HorizontalReader(
                             pages = uiState.pages.map { it.imageUrl },
+                            headers = uiState.headers,
                             currentPage = uiState.currentPage,
                             isRtl = uiState.isRtl,
                             onPageChange = viewModel::goToPage,
@@ -197,6 +199,7 @@ fun MangaReaderScreen(
 @Composable
 private fun VerticalReader(
     pages: List<String>,
+    headers: Map<String, String>,
     currentPage: Int,
     isSeamless: Boolean,
     onPageChange: (Int) -> Unit,
@@ -222,6 +225,7 @@ private fun VerticalReader(
         itemsIndexed(pages) { index, pageUrl ->
             ZoomableImage(
                 imageUrl = pageUrl,
+                headers = headers,
                 contentDescription = "Page ${index + 1}",
                 onTap = onTap
             )
@@ -236,6 +240,7 @@ private fun VerticalReader(
 @Composable
 private fun HorizontalReader(
     pages: List<String>,
+    headers: Map<String, String>,
     currentPage: Int,
     isRtl: Boolean,
     onPageChange: (Int) -> Unit,
@@ -269,6 +274,7 @@ private fun HorizontalReader(
     ) { page ->
         ZoomableImage(
             imageUrl = pages[page],
+            headers = headers,
             contentDescription = "Page ${page + 1}",
             onTap = onTap
         )
@@ -282,6 +288,7 @@ private fun HorizontalReader(
 @Composable
 private fun ZoomableImage(
     imageUrl: String,
+    headers: Map<String, String>,
     contentDescription: String,
     onTap: () -> Unit
 ) {
@@ -317,6 +324,9 @@ private fun ZoomableImage(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
+                .apply {
+                    headers.forEach { (key, value) -> addHeader(key, value) }
+                }
                 .crossfade(true)
                 .build(),
             contentDescription = contentDescription,

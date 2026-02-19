@@ -19,6 +19,8 @@ class ComixSource @Inject constructor(
 ) : MangaSource {
     
     override val name = "Comix (Built-in)"
+    override val id: Long = 1001L // Unique ID for built-in source
+
     // Using API v2 as per comix.py
     override val baseUrl = "https://comix.to/api/v2" 
     // Search still needs a fallback or different endpoint as comix.py didn't have search. 
@@ -29,7 +31,7 @@ class ComixSource @Inject constructor(
     // Let's assume search might work on v2 or we use the old one for search only.
     private val searchUrl = "https://api.comick.io/v1.0/search" 
 
-    private val headers = mapOf(
+    override val headers = mapOf(
         "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Referer" to "https://comix.to/"
     )

@@ -11,4 +11,6 @@ interface MangaSource {
     suspend fun getChapters(id: String): List<RawChapter>
     suspend fun getPages(chapterId: String): List<String>
     suspend fun getLatestUpdates(): List<MangaDto>
+    val headers: Map<String, String>
+    val id: Long
 }

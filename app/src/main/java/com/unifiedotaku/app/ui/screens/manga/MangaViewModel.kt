@@ -38,7 +38,30 @@ class MangaViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
-        refreshExtensions()
+        // Collect extensions from ExtensionManager
+        viewModelScope.launch {
+            extensionManager.loadedExtensions.collect { extensions ->
+                val sources = extensions.flatMap { it.sources }
+                val ids = extensions.map { it.pkgName } // Get extension IDs
+                _uiState.update {
+                    it.copy(
+                        installedExtensionIds = ids,
+                        selectedExtensionId = if (it.selectedExtensionId.isBlank() || it.selectedExtensionId !in ids) {
+                            ids.firstOrNull() ?: ""
+                        } else {
+                            it.selectedExtensionId
+                        }
+                        // If we have sources, and search results are empty, show something?
+                        // The UI handles empty state based on search results/popular manga.
+                    )
+                }
+                // Refresh home if extensions changed and we have no content
+                if (sources.isNotEmpty() && _uiState.value.popularManga.isEmpty()) {
+                    loadMangaHome()
+                }
+            }
+        }
+
         loadMangaHome()
         setCurrentDay()
     }
@@ -46,19 +69,9 @@ class MangaViewModel @Inject constructor(
     /**
      * Sync extension registry on startup so all sources are available before any search.
      */
-    private fun refreshExtensions() {
-        // Trigger dynamic extension loading from installed APKs
-        extensionManager.loadInstalledExtensions()
-        val ids = extensionManager.getAllExtensionIds()
-        _uiState.update { 
-            it.copy(
-                installedExtensionIds = ids,
-                selectedExtensionId = if (it.selectedExtensionId.isBlank() || it.selectedExtensionId !in ids) {
-                    ids.firstOrNull() ?: ""
-                } else {
-                    it.selectedExtensionId
-                }
-            )
+    fun refreshExtensions() {
+        viewModelScope.launch {
+            extensionManager.loadInstalledExtensions()
         }
     }
 

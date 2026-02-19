@@ -71,18 +71,16 @@ fun NavGraph(
             SearchResultsScreen(
                 query = query,
                 onBack = { navController.popBackStack() },
-                onSeriesClick = { seriesId ->
-                    navController.navigate(Routes.seriesDetail(seriesId)) {
-                        popUpTo(Routes.ANIME) { inclusive = false }
-                    }
+                onSeriesClick = { seriesId, sourceId, mangaId ->
+                    navController.navigate(Routes.seriesDetail(seriesId, sourceId, mangaId))
                 }
             )
         }
         
         composable(Routes.MANGA) {
             MangaScreen(
-                onSeriesClick = { seriesId ->
-                    navController.navigate(Routes.seriesDetail(seriesId))
+                onSeriesClick = { seriesId, sourceId, mangaId ->
+                    navController.navigate(Routes.seriesDetail(seriesId, sourceId, mangaId))
                 },
                 onViewAllClick = { category ->
                     navController.navigate(Routes.mangaViewAll(category))
@@ -98,8 +96,8 @@ fun NavGraph(
             com.unifiedotaku.app.ui.screens.manga.MangaViewAllScreen(
                 category = category,
                 onBack = { navController.popBackStack() },
-                onSeriesClick = { seriesId ->
-                    navController.navigate(Routes.seriesDetail(seriesId))
+                onSeriesClick = { seriesId, sourceId, mangaId ->
+                    navController.navigate(Routes.seriesDetail(seriesId, sourceId, mangaId))
                 }
             )
         }
@@ -122,13 +120,17 @@ fun NavGraph(
         
         // Series Detail Screen
         // Series Detail Screen
+        // Series Detail Screen
         composable(
-            route = Routes.SERIES_DETAIL,
+            route = "series_detail/{seriesId}?sourceId={sourceId}&mangaId={mangaId}",
             arguments = listOf(
-                navArgument("seriesId") { type = NavType.StringType }
+                navArgument("seriesId") { type = NavType.StringType },
+                navArgument("sourceId") { type = NavType.StringType; nullable = true },
+                navArgument("mangaId") { type = NavType.StringType; nullable = true }
             )
         ) { backStackEntry ->
             val seriesId = backStackEntry.arguments?.getString("seriesId") ?: return@composable
+            // sourceId and mangaId are automatically available to ViewModel via SavedStateHandle
             SeriesDetailScreen(
                 seriesId = seriesId,
                 navController = navController
@@ -186,7 +188,9 @@ fun NavGraph(
         composable(Routes.SETTINGS_ADVANCED) { com.unifiedotaku.app.ui.screens.more.AdvancedSettingsScreen(navController) }
         composable(Routes.SETTINGS_STATS) { com.unifiedotaku.app.ui.screens.more.StatsSettingsScreen(navController) }
         composable(Routes.SETTINGS_ABOUT) { com.unifiedotaku.app.ui.screens.more.AboutSettingsScreen(navController) }
-        composable(Routes.SETTINGS_EXTENSIONS) { com.unifiedotaku.app.ui.screens.more.ExtensionSettingsScreen(navController) }
+        composable(Routes.SETTINGS_EXTENSIONS) { com.unifiedotaku.app.ui.screens.settings.ExtensionSettingsScreen(
+            onBack = { navController.popBackStack() }
+        ) }
         composable(Routes.SETTINGS_REPOS) { com.unifiedotaku.app.ui.screens.more.ExtensionRepoScreen(navController) }
     }
 }

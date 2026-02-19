@@ -34,8 +34,34 @@
 > Task :app:writeDebugSigningConfigVersions UP-TO-DATE
 
 > Task :app:compileDebugKotlin
-e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/di/ExtensionModule.kt:9:1 This annotation is not repeatable
-e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/di/ExtensionModule.kt:10:1 This annotation is not repeatable
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/UnifiedOtakuApp.kt:13:6 Unresolved reference: Inject
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/UnifiedOtakuApp.kt:18:82 Unresolved reference: launch
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/UnifiedOtakuApp.kt:19:34 Suspend function 'reloadExtensions' should be called only from a coroutine or another suspend function
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/UnifiedOtakuApp.kt:41:78 Unresolved reference: launch
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/UnifiedOtakuApp.kt:42:30 Suspend function 'loadInstalledExtensions' should be called only from a coroutine or another suspend function
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:35:45 Unresolved reference: withContext
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:35:57 Unresolved reference: Dispatchers
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:62:9 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:62:37 'return' is not allowed here
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:62:44 Unresolved reference: it
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:64:16 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:64:52 Unresolved reference: it
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:68:16 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:77:16 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:81:9 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/data/extensions/ExtensionManager.kt:86:16 Unresolved reference: sourceRegistry
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/navigation/NavGraph.kt:99:33 Type mismatch: inferred type is (String) -> Unit but (String, String?, String?) -> Unit was expected
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/navigation/NavGraph.kt:99:35 Expected 3 parameters of types String, String?, String?
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaViewModel.kt:45:47 Unresolved reference: id
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaViewModel.kt:48:25 Cannot find a parameter with this name: installedSources
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaViewModel.kt:49:49 Type mismatch: inferred type is List<Unit> but List<String> was expected
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaViewModel.kt:50:47 Type mismatch: inferred type is Any but String was expected
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/manga/MangaViewModel.kt:50:110 Type inference failed. The value of the type parameter T should be mentioned in input types (argument types, receiver type or expected type). Try to specify it explicitly.
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/reader/ReaderViewModel.kt:82:60 Unresolved reference: getSource
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/settings/ExtensionSettingsScreen.kt:58:19 Type mismatch: inferred type is List<[Error type: Unresolved type for ExtensionContainer]> but Int was expected
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/settings/ExtensionSettingsScreen.kt:74:67 Unresolved reference: ExtensionContainer
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/settings/ExtensionSettingsViewModel.kt:5:45 Unresolved reference: ExtensionContainer
+e: file:///home/ice/Devlopment/UnifiedHub/app/src/main/java/com/unifiedotaku/app/ui/screens/settings/ExtensionSettingsViewModel.kt:18:36 Unresolved reference: ExtensionContainer
 
 > Task :app:compileDebugKotlin FAILED
 
@@ -60,5 +86,5 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 For more on this, please refer to https://docs.gradle.org/8.12/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD FAILED in 11s
+BUILD FAILED in 5s
 27 actionable tasks: 2 executed, 25 up-to-date

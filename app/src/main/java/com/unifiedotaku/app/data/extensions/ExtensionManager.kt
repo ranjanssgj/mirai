@@ -3,9 +3,12 @@ package com.unifiedotaku.app.data.extensions
 import android.util.Log
 import com.unifiedotaku.app.data.remote.api.RepoExtension
 import com.unifiedotaku.app.data.remote.scraper.AniCliSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,52 +23,60 @@ class ExtensionManager @Inject constructor(
         private const val TAG = "ExtensionManager"
     }
 
-    // Dynamic source registry: maps extensionId -> MangaSource
-    private val sourceRegistry = mutableMapOf<String, MangaSource>()
-
-    // Loaded extension descriptors (for UI display)
     private val _loadedExtensions = MutableStateFlow<List<LoadedExtension>>(emptyList())
     val loadedExtensions: StateFlow<List<LoadedExtension>> = _loadedExtensions.asStateFlow()
 
-    // Whether initial loading has been done
+    private val sourceRegistry = ConcurrentHashMap<String, MangaSource>()
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     private var initialized = false
 
     /**
-     * Scan installed extension APKs and register all their manga sources.
-     * Call this once on app startup (e.g. from ViewModel init).
+     * Loads extensions from the system.
+     * This is now a suspend function running on IO dispatcher.
      */
-    fun loadInstalledExtensions() {
-        if (initialized) return
-        initialized = true
+    suspend fun loadInstalledExtensions() = withContext(Dispatchers.IO) {
+        if (_isRefreshing.value) return@withContext
+        _isRefreshing.value = true
 
         Log.i(TAG, "Scanning for installed manga extensions...")
-        val extensions = extensionLoader.loadExtensions()
-        _loadedExtensions.value = extensions
-
-        for (ext in extensions) {
-            for (source in ext.sources) {
-                val id = "${ext.pkgName}:${source.name}"
-                sourceRegistry[id] = source
-                Log.i(TAG, "Registered source: $id (${source.name})")
+        try {
+            val extensions = extensionLoader.loadExtensions()
+            _loadedExtensions.value = extensions
+            
+            // Populate registry
+            sourceRegistry.clear()
+            extensions.flatMap { it.sources }.forEach { source ->
+                sourceRegistry[source.id.toString()] = source // Use ID as key
+                // Also map by name if needed, but ID is safer
             }
+            
+            Log.i(TAG, "Extensions loaded: ${extensions.size}, Sources: ${sourceRegistry.size}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to load extensions", e)
+        } finally {
+            _isRefreshing.value = false
+            initialized = true
         }
-
-        Log.i(TAG, "Loaded ${extensions.size} extension(s) with ${sourceRegistry.size} source(s)")
     }
 
     /**
-     * Refresh extensions (e.g. after an APK install/uninstall).
+     * Force reload extensions (e.g. after install/uninstall).
      */
-    fun refreshExtensions() {
-        sourceRegistry.clear()
-        initialized = false
+    suspend fun reloadExtensions() {
+        initialized = false // Force re-initialization logic if needed, though loadInstalledExtensions handles it
         loadInstalledExtensions()
     }
 
-    fun getMangaSource(name: String): MangaSource? {
-        // Direct lookup
-        sourceRegistry[name]?.let { return it }
-        // Partial match by source name
+    fun getMangaSource(id: String): MangaSource? {
+        // Direct lookup by ID
+        return sourceRegistry[id]
+    }
+    
+    // For legacy name-based lookup if really needed, but try to avoid
+    fun getMangaSourceByName(name: String): MangaSource? {
         return sourceRegistry.values.firstOrNull { it.name == name }
     }
 
@@ -74,7 +85,7 @@ class ExtensionManager @Inject constructor(
     }
 
     fun getAllExtensionIds(): List<String> {
-        return sourceRegistry.keys.toList()
+        return _loadedExtensions.value.map { it.pkgName }
     }
 
     fun getDefaultExtensionId(): String {

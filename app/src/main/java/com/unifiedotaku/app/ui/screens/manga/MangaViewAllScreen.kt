@@ -35,7 +35,7 @@ import com.unifiedotaku.app.ui.components.ClayContainer
 fun MangaViewAllScreen(
     category: String,
     onBack: () -> Unit,
-    onSeriesClick: (String) -> Unit,
+    onSeriesClick: (String, String?, String?) -> Unit,
     viewModel: MangaViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -101,7 +101,12 @@ fun MangaViewAllScreen(
                         items(list) { series ->
                             MangaViewAllCard(
                                 series = series,
-                                onClick = { onSeriesClick(series.id) }
+                                onClick = {
+                                    val parts = series.id.split(":", limit = 3)
+                                    val sourceId = if (parts.size == 3) parts[1] else null
+                                    val mangaId = if (parts.size == 3) parts[2] else null
+                                    onSeriesClick(series.id, sourceId, mangaId)
+                                }
                             )
                         }
                     }
